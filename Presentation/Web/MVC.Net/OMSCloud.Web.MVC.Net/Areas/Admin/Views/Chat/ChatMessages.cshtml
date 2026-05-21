@@ -1,0 +1,180 @@
+﻿@model IEnumerable<OMSCloud.Contracts.ViewModels.ChatMessageModel>
+@using OMSCloud.Contracts.Common.DBEnums
+@{
+    ViewBag.Title = "Customer's Chat Messages";
+}
+@helper Truncate(string input, int length)
+{
+    if (input.Length <= length)
+    {
+        @input
+    }
+    else
+    {
+        @input.Substring(0, length)<text>...</text>
+    }
+}
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table  id="ChatMessageTable" class="table table-striped table-hover table-bordered dataTable" style="width:100%">
+                <thead>
+                    <tr>
+                        <th class="">
+                            @Html.CheckBox("Select All", false, htmlAttributes: new { @class = "checkAll", onclick = "", onchange = "OnClickSelectAll(this)" })
+                        </th>
+                        @*<th>
+                            @Html.DisplayNameFor(model => model.RequestedByProfileId)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.MessageId)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.MessageCode)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ChatId)
+                        </th>*@
+                        <th>
+                            @Html.DisplayNameFor(model => model.SenderProfileName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ReceiverProfileName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Message)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SentDateTime)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ReadDateTime)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.IsReceived)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.IsRead)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.StatusId)
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                    <tr>
+                        <td id="MessageId_checkBox" class="">
+                            @Html.CheckBox(item.MessageId.ToString(), false, htmlAttributes: new {@id= "MessageId_CheckBox", @class = "CheckBox MessageId_CheckBox_" + item.MessageId, onclick = "OnClickSelectOne(this);" })
+                        </td>
+                        @*<td>
+                            @Html.DisplayFor(modelItem => item.RequestedByProfileId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MessageId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MessageCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ChatId)
+                        </td>*@
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SenderProfileName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ReceiverProfileName)
+                        </td>
+                        <td>
+                            <span data-toggle="tooltip" data-placement="top" title="@Html.DisplayFor(modelItem => item.Message)">@Truncate(item.Message, 300)</span>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SentDateTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ReadDateTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IsReceived)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IsRead)
+                        </td>
+                        <td>
+                            @if (item.StatusId == (long)DBStatusEnum.New)
+                            {
+                                <span>New</span>
+                            }
+                            else if (item.StatusId == (long)DBStatusEnum.Active)
+                            {
+                                <span>Active</span>
+                            }
+                            else if (item.StatusId == (long)DBStatusEnum.InActive)
+                            {
+                                <span>In-Active</span>
+                            }
+                            else if (item.StatusId == (long)DBStatusEnum.Deleted)
+                            {
+                                <span>Deleted</span>
+                            }
+                        </td>
+                    </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+            <div class="form-group">
+                <div class=" col-md-6">
+                    <input type="submit" value="Remove Selected" class="btn btn-success" onclick="PostRemoveSelected()" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var OnClickSelectAll = function (sender) {
+
+        $('.CheckBox').toggleClass("checked");
+
+        $("#ChatMessageTable input#MessageId_CheckBox[type=checkbox]").each((i, ele) => { ele.value = !ele.value; ele.checked = !ele.checked })
+    }
+
+    var OnClickSelectOne = function (sender) {
+        var x = $(sender).toggleClass("checked");
+        $('.CheckBox').val('false');
+        $('.checked').val('true');
+    }
+    var PostRemoveSelected = function () {
+        var values = [];
+        $('.checked').each(
+            function (obj) {
+                values.push($(this).attr('name'));
+            });
+        var form = $('#__AjaxAntiForgeryForm');
+        var token = $('input[name="__RequestVerificationToken"]', form).val();
+
+        var mydata = {
+            values: values,
+            "__RequestVerificationToken": token,
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "/admin/Chat/RemoveChatMessages?ChatMessageCSV=" + values,
+            data: mydata,
+            success: function (data) {
+                location.reload();
+            },
+            error: function () {
+
+            }
+
+        });
+    }
+</script>

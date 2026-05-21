@@ -1,0 +1,212 @@
+﻿@model OMSCloud.Contracts.ViewModels.CartItemModel
+
+@{
+    ViewBag.Title = "Modify Cart Item";
+}
+<script>
+    function FillData(result) {
+
+        $("#CartItemUnitPrice").val(result.product.UnitPrice);
+        var q = $("#CartItemQuantity").val();
+        $("#CartItemTaxRateApplied").val(result.product.TaxRateApplied);
+        $("#CartItemTaxAmount").val(result.product.TaxAmount);
+        $("#CartItemDiscountAmount").val(result.product.DiscountValue);
+        $("#CartItemItemTotalPrice").val(result.product.ItemTotalPrice);
+        $("#CartItemDiscountValue").val(result.product.DiscountValue);
+        $("#CartItemIsDiscountPercentage").val(result.product.IsDiscountPercentage);
+
+    }
+    function ClearData(result) {
+
+        $("#CartItemUnitPrice").val(0);
+        $("#CartItemTaxRateApplied").val(0);
+        $("#CartItemTaxAmount").val(0);
+        $("#CartItemDiscountAmount").val(0);
+        $("#CartItemItemTotalPrice").val(0);
+        $("#CartItemDiscountValue").val(0);
+        $("#CartItemIsDiscountPercentage").val(0);
+    }
+    //fetching data
+    function GetProductJson() {
+        ClearData();
+        var productId = $('#CartItemProductDropdown').val();
+        var q = $("#CartItemQuantity").val();
+        $.ajax({
+            type: "GET",
+            url: "/Admin/CartItem/GetCartItemProduct/" + productId + "?q=" + q,
+            success: (result) => {
+                FillData(result);
+            }
+        })
+    }
+    function UpdateCalc() {
+        var unitPrice = $("#CartItemUnitPrice").val();
+        var Quantity = $("#CartItemQuantity").val();
+        var TaxRate = $("#CartItemTaxRateApplied").val();
+        var DiscountValue = $("#CartItemDiscountValue").val();
+        var IsDiscountPercentage = $("#CartItemIsDiscountPercentage").val();
+        
+        var UnitPrice_X_Quantity = (unitPrice * Quantity);
+        var TaxAmount = UnitPrice_X_Quantity * (TaxRate / 100);//$("#CartItemTaxAmount").val();
+        var DiscountAmount = 0.0;
+        if (IsDiscountPercentage) {
+            DiscountAmount = (UnitPrice_X_Quantity * DiscountValue / 100)
+            //var TotalPrice = UnitPrice_X_Quantity + TaxAmount - (UnitPrice_X_Quantity * DiscountValue / 100); //$("#CartItemItemTotalPrice").val();
+            //$("#CartItemDiscountAmount").val((UnitPrice_X_Quantity * DiscountValue / 100));
+        } else {
+            DiscountAmount = DiscountValue;
+            //var TotalPrice = UnitPrice_X_Quantity + TaxAmount - DiscountValue; //$("#CartItemItemTotalPrice").val();
+            //$("#CartItemDiscountAmount").val(DiscountValue);
+        }
+        var TotalPrice = UnitPrice_X_Quantity + TaxAmount - DiscountAmount; //$("#CartItemItemTotalPrice").val();
+        $("#CartItemDiscountAmount").val(DiscountAmount);
+
+        //$("#CartItemUnitPrice").val(result.product.UnitPrice);
+        //$("#CartItemTaxRateApplied").val(result.product.TaxRateApplied);
+        $("#CartItemTaxAmount").val(TaxAmount);
+        //$("#CartItemDiscountAmount").val(result.product.DiscountValue);
+        $("#CartItemItemTotalPrice").val(TotalPrice);
+        }
+</script>
+
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group hidden">
+                @Html.LabelFor(model => model.CartItemID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CartItemID, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CartItemID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CartOrderID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CartOrderID, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                    @Html.ValidationMessageFor(model => model.CartOrderID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group hidden">
+                @Html.LabelFor(model => model.ProductID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ProductID, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                    @Html.ValidationMessageFor(model => model.ProductID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.ProductTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @if (!string.IsNullOrEmpty(Model.ProductTitle))
+                    {
+                        @Html.EditorFor(model => model.ProductTitle, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                    }
+                    else
+                    {
+                        @Html.DropDownListFor(
+                                            model => model.ProductID,
+                                            ViewBag.ProductList as SelectList, "--Select Product--",
+                                            htmlAttributes: new { @class = "form-control", @id = "CartItemProductDropdown", onchange = "GetProductJson()" })
+                        @Html.ValidationMessageFor(model => model.ProductID, "", new { @class = "text-danger" })
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.UnitPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.UnitPrice, new { htmlAttributes = new { @class = "form-control", @readonly = "true", @id = "CartItemUnitPrice" } })
+                    @Html.ValidationMessageFor(model => model.UnitPrice, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control", @id = "CartItemQuantity", onchange = "UpdateCalc()" } })
+                    @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TaxRateApplied, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.TaxRateApplied, new { htmlAttributes = new { @class = "form-control", @readonly = "true", @id = "CartItemTaxRateApplied" } })
+                    @Html.ValidationMessageFor(model => model.TaxRateApplied, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TaxAmount, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.TaxAmount, new { htmlAttributes = new { @class = "form-control", @readonly = "true", @id = "CartItemTaxAmount" } })
+                    @Html.ValidationMessageFor(model => model.TaxAmount, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DiscountAmount, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.DiscountAmount, new { htmlAttributes = new { @class = "form-control", @readonly = "true", @id = "CartItemDiscountAmount" } })
+                    @Html.ValidationMessageFor(model => model.DiscountAmount, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DiscountValue, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.DiscountValue, new { htmlAttributes = new { @class = "form-control", @readonly = "true", @id = "CartItemDiscountValue" } })
+                    @Html.ValidationMessageFor(model => model.DiscountValue, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.IsDiscountPercentage, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.IsDiscountPercentage, new { htmlAttributes = new { @class = "form-control", @readonly = "true", @id = "CartItemIsDiscountPercentage" } })
+                    @Html.ValidationMessageFor(model => model.IsDiscountPercentage, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ItemTotalPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ItemTotalPrice, new { htmlAttributes = new { @class = "form-control", @readonly = "true", @id = "CartItemItemTotalPrice" } })
+                    @Html.ValidationMessageFor(model => model.ItemTotalPrice, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.StatusTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.StatusID, ViewBag.StatusList as SelectList, "--Please Select Status--", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.StatusID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group hidden">
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.ModifiedOn.Ticks, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-success" />
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+</div>
+
+<div>
+    @Html.ActionLink("Back to List", "Index", "CartItem", new { id = Model.CartOrderID }, new { @class = "btn btn-success" })
+</div>

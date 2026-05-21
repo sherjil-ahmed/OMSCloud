@@ -1,0 +1,71 @@
+﻿@model OMSCloud.Contracts.ViewModels.ProfileModel
+@using OMSCloud.Contracts.Common.ConfigMgmt
+@using OMSCloud.Contracts.Common
+@{
+    ViewBag.Title = "Modify Profile: " + Model.FirstName + " " + Model.LastName;
+    string Imageurl = "";
+    if ( ! string.IsNullOrEmpty(ApplicationSession.Country))
+    {
+        if (!String.IsNullOrEmpty(Model.ImagePath))
+        {
+            Imageurl = Config.GetWebAPIHost(ApplicationSession.Country) +
+                Config.DynamicContent +
+                ImageRoute.Profile.ToString() + "/" +
+                Model.ProfileID.ToString() + "/" +
+                Model.ImagePath;
+        }
+
+    }
+}
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        @using (Html.BeginForm("Edit", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="col-md-12">
+                    <div class="tabs">
+                        <ul class="nav nav-tabs">
+                            <li class="active">
+                                <a href="#ProfileTab" data-toggle="tab"><i class="fa fa-star"></i>Profile</a>
+                            </li>
+                            <li class="">
+                                <a href="#AddressTab" data-toggle="tab">Address</a>
+                            </li>
+                            <li class="">
+                                <a href="#ReviewTab" data-toggle="tab">Reviews</a>
+                            </li>
+                            <li class="">
+                                <a href="#ChatTab" data-toggle="tab">Chats</a>
+                            </li>
+                        </ul>
+                        <div id="productTabContents" class="tab-content">
+                            <div id="ProfileTab" class="tab-pane active">
+                                @Html.Partial("Partial/_ProfileEdit")
+                            </div>
+                            <div id="AddressTab" class="tab-pane ">
+                                @*@{Html.RenderAction("AttachAddress", "Profile");}*@
+                                @{Html.RenderAction("AddressList", "Profile", new { Id = Model.ProfileID });}
+                            </div>
+                            <div id="ReviewTab" class="tab-pane ">
+                                @{Html.RenderAction("GetReviewList", "Profile", new { Id = Model.ProfileID });}
+                            </div>
+                            <div id="ChatTab" class="tab-pane ">
+                                @{Html.RenderAction("GetChatListByProfileId", "Chat", new { Id = Model.ProfileID });}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Back to List", "Index", 0, new { @class = "btn  btn-success" }) |
+    @Html.ActionLink("Verification", "IndexPublic", "ProfileVerification", new { id = @ViewContext.RouteData.Values["id"].ToString() }, new { @class = "btn  btn-default" })
+</div>

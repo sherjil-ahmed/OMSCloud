@@ -1,0 +1,76 @@
+﻿@model OMSCloud.Contracts.ViewModels.StatusModel
+
+@{
+    ViewBag.Title = "Status Delete";
+}
+
+<script>
+    function onDelete(Id, IsSystem = false)
+    {
+        event.preventDefault()
+        if (IsSystem) {
+            alert('System managed field, can not be deleted by admin!')
+        }
+        else
+        {
+            if (confirm('Are you sure'))
+            {
+                $.post(`/Admin/Status/Delete/${Id}`)
+            }
+        }
+    }
+</script>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <h3>Are you sure you want to delete this?</h3>
+        <div>
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.StatusID)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.StatusID)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.StatusName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.StatusName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.IsSystem)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.IsSystem)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+
+            </dl>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="Delete" class="btn btn-danger" onclick="onDelete(@Model.StatusID,@Model.IsSystem)"/> 
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="form-actions no-color">
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-success" })
+</div>

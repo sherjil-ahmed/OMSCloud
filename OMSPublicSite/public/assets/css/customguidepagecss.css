@@ -1,0 +1,355 @@
+/*media for ipad pro*/
+@media only screen and (max-width: 1024px) {
+    .sec1 {
+        background-size: contain !important;
+        background-position: bottom;
+        background-image: url("../images/guidepage/section1-back2.png");
+    }
+    .ins-cont h2 {
+        font-size: 22px;
+    }
+    .ica h2 {
+        font-size: 22px;
+    }
+    .ins-cont {
+        padding-left: 42px !important;
+    }
+    .sec5 p {
+        font-size: 15px !important;
+    }
+}
+/*media for ipad pro End*/	
+
+/*media for ipad*/
+@media only screen and (max-width: 768px) {
+    /*nav test*/
+    .topnav a{
+          display: none !important;
+          color: #fff !important
+      }
+   .topnav a.icon {
+        float: right;
+        display: block;
+        margin-top: -81px;
+        font-size: 26px;
+        display: block !important;
+        color: #150101 !important;
+    }
+    .topnav.responsive {
+          position: relative;
+          display: block !important;
+      }
+    .topnav.responsive .icon {
+        position: absolute;
+        right: 0;
+        top: 0;
+        display: block !important;
+     }
+      .topnav.responsive a {
+        float: none;
+        display: block !important;
+        text-align: left;
+    }
+    div#myTopnav {
+        background: #150101;
+    }   
+    /*nav test End*/
+    .sec1 {
+        background-image: url("../images/guidepage/section1-back2.png");
+        background-repeat: no-repeat;
+        background-color: #f2f0f4;
+    }
+    .js-m {
+        padding-right: 210px;
+    }
+    .sec-cont {
+        text-align: center;
+    }
+    .sec-cont h2 {
+        padding: 0 123px;
+    }
+    .sec-cont h2::after {
+        width: 40% !important;
+        margin: 0 auto !important;
+        margin-top: 19px !important;
+    }
+    .ica, .abm {
+        float: left;
+    }
+    .ica {
+        width: 10%;
+    }
+    .abm {
+        width: 90%;
+    }
+    .ica h2 {
+        font-size: 30px;
+    }
+    .sec-4 {
+        background-size: 100% 100%;
+        background-image: url("../images/guidepage/sec2-back.png");
+    }
+    .sec5 p {
+        font-size: 25px !important;
+        border: 0 !important;
+        text-align: left !important; 
+    }
+}
+/*media for ipad End*/
+
+/*media for mobile*/
+@media screen and (max-width: 600px) {
+  .sec1 {
+        padding-bottom: 142px !important;
+        padding-top: 127px !important;
+        background-image: url("../images/guidepage/section1-back2.png");
+    }
+  .js-m {
+        padding-right: 13px;
+    }
+    section.sec1 h2 {
+        font-size: 35px !important;
+    }
+    .sec-cont {
+        padding: 21px 12px !important;
+    }
+    .sec-cont h2 {
+        padding: 0px;
+    }
+    .sec-4 {
+        background-size: 434px !important;
+        background-repeat: no-repeat !important;
+        background-image: url("../images/guidepage/sec2-back.png");
+    }
+}
+/*media for mobile End*/
+.custom-topmargin {
+    background: #f6f6f6;
+    width: 100%;
+    z-index: 9999;
+}
+.custom-topmargin-scroll {
+    top: 67px;
+    position: fixed;
+}
+header-custom {
+    padding: 9px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    background: #f2f0f4;
+    z-index: 999;
+    padding-bottom: 0;
+}
+img.logo-img {
+    height: 100px;
+    width: auto;
+    object-fit: cover;
+}
+.nav {
+   text-align: center;
+}
+
+.topnav a::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 3px;
+    background: #150101;
+    transition: width .3s;
+    margin-top: 3px;
+}
+.topnav a:hover::after {
+    width: 40%;
+    
+}
+.topnav a:hover {
+    text-decoration: none;
+}
+/*nav css*/
+.topnav {
+    width: 100%;
+    text-align: center;
+}
+
+.topnav a {
+    color: #150101;
+    padding: 14px 16px;
+    font-size: 17px;
+    text-align: center;
+    display: inline-block;
+}
+
+.topnav .icon {
+  display: none;
+}
+
+/*nav css End*/
+.sec1 {
+    background-image: url("../images/guidepage/section1-back2.png");
+    padding-top: 70px;
+    background-size: 70% 525px;
+    padding-bottom: 70px;
+    background-repeat: no-repeat;
+    background-position: right;
+    background-color: #f2f0f4;
+}
+section.sec1 h2 {
+    font-size: 50px;
+    font-weight: 600;
+}
+section.sec1 h2::after{
+    content: '';
+    display: block;
+    width: 20%;
+    height: 3px;
+    background: #150101;
+    transition: width .3s;
+    margin-top: 3px;
+}    
+section.sec1 p {
+    font-size: 16.5px;
+}
+section.sec-2 {
+    background: #fdfdfa;
+}
+section.sec-2 img {
+    width: 100%;
+}
+.sec-cont {
+    padding: 70px 0;
+}
+.sec-cont h2 {
+    font-size: 53px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+.sec-cont h2::after{
+    content: '';
+    display: block;
+    width: 20%;
+    height: 3px;
+    background: #150101;
+    transition: width .3s;
+    margin-top: 3px;
+}  
+.sec-cont span {
+    color: #ff0c0c;
+}
+.sec-cont p {
+    font-size: 17.5px;
+}
+.sec3 {
+    background-color: #150101;
+    padding: 35px 0px;
+}
+.ins-cont {
+    padding: 0px 29px;
+}
+.h-df {
+    padding-bottom: 56px;
+}
+.sec3-row {
+    margin-bottom: 75px;
+}
+.h-df h2 {
+    font-size: 40px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #ffffff;
+}
+.ica h2 {
+    background: #736565;
+    padding: 20px;
+    width: fit-content;
+    border-radius: 50%;
+    color: #fff;
+}
+.ins-cont h3 {
+    color: #736565;
+    font-size: 1.7em;
+} 
+.ins-cont h2 {
+    text-align: left;
+    margin: 0;
+    color: #fff;
+} 
+.ins-cont ul li {
+    color: #fff;
+    list-style-type: disclosure-closed;
+    line-height: 29px;
+    margin-left: -6px;
+    font-size: 17.5px;
+}
+.ins-cont p {
+    color: #fff;
+    line-height: 29px;
+    font-size: 17.5px;
+}
+.sec-4 {
+    background-image: url("../images/guidepage/sec2-back.png");
+    padding: 74px 0px;
+    background-repeat: no-repeat;
+    background-position: right;
+}
+}
+h2.faq {
+    font-size: 40px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #150101;
+}
+.q1, .q2, .q3, .q4, .q5, {
+    margin-bottom: 20px;
+}
+.qu1, .qu2, .qu3, .qu4, .qu5{
+    background: #150101;
+    color: #fff;
+    padding: 14px;
+    border-radius: 5px;
+    margin-bottom: 0px;
+    font-size: 18px;
+    cursor: pointer;
+}
+.qu1::before, .qu2::before, .qu3::before, .qu4::before, .qu5::before {
+    content: "";
+    height: 15px;
+    width: 15px;
+    display: block;
+    float: right;
+    border-left: 3px solid;
+    border-bottom: 3px solid;
+    transform: rotate(315deg);
+    border-color: #ee0b0b;
+    margin-right: 20px;
+}
+.a1, .a2, .a3, .a4, .a5 {
+    background: #fafaf8;
+    margin-bottom: 0;
+    padding: 23px 14px;
+    font-size: 16.5px;
+    display: none;
+}
+section.sec5 {
+    background: #f2f0f4;
+    padding: 25px 0;
+}
+.sec5 p {
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border-left: 2px solid #150101;
+    text-align: center;
+    padding: 11px 0;
+    font-size: 17px;
+}
+p.bon {
+    border-left: none;
+}
+.custom-topmargin{
+    
+}
+.show {
+    display:block !important;
+}

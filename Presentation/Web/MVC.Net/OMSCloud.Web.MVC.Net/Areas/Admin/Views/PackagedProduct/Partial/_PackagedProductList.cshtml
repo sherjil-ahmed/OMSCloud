@@ -1,0 +1,128 @@
+﻿@model IEnumerable<OMSCloud.Contracts.ViewModels.PackagedProductModel>
+
+<table class="table table-hover table-striped dataTable" id="PackagedProductTable" style="width:100%">
+    <thead>
+        <tr>
+            <th class="hidden">
+                @Html.DisplayNameFor(model => model.PackageID)
+            </th>
+            <th class="hidden">
+                @Html.DisplayNameFor(model => model.ProductID)
+            </th>
+            <th class="hidden">
+                @Html.DisplayNameFor(model => model.ProductTitle)
+            </th>
+            <th class="hidden">
+                @Html.DisplayNameFor(model => model.ChildProductID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ChildProductTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IncludedByDefault)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PercentagePrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OtherDetails)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+
+            foreach (var item in Model)
+            {
+                <tr id="PackageId_@item.PackageID">
+                    <td class="hidden">
+                        @Html.DisplayFor(modelItem => item.PackageID)
+                    </td>
+                    <td class="hidden">
+                        @Html.DisplayFor(modelItem => item.ProductID)
+                    </td>
+                    <td class="hidden">
+                        @Html.DisplayFor(modelItem => item.ProductTitle)
+                    </td>
+                    <td class="hidden">
+                        @Html.DisplayFor(modelItem => item.ChildProductID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ChildProductTitle)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+                        @{
+                            if (item.IncludedByDefault)
+                            {
+                                @Html.DisplayText("Yes");
+                            }
+                            else
+                            {
+                                @Html.DisplayText("No");
+                            }
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PercentagePrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OtherDetails)
+                    </td>
+                    <td>
+                        @*@Html.ActionLink("Edit", "Edit", new { id = item.PackageID }) @*|
+                            @Html.ActionLink("Details", "Details", new { id = item.PackageID }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.PackageID })*@
+                    </td>
+                </tr>
+                                }
+                            }
+    </tbody>
+</table>
+
+<script>
+    $(document).ready(function () {
+        var myTr = [];
+        $("tbody tr").click(function () {
+            $(this).find('td').each(function () {
+                myTr.push($(this).text());
+            });
+            var packageId = myTr[0];
+            $("#mySameNew_PackageId").val(packageId.trim());
+            var valu = myTr[3];
+            var name = myTr[4].toLowerCase().trim();
+            var i = 0;
+            $("#childProductId option").each(function () {
+                var optionName = $(this).html().toLowerCase().trim();
+                if (optionName == name) {
+                    return false;
+                }
+                i++;
+            });
+            $("#childProductId")[0].selectedIndex = i;
+
+            var quantity = myTr[5];
+            $("#quantity").val(quantity.trim())
+
+            var isIncludedByDefault = myTr[6];
+            //alert("isIncludedByDefault  : " + isIncludedByDefault);
+            $("#includedByDefault").val(isIncludedByDefault)
+
+            var percentagePrice = myTr[7];
+            $("#percentagePrice").val(percentagePrice.trim())
+
+            var OtherDetails = myTr[8];
+            $("#otherDetails").val(OtherDetails.trim())
+
+            myTr = [];
+            $("#btnSavePackagedProduct").text("Update");
+        });
+    });
+</script>

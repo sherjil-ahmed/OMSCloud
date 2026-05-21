@@ -1,0 +1,98 @@
+﻿@model IEnumerable<OMSCloud.Contracts.ViewModels.CartExtendedModel>
+@using OMSCloud.Contracts.Common.DBEnums
+
+@{
+    ViewBag.Title = "User's Active Cart List";
+}
+<div class="panel panel-default">
+    @*<div class="panel-heading">
+                <a href="@Url.Action("Create")" class="btn btn-md btn-default"><i class="glyphicon glyphicon-plus"></i> Create New Cart</a>
+        </div>*@
+    <div class="panel-body">
+        <table class="table table-striped table-hover table-responsive table-bordered dataTable" style="width:100%">
+            <thead>
+                <tr>
+                    <th class="">
+                        @Html.DisplayNameFor(model => model.CartID)
+                    </th>
+                    <th class="">
+                        @Html.DisplayNameFor(model => model.CreatedOn)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Buyer)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CartStatus)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Status)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CartTotal)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TaxTotal)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DiscountTotal)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="">
+                                <a href="@Url.Action("Index", "CartItem", new { id = item.CartID })" class="btn btn-xs btn-success" data-toggle="tooltip" data-placement="top" title="Cart Detail">
+                                    @Html.DisplayFor(modelItem => item.CartID)
+                                </a>
+                                @*<a href="@Url.Action("Edit", new { id = item.CartID })" style="color:#000" class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="top"><i class="glyphicon glyphicon-pencil"></i> - Edit </a>*@
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CreatedOn)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Buyer)
+
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CartStatus)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Status)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CartTotal)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TaxTotal)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DiscountTotal)
+                            </td>
+                            <td>
+                                @*<a href="@Url.Action("Edit", new { id = item.CartID })" class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="top" title="Edit"><i class="glyphicon glyphicon-shopping-cart"></i></a>
+        <a href="@Url.Action("Index", "CartItem", new { id = item.CartID })" class="btn btn-xs btn-success" data-toggle="tooltip" data-placement="top" title="Cart Items"><i class="glyphicon glyphicon-align-center"></i></a>*@
+                                
+                                @if (item.CartStatusID == (long)DBCartStatusEnum.NewCart)
+                                {
+                                    <a href="@Url.Action("ConvertCartToOrder", "Order", new { id = item.CartID })" class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="top" title="Convert Cart to Orders"><i class="glyphicon glyphicon-asterisk"></i></a>
+                                }
+                                else if(item.OrderCount > 0 && item.CartStatusID == (long)DBCartStatusEnum.CartConvertedToOrders)
+                                {
+                                <a href="@Url.Action("Index", "Order", new { parentCartId = item.CartID })" class="btn btn-xs btn-dark" data-toggle="tooltip" data-placement="top" title="List related Orders Only"><i class="glyphicon glyphicon-ban-circle"></i></a>
+                                }
+                                @*<a href="@Url.Action("Delete", new { id = item.CartID })" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Delete"><i class="glyphicon glyphicon-remove-sign"></i></a>
+        <a href="@Url.Action("Details", new { id = item.CartID })" class="btn btn-xs btn-info" data-toggle="tooltip" data-placement="top" title="Details"><i class="glyphicon glyphicon-eye-open"></i></a>*@
+
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

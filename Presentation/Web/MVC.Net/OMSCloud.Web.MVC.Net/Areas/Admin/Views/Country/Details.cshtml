@@ -1,0 +1,106 @@
+﻿@model OMSCloud.Contracts.ViewModels.CountryModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CountryModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt class="hidden">
+            @Html.DisplayNameFor(model => model.RequestedByProfileId)
+        </dt>
+
+        <dd class="hidden">
+            @Html.DisplayFor(model => model.RequestedByProfileId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AllowsBilling)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AllowsBilling)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AllowsShipping)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AllowsShipping)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TwoLetterIsoCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TwoLetterIsoCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ThreeLetterIsoCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ThreeLetterIsoCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumericIsoCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumericIsoCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SubjectToVat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubjectToVat)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Published)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Published)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DisplayOrder)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DisplayOrder)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LimitedToStores)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LimitedToStores)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,176 @@
+﻿@model OMSCloud.Contracts.ViewModels.ScheduleDisplayModel
+@using OMSCloud.Contracts.Common.DBEnums
+
+    @{
+        ViewBag.Title = "New Shop Schedule";
+    }
+    <script>
+        function shopScheduleTypeChanged() {
+
+            if ($("#shopScheduleWeeklyRadioButton").is(":checked")) {
+                //alert('weekly');
+                //$("#weekdaysInputGroup").prop("disabled", false);
+                //$("#dateInput").prop("disabled", true);
+                //$("#date1").prop("disabled", true);
+                //$("#date1").prop("disabled", true);
+            } else if ($("#shopScheduleMonthlyRadioButton").is(":checked")) {
+                //alert('monthly');
+                //$("#weekdaysInputGroup").prop("disabled", false);
+                //$("#dateInput").prop("disabled", false);
+                //$("#date1").prop("disabled", false);
+                //$("#date1").prop("disabled", false);
+
+            } else if ($("#shopScheduleSpecificDateRadioButton").is(":checked")) {
+                //alert('yearly');
+                //$("#weekdaysInputGroup").prop("disabled", false);
+                //$("#dateInput").prop("disabled", false);
+                //$("#date1").prop("disabled", false);
+                //$("#date1").prop("disabled", true);
+            }
+        }
+
+    </script>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <div class="form-group hidden">
+                    @Html.LabelFor(model => model.ScheduleID, htmlAttributes: new { @class = "control-label col-md-1" })
+                    <div class="col-md-3">
+                        @Html.EditorFor(model => model.ScheduleID, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ScheduleID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                @if (Model.ShopID <= 0)
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ShopName, htmlAttributes: new { @class = "control-label col-md-1" })
+                        <div class="col-md-6">
+                            @Html.DropDownListFor(model => model.ShopID, ViewBag.Supplier as SelectList, "--Select Shop--", new { @class = "form-control", id = "SupplierDropDown", onChange = "SupplierOptionHandler(this)" })
+
+                            @Html.ValidationMessageFor(model => model.ShopName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="form-group hidden">
+                        @Html.LabelFor(model => model.ShopName, htmlAttributes: new { @class = "control-label col-md-1" })
+                        <div class="col-md-8">
+                            @Html.HiddenFor(model => model.ShopName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.HiddenFor(model => model.ShopID, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ShopName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                }
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IsException, htmlAttributes: new { @class = "control-label col-md-1" })
+                    <div class="col-md-6">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.IsException)
+                            @Html.ValidationMessageFor(model => model.IsException, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ScheduleTypeID, htmlAttributes: new { @class = "control-label col-md-1" })
+                    <div class="col-md-6">
+                        @Html.RadioButtonFor(model => model.ScheduleTypeID, (int)DBScheduleTypeEnum.Weekly, new { id = "shopScheduleWeeklyRadioButton", @class = "", onchange = "shopScheduleTypeChanged()" })
+                        Weekly
+                        @Html.RadioButtonFor(model => model.ScheduleTypeID, (int)DBScheduleTypeEnum.Monthly, new { id = "shopScheduleMonthlyRadioButton", @class = "", onchange = "shopScheduleTypeChanged()" })
+                        Monthly
+                        @Html.RadioButtonFor(model => model.ScheduleTypeID, (int)DBScheduleTypeEnum.Yearly, new { id = "shopScheduleSpecificDateRadioButton", @class = "", onchange = "shopScheduleTypeChanged()" })
+                        Yearly
+                        @Html.ValidationMessageFor(model => model.ScheduleTypeID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div id="weekdaysInputGroup" class="form-group">
+                    @Html.LabelFor(model => model.WeekDays, htmlAttributes: new { @class = "control-label col-md-1" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.WeekDays, new { htmlAttributes = new { @class = "form-control hidden" } })
+                        @Html.CheckBoxFor(model => model.Monday, new { htmlAttributes = new { @class = "form-control" } }) Monday
+                        @Html.CheckBoxFor(model => model.Tuesday) Tuesday
+                        @Html.CheckBoxFor(model => model.Wednesday) Wednesday
+                        @Html.CheckBoxFor(model => model.Thursday) Thursday
+                        @Html.CheckBoxFor(model => model.Friday) Friday
+                        @Html.CheckBoxFor(model => model.Saturday) Saturday
+                        @Html.CheckBoxFor(model => model.Sunday) Sunday
+                        @Html.ValidationMessageFor(model => model.WeekDays, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div id="dateInput" class="form-group">
+                    @Html.LabelFor(model => model.FromDay, htmlAttributes: new { @class = "control-label col-md-1" })
+                    <div id="date1" class="col-md-2">
+                        @Html.DropDownListFor(model => Model.FromDay, Enumerable.Range(1, 31).Select(x => new SelectListItem { Text = x.ToString(), Value = x.ToString() }), new { @class = "form-control" } )
+
+                        @*@Html.EditorFor(model => model.FromDay, new { htmlAttributes = new { @class = "form-control" } })*@
+                        @Html.ValidationMessageFor(model => model.FromDay, "", new { @class = "text-danger" })
+                    </div>
+                    @*</div>
+
+            <div class="form-group">*@
+                    @Html.LabelFor(model => model.ToDay, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div id="date2" class="col-md-2">
+                        @Html.DropDownListFor(model => Model.ToDay, Enumerable.Range(1, 31).Select(x => new SelectListItem { Text = x.ToString(), Value = x.ToString() }), new { @class = "form-control" })
+
+                        @*@Html.EditorFor(model => model.ToDay, new { htmlAttributes = new { @class = "form-control" } })*@
+                        @Html.ValidationMessageFor(model => model.ToDay, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div id="dateInput" class="form-group">
+                    @Html.LabelFor(model => model.Month, htmlAttributes: new { @class = "control-label col-md-1" })
+                    <div id="date1" class="col-md-2">
+                        @Html.DropDownListFor(model => model.Month, ViewBag.monthsList as SelectList, " --- Select a Month --- ", new { @class = "form-control" })
+                        @*@Html.EditorFor(model => model.Month, new { htmlAttributes = new { @class = "form-control" } })*@
+                        @Html.ValidationMessageFor(model => model.Month, "", new { @class = "text-danger" })
+                    </div>
+                    @*</div>
+
+            <div class="form-group">*@
+                    @Html.LabelFor(model => model.MonthDay, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div id="date2" class="col-md-2">
+                        @Html.DropDownListFor(model => Model.MonthDay, Enumerable.Range(1, 31).Select(x => new SelectListItem { Text = x.ToString(), Value = x.ToString() }), new { @class = "form-control" })
+
+                        @*@Html.EditorFor(model => model.MonthDay, new { htmlAttributes = new { @class = "form-control" } })*@
+                        @Html.ValidationMessageFor(model => model.MonthDay, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.StatusTitle, htmlAttributes: new { @class = "control-label col-md-1" })
+                    <div class="col-md-6">
+                        @Html.DropDownListFor(model => model.StatusID, ViewBag.status as SelectList, "--Select status--", new { @class = "form-control" })
+
+                        @Html.ValidationMessageFor(model => model.StatusID, "", new { @class = "text-danger" })
+                    </div>
+                    </div>
+
+            <div class="form-group">
+                    @Html.LabelFor(model => model.Notes, htmlAttributes: new { @class = "control-label col-md-1" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.Notes, new { htmlAttributes = new { @class = "form-control", rows = "8" } })
+                        @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-1 col-md-6">
+                        <input type="submit" value="Create" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+                        }
+                    </div>
+                </div>
+    <div>
+        @Html.ActionLink("Back to List", "Index", new { Id = Model.ShopID }, new { @class = "btn btn-success" })
+    </div>

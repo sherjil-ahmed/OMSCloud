@@ -1,0 +1,227 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1500
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{20A01403-E7C1-431A-8E42-C6086BAB7D28}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{362671F6-C418-49BB-A8E8-2B4BA6751AEB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Business", "Business", "{D723E676-916C-4FBA-BA39-0A5871F6167A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Contracts", "Contracts", "{D6316703-A0ED-46D6-A828-7DFBAC6CF609}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{6F7C6F6A-5251-45C2-9A85-9875D765FC3A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Interfaces", "Interfaces", "{730CDCCD-5F7E-4008-A1BD-6CA087BFA100}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataAdapters", "DataAdapters", "{3CDAD1AF-5DE9-42CD-8EEC-B7F7710FD80D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CoreBusiness", "CoreBusiness", "{5E60EC7E-D27F-48A7-9F60-00392409AD94}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Proxies", "Proxies", "{13284578-21A5-466B-B926-4468B504B1CE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataStore", "DataStore", "{FED6D3D0-0129-48A7-A018-30FDE915B3EA}"
+	ProjectSection(SolutionItems) = preProject
+		DataStore\baseline Data.sql = DataStore\baseline Data.sql
+		DataStore\schemaonly.sql = DataStore\schemaonly.sql
+		DataStore\ScriptGenerator for IRepo, Repo, UnitofWork-RepoProperties.sql = DataStore\ScriptGenerator for IRepo, Repo, UnitofWork-RepoProperties.sql
+		DataStore\SQL\ScriptGenerator for IRepo, Repo, UnitofWork-RepoProperties.sql = DataStore\SQL\ScriptGenerator for IRepo, Repo, UnitofWork-RepoProperties.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{2FA28B03-2901-4D54-996A-4210A4F82AE8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebAPIs", "WebAPIs", "{78527943-52D5-4A3B-A0AF-FC998162CEDB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OMSCloud.DataStore.EF", "DataStore\OMSCloud.DataStore.EF\OMSCloud.DataStore.EF.csproj", "{66C65132-8ABA-4B2A-BCF0-A55DC73B3F7D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UoW_RepositoryFramework", "DataStore\UoW_RepositoryFramework\UoW_RepositoryFramework.csproj", "{44F2336B-0F6D-48D7-8488-F921CA077188}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OMSCloud.Business.DataAdapters", "Business\Adapters\OMSCloud.Business.Adapters\OMSCloud.Business.DataAdapters.csproj", "{6F033CD0-5BF8-4675-9D35-B9AA0EA5F264}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OMSCloud.Business.Core", "Business\CoreBusiness\OMSCloud.Business.Core\OMSCloud.Business.Core.csproj", "{D8533F24-C4FB-444D-96EA-80119FC22D67}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OMSCloud.Contracts.Proxies.WebAPIs", "Contracts\Proxies\OMSCloud.Contracts.Proxies.WebAPIs\OMSCloud.Contracts.Proxies.WebAPIs.csproj", "{E69CD107-2D8E-41D7-8488-9AE378F7F8EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OMSCloud.Contracts.Common", "Contracts\Common\OMSCloud.Contracts.Common\OMSCloud.Contracts.Common.csproj", "{154F21BC-1A1D-4DC1-BD84-A89AEB2C1F87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OMSCloud.Contracts.Interfaces.IServices", "Contracts\Interfaces\OMSCloud.Contracts.Interfaces.IServices\OMSCloud.Contracts.Interfaces.IServices.csproj", "{59BD6589-C088-4291-84FD-EFC301E7D5EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OMSCloud.Contracts.Interfaces.IBusinesComponents", "Contracts\Interfaces\OMSCloud.Contracts.Interfaces.IBusinesComponents\OMSCloud.Contracts.Interfaces.IBusinesComponents.csproj", "{B1ACD993-0FAC-4F6B-861E-8FCECEBB4963}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ViewModels", "ViewModels", "{B3939F45-852D-4CCB-B36E-A73420D635A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OMSCloud.Contracts.ViewModels", "Contracts\ViewModels\OMSCloud.Contracts.ViewModels\OMSCloud.Contracts.ViewModels.csproj", "{FF7B0FEA-9B94-44FD-B252-2CDE40F11FE2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MVC.Net", "MVC.Net", "{6EBA93FE-6C1E-4641-BF41-1CFD480D5BC5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OMSCloud.Web.MVC.Net", "Presentation\Web\MVC.Net\OMSCloud.Web.MVC.Net\OMSCloud.Web.MVC.Net.csproj", "{86421B44-AA06-41D2-A4D3-98CDDA4B536B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OMSCloud.Services.WebAPI", "Services\WebAPI\OMSCloud.Services.WebAPI\OMSCloud.Services.WebAPI.csproj", "{04D37909-7885-4D63-AB95-595BF99F8BF3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OMSCloud.Contracts.Serialization", "Contracts\Common\OMSCloud.Contracts.Serialization\OMSCloud.Contracts.Serialization.csproj", "{DF9C6AAB-75A4-48FC-957B-B89D043EE760}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Caching", "Caching", "{4A049B68-094E-43B8-8FFF-B06C083C3A4C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OMSCloud.Contracts.Caching", "Contracts\Caching\OMSCloud.Contracts.Caching\OMSCloud.Contracts.Caching.csproj", "{A099590E-974A-4A33-B9DB-9CF832718467}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OMSCloud.Contracts.CryptoTool", "Contracts\Common\OMSCloud.Contracts.CryptoTool\OMSCloud.Contracts.CryptoTool.csproj", "{D84429FD-78A4-4412-A9B2-8C39974784F1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{66C65132-8ABA-4B2A-BCF0-A55DC73B3F7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66C65132-8ABA-4B2A-BCF0-A55DC73B3F7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66C65132-8ABA-4B2A-BCF0-A55DC73B3F7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66C65132-8ABA-4B2A-BCF0-A55DC73B3F7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44F2336B-0F6D-48D7-8488-F921CA077188}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44F2336B-0F6D-48D7-8488-F921CA077188}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44F2336B-0F6D-48D7-8488-F921CA077188}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44F2336B-0F6D-48D7-8488-F921CA077188}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F033CD0-5BF8-4675-9D35-B9AA0EA5F264}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F033CD0-5BF8-4675-9D35-B9AA0EA5F264}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F033CD0-5BF8-4675-9D35-B9AA0EA5F264}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F033CD0-5BF8-4675-9D35-B9AA0EA5F264}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8533F24-C4FB-444D-96EA-80119FC22D67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8533F24-C4FB-444D-96EA-80119FC22D67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8533F24-C4FB-444D-96EA-80119FC22D67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8533F24-C4FB-444D-96EA-80119FC22D67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E69CD107-2D8E-41D7-8488-9AE378F7F8EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E69CD107-2D8E-41D7-8488-9AE378F7F8EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E69CD107-2D8E-41D7-8488-9AE378F7F8EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E69CD107-2D8E-41D7-8488-9AE378F7F8EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{154F21BC-1A1D-4DC1-BD84-A89AEB2C1F87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{154F21BC-1A1D-4DC1-BD84-A89AEB2C1F87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{154F21BC-1A1D-4DC1-BD84-A89AEB2C1F87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{154F21BC-1A1D-4DC1-BD84-A89AEB2C1F87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59BD6589-C088-4291-84FD-EFC301E7D5EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59BD6589-C088-4291-84FD-EFC301E7D5EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59BD6589-C088-4291-84FD-EFC301E7D5EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59BD6589-C088-4291-84FD-EFC301E7D5EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1ACD993-0FAC-4F6B-861E-8FCECEBB4963}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1ACD993-0FAC-4F6B-861E-8FCECEBB4963}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1ACD993-0FAC-4F6B-861E-8FCECEBB4963}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1ACD993-0FAC-4F6B-861E-8FCECEBB4963}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF7B0FEA-9B94-44FD-B252-2CDE40F11FE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF7B0FEA-9B94-44FD-B252-2CDE40F11FE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF7B0FEA-9B94-44FD-B252-2CDE40F11FE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF7B0FEA-9B94-44FD-B252-2CDE40F11FE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86421B44-AA06-41D2-A4D3-98CDDA4B536B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86421B44-AA06-41D2-A4D3-98CDDA4B536B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86421B44-AA06-41D2-A4D3-98CDDA4B536B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86421B44-AA06-41D2-A4D3-98CDDA4B536B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04D37909-7885-4D63-AB95-595BF99F8BF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04D37909-7885-4D63-AB95-595BF99F8BF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04D37909-7885-4D63-AB95-595BF99F8BF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04D37909-7885-4D63-AB95-595BF99F8BF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF9C6AAB-75A4-48FC-957B-B89D043EE760}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF9C6AAB-75A4-48FC-957B-B89D043EE760}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF9C6AAB-75A4-48FC-957B-B89D043EE760}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF9C6AAB-75A4-48FC-957B-B89D043EE760}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A099590E-974A-4A33-B9DB-9CF832718467}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A099590E-974A-4A33-B9DB-9CF832718467}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A099590E-974A-4A33-B9DB-9CF832718467}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A099590E-974A-4A33-B9DB-9CF832718467}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D84429FD-78A4-4412-A9B2-8C39974784F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D84429FD-78A4-4412-A9B2-8C39974784F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D84429FD-78A4-4412-A9B2-8C39974784F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D84429FD-78A4-4412-A9B2-8C39974784F1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6F7C6F6A-5251-45C2-9A85-9875D765FC3A} = {D6316703-A0ED-46D6-A828-7DFBAC6CF609}
+		{730CDCCD-5F7E-4008-A1BD-6CA087BFA100} = {6F7C6F6A-5251-45C2-9A85-9875D765FC3A}
+		{3CDAD1AF-5DE9-42CD-8EEC-B7F7710FD80D} = {D723E676-916C-4FBA-BA39-0A5871F6167A}
+		{5E60EC7E-D27F-48A7-9F60-00392409AD94} = {D723E676-916C-4FBA-BA39-0A5871F6167A}
+		{13284578-21A5-466B-B926-4468B504B1CE} = {D6316703-A0ED-46D6-A828-7DFBAC6CF609}
+		{2FA28B03-2901-4D54-996A-4210A4F82AE8} = {20A01403-E7C1-431A-8E42-C6086BAB7D28}
+		{78527943-52D5-4A3B-A0AF-FC998162CEDB} = {362671F6-C418-49BB-A8E8-2B4BA6751AEB}
+		{66C65132-8ABA-4B2A-BCF0-A55DC73B3F7D} = {FED6D3D0-0129-48A7-A018-30FDE915B3EA}
+		{44F2336B-0F6D-48D7-8488-F921CA077188} = {FED6D3D0-0129-48A7-A018-30FDE915B3EA}
+		{6F033CD0-5BF8-4675-9D35-B9AA0EA5F264} = {3CDAD1AF-5DE9-42CD-8EEC-B7F7710FD80D}
+		{D8533F24-C4FB-444D-96EA-80119FC22D67} = {5E60EC7E-D27F-48A7-9F60-00392409AD94}
+		{E69CD107-2D8E-41D7-8488-9AE378F7F8EA} = {13284578-21A5-466B-B926-4468B504B1CE}
+		{154F21BC-1A1D-4DC1-BD84-A89AEB2C1F87} = {6F7C6F6A-5251-45C2-9A85-9875D765FC3A}
+		{59BD6589-C088-4291-84FD-EFC301E7D5EF} = {730CDCCD-5F7E-4008-A1BD-6CA087BFA100}
+		{B1ACD993-0FAC-4F6B-861E-8FCECEBB4963} = {730CDCCD-5F7E-4008-A1BD-6CA087BFA100}
+		{B3939F45-852D-4CCB-B36E-A73420D635A3} = {D6316703-A0ED-46D6-A828-7DFBAC6CF609}
+		{FF7B0FEA-9B94-44FD-B252-2CDE40F11FE2} = {B3939F45-852D-4CCB-B36E-A73420D635A3}
+		{6EBA93FE-6C1E-4641-BF41-1CFD480D5BC5} = {2FA28B03-2901-4D54-996A-4210A4F82AE8}
+		{86421B44-AA06-41D2-A4D3-98CDDA4B536B} = {6EBA93FE-6C1E-4641-BF41-1CFD480D5BC5}
+		{04D37909-7885-4D63-AB95-595BF99F8BF3} = {78527943-52D5-4A3B-A0AF-FC998162CEDB}
+		{DF9C6AAB-75A4-48FC-957B-B89D043EE760} = {6F7C6F6A-5251-45C2-9A85-9875D765FC3A}
+		{4A049B68-094E-43B8-8FFF-B06C083C3A4C} = {D6316703-A0ED-46D6-A828-7DFBAC6CF609}
+		{A099590E-974A-4A33-B9DB-9CF832718467} = {4A049B68-094E-43B8-8FFF-B06C083C3A4C}
+		{D84429FD-78A4-4412-A9B2-8C39974784F1} = {6F7C6F6A-5251-45C2-9A85-9875D765FC3A}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E27AF9E1-AF77-40F3-B605-5E78B7CB69F2}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 15
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://avanturebytes.visualstudio.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Contracts\\Common\\OMSCloud.Contracts.Common\\OMSCloud.Contracts.Common.csproj
+		SccProjectTopLevelParentUniqueName1 = OMSCloud.sln
+		SccProjectName1 = Contracts/Common/OMSCloud.Contracts.Common
+		SccLocalPath1 = Contracts\\Common\\OMSCloud.Contracts.Common
+		SccProjectUniqueName2 = Contracts\\Interfaces\\OMSCloud.Contracts.Interfaces.IBusinesComponents\\OMSCloud.Contracts.Interfaces.IBusinesComponents.csproj
+		SccProjectTopLevelParentUniqueName2 = OMSCloud.sln
+		SccProjectName2 = Contracts/Interfaces/OMSCloud.Contracts.Interfaces.IBusinesComponents
+		SccLocalPath2 = Contracts\\Interfaces\\OMSCloud.Contracts.Interfaces.IBusinesComponents
+		SccProjectUniqueName3 = Contracts\\Interfaces\\OMSCloud.Contracts.Interfaces.IServices\\OMSCloud.Contracts.Interfaces.IServices.csproj
+		SccProjectTopLevelParentUniqueName3 = OMSCloud.sln
+		SccProjectName3 = Contracts/Interfaces/OMSCloud.Contracts.Interfaces.IServices
+		SccLocalPath3 = Contracts\\Interfaces\\OMSCloud.Contracts.Interfaces.IServices
+		SccProjectUniqueName4 = DataStore\\OMSCloud.DataStore.EF\\OMSCloud.DataStore.EF.csproj
+		SccProjectTopLevelParentUniqueName4 = OMSCloud.sln
+		SccProjectName4 = DataStore/OMSCloud.DataStore.EF
+		SccLocalPath4 = DataStore\\OMSCloud.DataStore.EF
+		SccProjectUniqueName5 = DataStore\\UoW_RepositoryFramework\\UoW_RepositoryFramework.csproj
+		SccProjectTopLevelParentUniqueName5 = OMSCloud.sln
+		SccProjectName5 = DataStore/UoW_RepositoryFramework
+		SccLocalPath5 = DataStore\\UoW_RepositoryFramework
+		SccProjectUniqueName6 = Contracts\\Common\\OMSCloud.Contracts.Serialization\\OMSCloud.Contracts.Serialization.csproj
+		SccProjectTopLevelParentUniqueName6 = OMSCloud.sln
+		SccProjectName6 = Contracts/Common/OMSCloud.Contracts.Serialization
+		SccLocalPath6 = Contracts\\Common\\OMSCloud.Contracts.Serialization
+		SccProjectUniqueName7 = Presentation\\Web\\MVC.Net\\OMSCloud.Web.MVC.Net\\OMSCloud.Web.MVC.Net.csproj
+		SccProjectTopLevelParentUniqueName7 = OMSCloud.sln
+		SccProjectName7 = Presentation/Web/MVC.Net/OMSCloud.Web.MVC.Net
+		SccLocalPath7 = Presentation\\Web\\MVC.Net\\OMSCloud.Web.MVC.Net
+		SccProjectUniqueName8 = Services\\WebAPI\\OMSCloud.Services.WebAPI\\OMSCloud.Services.WebAPI.csproj
+		SccProjectTopLevelParentUniqueName8 = OMSCloud.sln
+		SccProjectName8 = Services/WebAPI/OMSCloud.Services.WebAPI
+		SccLocalPath8 = Services\\WebAPI\\OMSCloud.Services.WebAPI
+		SccProjectUniqueName9 = Contracts\\ViewModels\\OMSCloud.Contracts.ViewModels\\OMSCloud.Contracts.ViewModels.csproj
+		SccProjectTopLevelParentUniqueName9 = OMSCloud.sln
+		SccProjectName9 = Contracts/ViewModels/OMSCloud.Contracts.ViewModels
+		SccLocalPath9 = Contracts\\ViewModels\\OMSCloud.Contracts.ViewModels
+		SccProjectUniqueName10 = Contracts\\Proxies\\OMSCloud.Contracts.Proxies.WebAPIs\\OMSCloud.Contracts.Proxies.WebAPIs.csproj
+		SccProjectTopLevelParentUniqueName10 = OMSCloud.sln
+		SccProjectName10 = Contracts/Proxies/OMSCloud.Contracts.Proxies.WebAPIs
+		SccLocalPath10 = Contracts\\Proxies\\OMSCloud.Contracts.Proxies.WebAPIs
+		SccProjectUniqueName11 = Business\\Adapters\\OMSCloud.Business.Adapters\\OMSCloud.Business.DataAdapters.csproj
+		SccProjectTopLevelParentUniqueName11 = OMSCloud.sln
+		SccProjectName11 = Business/Adapters/OMSCloud.Business.Adapters
+		SccLocalPath11 = Business\\Adapters\\OMSCloud.Business.Adapters
+		SccProjectUniqueName12 = Business\\CoreBusiness\\OMSCloud.Business.Core\\OMSCloud.Business.Core.csproj
+		SccProjectTopLevelParentUniqueName12 = OMSCloud.sln
+		SccProjectName12 = Business/CoreBusiness/OMSCloud.Business.Core
+		SccLocalPath12 = Business\\CoreBusiness\\OMSCloud.Business.Core
+		SccProjectUniqueName13 = Contracts\\Caching\\OMSCloud.Contracts.Caching\\OMSCloud.Contracts.Caching.csproj
+		SccProjectTopLevelParentUniqueName13 = OMSCloud.sln
+		SccProjectName13 = Contracts/Caching/OMSCloud.Contracts.Caching
+		SccLocalPath13 = Contracts\\Caching\\OMSCloud.Contracts.Caching
+		SccProjectUniqueName14 = Contracts\\Common\\OMSCloud.Contracts.CryptoTool\\OMSCloud.Contracts.CryptoTool.csproj
+		SccProjectTopLevelParentUniqueName14 = OMSCloud.sln
+		SccProjectName14 = Contracts/Common/OMSCloud.Contracts.CryptoTool
+		SccLocalPath14 = Contracts\\Common\\OMSCloud.Contracts.CryptoTool
+	EndGlobalSection
+EndGlobal

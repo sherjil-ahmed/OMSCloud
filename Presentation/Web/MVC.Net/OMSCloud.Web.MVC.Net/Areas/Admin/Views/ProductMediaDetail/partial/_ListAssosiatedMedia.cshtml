@@ -1,0 +1,33 @@
+﻿@model IEnumerable<OMSCloud.Contracts.ViewModels.ProductMediaDetailModel>
+@using OMSCloud.Contracts.Common.ConfigMgmt
+@using OMSCloud.Contracts.Common
+@{
+    string ImageurlBase = "";
+    if (!string.IsNullOrEmpty(ApplicationSession.Country))
+    {
+        ImageurlBase = Config.GetWebAPIHost(ApplicationSession.Country) +
+        Config.DynamicContent +
+        ImageRoute.ProductMediaDetail.ToString();
+    }
+}
+
+<form id="ProductImageListForm">
+    <div class="form-horizontal">
+        <ul id="productImageList">
+            <div class="form-group">
+                @foreach (var item in Model)
+                {
+
+                    <div class="col-md-2">
+                        <li style="list-style-type:none;">
+                            <a href="#">
+                                <img src="@ImageurlBase/@item.ProductID/@item.MediaFilePath" class="img-responsive" id="targetImg" width="200" height="200" />
+                            </a>
+                        </li>
+                    </div>
+
+                }
+            </div>
+        </ul>
+    </div>
+</form>

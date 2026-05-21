@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "Account Verified";
+    Layout = "~/Areas/Admin/Views/Shared/_AuthLayout.cshtml";
+    ViewBag.AuthTitle = "Confirm Email";
+}
+
+
+<div>
+    <br />
+    <table>
+        <td><img src="~/Areas/Security/Content/Images/result.png" /></td>
+        <td class="security-formtitle">@ViewBag.Title<p class="security-formtitlesub">Your email address has been successfully verified</p></td>
+    </table>
+</div>
+<div>
+    <hr />
+    <p>
+        Thank you for verifying your email.  You can now @Html.ActionLink("log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" }) to the website.
+    </p>
+</div>

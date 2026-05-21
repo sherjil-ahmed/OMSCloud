@@ -1,0 +1,58 @@
+﻿@model OMSCloud.Contracts.ViewModels.AddressContactInfoPairModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>AddressContactInfoPairModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt class="hidden">
+            @Html.DisplayNameFor(model => model.RequestedByProfileId)
+        </dt>
+
+        <dd class="hidden">
+            @Html.DisplayFor(model => model.RequestedByProfileId)
+        </dd>
+
+        <dt class="hidden">
+            @Html.DisplayNameFor(model => model.AddressContactInfoPairID)
+        </dt>
+
+        <dd class="hidden">
+            @Html.DisplayFor(model => model.AddressContactInfoPairID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AddressID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AddressID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContactInfoID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContactInfoID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsPrimary)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsPrimary)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = item.AddressContactInfoPairID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

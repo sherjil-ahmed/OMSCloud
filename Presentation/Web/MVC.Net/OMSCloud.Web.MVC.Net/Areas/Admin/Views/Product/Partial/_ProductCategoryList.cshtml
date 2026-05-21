@@ -1,0 +1,44 @@
+﻿@model IEnumerable<OMSCloud.Contracts.ViewModels.ProductCategoryPairModel>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <table class="table table-striped table-hover  table-responsive table-bordered dataTable" style="width:100%" id="ProductCategoryPairTable">
+            <thead>
+                <tr>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.ProductCategoryPairID)
+                    </th>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.CategoryID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CategoryTitle)
+                    </th>
+                    @*<th>Actions</th>*@
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="hidden">
+                                @Html.DisplayFor(modelItem => item.ProductCategoryPairID)
+                            </td>
+                            <td class="hidden">
+                                @Html.DisplayFor(modelItem => item.CategoryID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CategoryTitle)
+                            </td>
+                            @*<td>
+                                    @Html.ActionLink("Delete", "Delete", "ProductCategoryPair", new { id = item.ProductCategoryPairID }) |
+                                    @Html.ActionLink("Edit", "Edit", "ProductCategoryPair", new { id = item.ProductCategoryPairID })
+                                </td>*@
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+</div>
+</div>

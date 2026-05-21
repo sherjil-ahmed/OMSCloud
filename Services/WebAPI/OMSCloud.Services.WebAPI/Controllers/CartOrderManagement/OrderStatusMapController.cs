@@ -1,0 +1,26 @@
+﻿using OMSCloud.Business.Core;
+using OMSCloud.Contracts.Common;
+using OMSCloud.Contracts.Interfaces.IServices;
+using OMSCloud.Contracts.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Controllers;
+using System.Web.Http.Description;
+
+namespace OMSCloud.Services.WebAPIs.Controllers
+{
+
+    public partial class OrderStatusMapController : ApiController, IOrderStatusMapController
+    {
+        [ReturnType(DataType = typeof(List<OrderStatusMapModel>))]
+        public IHttpActionResult GetSortedList()
+        {
+            return Ok<List<OrderStatusMapModel>>(comp.GetSortedList());
+        }
+    }
+}

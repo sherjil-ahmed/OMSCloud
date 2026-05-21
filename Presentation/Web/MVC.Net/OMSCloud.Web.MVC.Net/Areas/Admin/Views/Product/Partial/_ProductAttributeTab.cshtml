@@ -1,0 +1,224 @@
+﻿@model OMSCloud.Contracts.ViewModels.ProductAttributePairModel
+
+<div>
+    <form id="ProductAttributeForm">
+
+        <div class="form-horizontal">
+            <h4>Product Attributes</h4>
+            <div class="form-group hidden">
+                @Html.EditorFor(model => model.ProductAttributePairID, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.AttributeID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.AttributeID, ViewBag.attributeList as SelectList, "--Please Select--", new { @class = "form-control", @id = "cmbAttribute", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.AttributeID, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2">
+                    <a href="#" class="btn btn-success" onclick="ShowModal()">Create New Attribute</a>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.AttributeValue, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.AttributeValue, new { htmlAttributes = new { @class = "form-control", @id = "attributeValue", @required = "required" } })
+                    @Html.ValidationMessageFor(model => model.AttributeValue, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DisplayOrder, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.DisplayOrder, new { htmlAttributes = new { @class = "form-control", @id = "OrderValue", @required = "required", @type = "number" } })
+                    @Html.ValidationMessageFor(model => model.DisplayOrder, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.IsAssigned, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-6">
+                    @Html.CheckBoxFor(model => model.IsAssigned, new { htmlAttributes = new { @class = "form-control", @id= "IsAssigned" } })
+                    @Html.ValidationMessageFor(model => model.IsAssigned, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.IsSelectedForVariation, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-6">
+                    @Html.CheckBoxFor(model => model.IsSelectedForVariation, new { htmlAttributes = new { @class = "form-control", @id = "IsSelectedForVariation" } })
+                    @Html.ValidationMessageFor(model => model.IsSelectedForVariation, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.VariationInPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.VariationInPrice, new { htmlAttributes = new { @class = "form-control", @id = "VariationInPrice", @type = "number" } })
+                    @Html.ValidationMessageFor(model => model.VariationInPrice, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="col-md-8">
+                <div class="col-md-2 col-lg-offset-2">
+                <a id="btnSaveAttributePair" href="#" class="btn btn-success" onclick="SaveAttributePair()">Create</a>
+            </div>
+            <div class="col-md-4 ">
+            <a id="btnClearForm" href="#" class="btn btn-success" onclick="ClearForm()">Clear</a>
+        </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+                @{
+                    Html.RenderAction("ProductAttributeListByProductId", "ProductAttributePair");// , new { id = ViewBag.CategoryID }
+                }
+            </div>
+        </div>
+
+        @Html.Partial("../partial/Catalogue/Modal", new ViewDataDictionary() {
+                { "Title", "Create Attribute"},
+                { "modalDivId", "attributeCreateModal"},
+                { "modalBodyId", "attributeCreateModalBody"},
+                { "URL", "/Admin/Attribute/CreateAttribute/" + ViewContext.RouteData.Values["id"].ToString()}
+            })
+        </div>
+    </form>
+
+</div>
+
+<script>
+    var OnModalClose = function (newAttribute){
+        var option = new Option(newAttribute.AttributeTitle, newAttribute.AttributeID);
+        $('#cmbAttribute').append($(option));
+        $("#cmbAttribute").val(newAttribute.AttributeID);
+        $("#attributeValue").focus();
+    }
+
+    var ClearForm = function () {
+        $("#ProductAttributePairID").val("");
+        $("#cmbAttribute")[0].selectedIndex = 0;
+        $("#attributeValue").val("");
+        $("#OrderValue").val("");
+        $("#IsAssigned").prop("checked", false);
+        $("#IsSelectedForVariation").prop("checked", false);
+        $("#VariationInPrice").val(0);
+        $("#btnSaveAttributePair").text("Create");
+    }
+
+    var GetModelForSave = function (isInsertOrUpdate) {
+        var form = $('#__AjaxAntiForgeryForm');
+        var token = $('input[name="__RequestVerificationToken"]', form).val();
+
+        var ProductAttributePairId = $("#ProductAttributePairID").val();
+        //alert(ProductAttributePairId);
+        var attributeId = $("#cmbAttribute").val();
+        var attributeName = $("#cmbAttribute option:selected").text();
+        var attributeValue = $("#attributeValue").val();
+        var displayOrder = $("#OrderValue").val();
+        var isAssigned = $("#IsAssigned").prop("checked");
+        var isSelectedForVariation = $("#IsSelectedForVariation").prop("checked");
+        var variationInPrice = $("#VariationInPrice").val();
+
+        var mydata = {
+            ProductID: @ViewContext.RouteData.Values["id"].ToString(),
+            ProductAttributePairID: ProductAttributePairId,
+            AttributeID: attributeId,
+            AttributeName: attributeName,
+            AttributeValue: attributeValue,
+            DisplayOrder: displayOrder,
+            IsAssigned: isAssigned,
+            IsSelectedForVariation: isSelectedForVariation,
+            VariationInPrice: variationInPrice,
+            IsInsertOrUpdate: isInsertOrUpdate,
+            "__RequestVerificationToken": token
+        };
+        return mydata;
+    }
+
+    var GetNewRowHtml = function (data) {
+        var isAssigned = data.IsAssigned ? "checked" : "unchecked";
+        var isSelectedforVariation = data.IsSelectedForVariation ? "checked" : "unchecked";
+        return "<tr id='ProductAttributePairList_" + data.ProductAttributePairID + "'> " +
+            "    <td class='hidden'>" +
+            data.AttributeID +
+            "    </td>" +
+            "    <td>" +
+            data.AttributeName +
+            "    </td>" +
+            "    <td>" +
+            data.AttributeValue +
+            "    </td>" +
+            "    <td>" +
+            data.DisplayOrder +
+            "    </td>" +
+            "    <td>" +
+            "<input type='checkbox' disabled " + isAssigned + "/> " +
+            "    </td>" +
+            "    <td>" +
+            "<input type='checkbox' disabled " + isSelectedforVariation + " /> " +
+            "    </td>" +
+            "    <td>" +
+            data.VariationInPrice +
+            "    </td>" +
+            "    <td class='hidden'>" +
+            data.ProductAttributePairID +
+            "    </td>" +
+            "    <td>" +
+            "       <a href='/Admin/ProductAttributePair/Edit/" + data.ProductAttributePairID + "'  class='btn btn-xs btn-default' data-toggle='tooltip' data-placement='top' title='Edit'><i class='glyphicon glyphicon-pencil'></i></a>" +
+            "       <a href='/Admin/ProductAttributePair/Delete/" + data.ProductAttributePairID + "' class='btn btn-xs btn-danger' data-toggle='tooltip' data-placement='top' title='Delete'><i class='glyphicon glyphicon-remove-sign'></i></a>" +
+            "    </td>" +
+            "</tr>";
+    }
+
+    var SaveAjax = function (data) {
+        $.ajax({
+            type: "POST",
+            url: "/Admin/ProductAttributePair/AssociateAttributeWithProduct/",
+            data: data,
+            success: OnSuccessAjaxSave
+        });
+    }
+
+    var OnSuccessAjaxSave = function (result) {
+        if (result == undefined || result == "") {
+            alert('unable to associate attribute with Product. Please retry.');
+            return;
+        }
+        else {
+            var row = GetNewRowHtml(result);
+            if (result.IsInsertOrUpdate)
+                $('#ProductAttributePairTable').append(row);
+            else {
+                var tr = $("#ProductAttributePairList_" + result.ProductAttributePairID);
+                tr.replaceWith(row);
+                tr = $("#ProductAttributePairList_" + result.ProductAttributePairID);
+                if (tr == undefined || tr == "") {
+                    tr.css('background-color', 'lightgreen');
+                }
+                else {
+                    tr.css('background-color', 'lightyellow');
+                }
+            }
+            $("#btnSaveAttributePair").text("Create");
+            ClearForm();
+
+        }
+    }
+
+    var SaveAttributePair = function () {
+        var btnText = $("#btnSaveAttributePair").text();
+        if (btnText == "Create") {
+            var txtPairId = $("#ProductAttributePairID").val();
+            var tr = $("#ProductAttributePairList_" + txtPairId);
+            var mydata = GetModelForSave(true);
+            SaveAjax(mydata);
+            return;
+            //$('#ProductAttributePairTable').append(newRow);
+        }
+        else if (btnText == "Update") {
+
+            var mydata = GetModelForSave(false);
+            SaveAjax(mydata);
+            return;
+        }
+    }
+</script>

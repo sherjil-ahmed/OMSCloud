@@ -1,0 +1,343 @@
+﻿@model IEnumerable<OMSCloud.Contracts.ViewModels.OrderDetailModel>
+@using OMSCloud.Contracts.Common.DBEnums
+
+@using OMSCloud.Contracts.Common
+
+@{
+    if (ViewBag.CartType == 1)//(int)OrderType.Cart)
+    {
+        ViewBag.Title = "All Active User-Carts";
+    }
+    else if (ViewBag.CartType == 2)//(int)OrderType.Order)
+    {
+        ViewBag.Title = "Carts Converted to Orders";
+    }
+    else if (ViewBag.CartType == 3)
+    {
+        ViewBag.Title = "Unpaind Orders";
+    }
+    else if (ViewBag.CartType == 4)
+    {
+        ViewBag.Title = "Orders Placed";
+    }
+    else if (ViewBag.CartType == 5)
+    {
+        ViewBag.Title = "Orders in-process";
+    }
+    else if (ViewBag.CartType == 6)
+    {
+        ViewBag.Title = "Orders Dispatched or Ready for Pickup";
+    }
+    else if (ViewBag.CartType == 7)
+    {
+        //does not exists in DB
+    }
+    else if (ViewBag.CartType == 8)
+    {
+        ViewBag.Title = "Orders Delived / Picked-up";
+    }
+    else if (ViewBag.CartType == 9)
+    {
+        ViewBag.Title = "Orders with Issues raised by Buyer";
+    }
+    else if (ViewBag.CartType == 10)
+    {
+        ViewBag.Title = "Completed/Successful Orders ";
+    }
+    else if (ViewBag.CartType == 11)
+    {
+        ViewBag.Title = "Order (Delivery / Puckup) Failed";
+    }
+    else if (ViewBag.CartType == 12)
+    {
+        ViewBag.Title = "Order (Delivery / Puckup) with issues";
+    }
+    else if (ViewBag.CartType == 13)
+    {
+        ViewBag.Title = "Failed / Un-successful Orders (Closed-cases)";
+    }
+    else
+    {
+        ViewBag.Title = "All Active User-Orders";
+    }
+
+}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        @*            <a href="@Url.Action("Create")" class="btn btn-md btn-default"><i class="glyphicon glyphicon-plus"></i> @ViewBag.CreateTtitle </a>*@
+    </div>
+    <div class="panel-body">
+        @{
+            Html.RenderAction("Edit", "Location", new { OperatingCityID = ApplicationSession.CityId });
+        }
+
+        <div class="col-md-12">
+            <form class="pull-right form-inline" method="get" action="/Admin/Order/Index">
+                <div class="form-group">
+                    <input type="text" class="form-control input-sm" placeholder="Search Orders" value="@ViewBag.SearchString" name="searchString">
+                </div>
+                <button type="submit" class="btn btn-default btn-sm">Submit</button>
+            </form>
+        </div>   <br /><br />
+        <table id="orderTable" class="table table-striped table-responsive table-hover table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th class="">
+                        @Html.CheckBox("Select All", false, htmlAttributes: new { @class = "checkAll", onclick = "", onchange = "OnClickSelectAll(this)" })
+                    </th>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.OrderID)
+                    </th>
+                    <th class="">
+                        @Html.ActionLink("Order Number", "Index", new { sortOrder = ViewBag.OrderNumberSortParm, searchString = ViewBag.SearchString }, new { @style = " color: #000;" })
+                        @*@Html.DisplayNameFor(model => model.OrderNumber)*@
+                    </th>
+                    <th>
+                        @Html.ActionLink("Buyer Name", "Index", new { sortOrder = ViewBag.BuyerNameSortParm, searchString = ViewBag.SearchString }, new { @style = " color: #000;" })
+                        @*@Html.DisplayNameFor(model => model.BuyerName)*@
+                    </th>
+                    <th>
+                        @Html.ActionLink("Order Status", "Index", new { sortOrder = ViewBag.OrderStatusTitleSortParm, searchString = ViewBag.SearchString }, new { @style = " color: #000;" })
+                        @*@Html.DisplayNameFor(model => model.OrderStatusTitle)*@
+                    </th>
+                    <th class="">
+                        @Html.ActionLink("Shop", "Index", new { sortOrder = ViewBag.ShopNameSortParm, searchString = ViewBag.SearchString }, new { @style = " color: #000;" })
+                        @*@Html.DisplayNameFor(model => model.ShopName)*@
+                    </th>
+                    <th class="">
+                        @Html.ActionLink("Total Tax", "Index", new { sortOrder = ViewBag.TaxTotalSortParm, searchString = ViewBag.SearchString }, new { @style = " color: #000;" })
+                        @*@Html.DisplayNameFor(model => model.TaxTotal)*@
+                    </th>
+                    <th class="">
+                        @Html.ActionLink("Total Payment", "Index", new { sortOrder = ViewBag.PaymentTotalSortParm, searchString = ViewBag.SearchString }, new { @style = " color: #000;" })
+                        @*@Html.DisplayNameFor(model => model.PaymentTotal)*@
+                    </th>
+                    <th class="">
+                        @Html.ActionLink("Converted on", "Index", new { sortOrder = ViewBag.CreatedOn, searchString = ViewBag.SearchString }, new { @style = " color: #000;" })                        
+                        @*@Html.DisplayNameFor(model => model.CreatedOn)*@
+                    </th>
+                    <th class="">
+                        @Html.ActionLink("Modified on", "Index", new { sortOrder = ViewBag.ModifiedOn, searchString = ViewBag.SearchString }, new { @style = " color: #000;" })
+                        @*@Html.DisplayNameFor(model => model.ModifiedOn)*@
+                    </th>
+                    @*<th class="">
+            @Html.DisplayNameFor(model => model.CalculatedPayout)
+        </th>
+        <th class="">
+            @Html.DisplayNameFor(model => model.ActualPayout)
+        </th>
+        <th class="">
+            @Html.DisplayNameFor(model => model.CalculatedPayIn)
+        </th>
+        <th class="">
+            @Html.DisplayNameFor(model => model.ActualPayIn)
+        </th>*@
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                <tr>
+                    <td id="orderId_checkBox" class="">
+                        @Html.CheckBox(item.OrderID.ToString(), false, htmlAttributes: new { @id= "OrderId_CheckBox", @class = "CheckBox orderId_CheckBox_" + item.OrderID, onclick = "OnClickSelectOne(this);" })
+                    </td>
+
+                    <td class="hidden">
+                        @Html.DisplayFor(modelItem => item.OrderID)
+                    </td>
+                    <td class="">
+                        @*<a href="@Url.Action("Edit", new { id = item.OrderID })" style="color:#000" class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="top"><i class="glyphicon glyphicon-pencil"></i> @Html.DisplayFor(modelItem => item.OrderNumber)</a>*@
+
+                        <a href="@Url.Action("Index", "CartItem", new { id = item.OrderID })" class="btn btn-xs btn-success" data-toggle="tooltip" data-placement="top" title="Order Details">@Html.DisplayFor(modelItem => item.OrderNumber)</a>
+                    </td>
+                    <td class="">
+                        @Html.DisplayFor(modelItem => item.BuyerName)
+
+                    </td>
+
+                    <td>
+                        @*@if (item.OrderStatusId == (long)DBOrderStatusEnum.NewOrder)
+                        {
+                            Html.DisplayFor(modelItem => item.OrderStatusTitle);
+                        }*@
+                        @if (item.OrderStatusId == (long)DBOrderStatusEnum.NewOrder)
+                        {
+                            <span>Unpaid</span>
+                        }
+                        else if (item.OrderStatusId == (long)DBOrderStatusEnum.OrderPlaced)
+                        {
+                            <span>New</span>
+                        }
+                        else if (item.OrderStatusId == (long)DBOrderStatusEnum.OrderInProcess)
+                        {
+                            <span>In-Process</span>
+                        }
+                        else if (item.OrderStatusId == (long)DBOrderStatusEnum.OrderDispatched_ReadyforPickup)
+                        {
+                            <span>Ready to ship/pickup</span>
+                        }
+                        else if (item.OrderStatusId == (long)DBOrderStatusEnum.Order_Delivered_Pickedup)
+                        {
+                            <span>Delivered/Picked-up</span>
+                        }
+                        else if (item.OrderStatusId == (long)DBOrderStatusEnum.OrderIssueRaisedByBuyer)
+                        {
+                            <span>Issues raised by buyer</span>
+                        }
+                        else if (item.OrderStatusId == (long)DBOrderStatusEnum.OrderCompleted)
+                        {
+                            <span>Completed</span>
+                        }
+                        else if (item.OrderStatusId == (long)DBOrderStatusAdminEnum.OrderFailed)
+                        {
+                            <span>Failed & Closed</span>
+                        }
+                        else if (item.OrderStatusId == (long)DBOrderStatusAdminEnum.OrderIssues)
+                        {
+                            <span>Order with issues</span>
+                        }
+                        else if (item.OrderStatusId == (long)DBOrderStatusAdminEnum.Order_Delivery_Pickup_Failed)
+                        {
+                            <span>Delivery/Pickup Failed</span>
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ShopName)
+                    </td>
+                    <td class="">
+                        @Html.DisplayFor(modelItem => item.TaxTotal)
+                    </td>
+                    <td class="">
+                        @Html.DisplayFor(modelItem => item.PaymentTotal)
+                    </td>
+                    <td class="">
+                        @Html.DisplayFor(modelItem => item.CreatedOn)
+                    </td>
+                    <td class="">
+                        @Html.DisplayFor(modelItem => item.ModifiedOn)
+                    </td>
+                    @*<td class="">
+            @Html.DisplayFor(modelItem => item.CalculatedPayout)
+        </td>
+        <td class="">
+            @Html.DisplayFor(modelItem => item.ActualPayout)
+        </td>
+        <td class="">
+            @Html.DisplayFor(modelItem => item.CalculatedPayIn)
+        </td>
+        <td class="">
+            @Html.DisplayFor(modelItem => item.ActualPayIn)
+        </td>*@
+                    <td>
+                        @*@Html.ActionLink("Edit", "Edit", new { id = item.OrderID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.CartOrderID }) |
+            @Html.ActionLink("Items", "Index", "CartItem", new { id = item.CartOrderID }, new { @class = "" }) |
+            @Html.ActionLink("Invoice", "Index", "Invoice", new { id = item.CartOrderID }, new { @class = "" }) |
+            @Html.ActionLink("Setup Delivery", "Create", "OrderDeliveryDetail", new { id = item.CartOrderID }, new { @class = "" }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.CartOrderID })*@
+
+
+                        <a href="@Url.Action("Index", "Invoice", new { id = item.OrderID })" class="btn btn-xs btn-info" data-toggle="tooltip" data-placement="top" title="Invoice View"><i class="glyphicon glyphicon-eye-open"></i></a>
+
+                        <a href="@Url.Action("Edit", new { id = item.OrderID })" class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="top" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
+                        @*        <a href="@Url.Action("Delete", new { id = item.OrderID })" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Delete"><i class="glyphicon glyphicon-remove-sign"></i></a>*@
+                    </td>
+                </tr>
+                    }
+                }
+                else
+                {
+                    <tr><td colspan="13">There is no record to show</td></tr>
+                }
+            </tbody>
+        </table>
+        <div class="form-group hidden">
+            <div class=" col-md-6">
+                <input type="submit" value="Move to Next OrderStatus" class="btn btn-success" onclick="PostApproveSelected()" />
+            </div>
+        </div>
+
+        <ul class="pagination pull-right">
+            @if (ViewBag.CurrentPageIndex > 1)
+            {
+                <li>
+                    <a href="/Admin/Order/Index?PageNum=1&searchString=@ViewBag.SearchString&sortOrder=@ViewBag.SortOrder" class="edge">|&lt;</a>
+                </li>
+                <li>
+                    <a href="/Admin/Order/Index?PageNum=@(ViewBag.CurrentPageIndex - 1)&searchString=@ViewBag.SearchString&sortOrder=@ViewBag.SortOrder" class="edge">&lt;</a>
+                </li>
+            }
+            @{
+                var DISPLAY_PAGES = 6;
+                var startIdx = (ViewBag.CurrentPageIndex - DISPLAY_PAGES) < 0 ? 1 : (ViewBag.CurrentPageIndex < ViewBag.PageCount) ? ViewBag.CurrentPageIndex - (DISPLAY_PAGES - 2) : ViewBag.CurrentPageIndex - (DISPLAY_PAGES - 1);
+                var endIdx = (startIdx + DISPLAY_PAGES) - 1 > ViewBag.PageCount ? ViewBag.PageCount : (startIdx + DISPLAY_PAGES) - 1;
+
+                for (var i = startIdx; i <= endIdx; i++)
+                {
+                    if (i != ViewBag.CurrentPageIndex)
+                    {
+                        <li><a href="/Admin/Order/Index?PageNum=@i&searchString=@ViewBag.SearchString&sortOrder=@ViewBag.SortOrder">@i</a></li>
+                    }
+                    else
+                    {
+                        <li><span class="active">@i</span></li>
+                    }
+                }
+            }
+            @if (ViewBag.CurrentPageIndex < ViewBag.PageCount)
+            {
+                <li>
+                    <a href="/Admin/Order/Index?PageNum=@(ViewBag.CurrentPageIndex + 1)&searchString=@ViewBag.SearchString&sortOrder=@ViewBag.SortOrder" class="edge">&gt;</a>
+                </li>
+                <li>
+                    <a href="/Admin/Order/Index?PageNum=@(ViewBag.PageCount)&searchString=@ViewBag.SearchString&sortOrder=@ViewBag.SortOrder" class="edge">&gt;|</a>
+                </li>
+            }
+
+        </ul>
+    </div>
+</div>
+
+<script>
+    var OnClickSelectAll = function (sender) {
+        $('.CheckBox').toggleClass("checked");
+        $("#orderTable input#OrderId_CheckBox[type=checkbox]").each((i, ele) => { ele.value = !ele.value; ele.checked = !ele.checked })
+    }
+
+    var OnClickSelectOne = function (sender) {
+        var x = $(sender).toggleClass("checked");
+        $('.CheckBox').val('false');
+        $('.checked').val('true');
+    }
+    var PostApproveSelected = function () {
+        var values = [];
+        $('.checked').each(
+            function (obj) {
+                values.push($(this).attr('name'));
+            });
+
+        var form = $('#__AjaxAntiForgeryForm');
+        var token = $('input[name="__RequestVerificationToken"]', form).val();
+
+        var mydata = {
+            values: values,
+            "__RequestVerificationToken": token,
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "/admin/order/ApproveProductList?ProductCSV=" + values,
+            data: mydata,
+            success: function (data) {
+                location.reload();
+            },
+            error: function () {
+
+            }
+
+        });
+    }
+</script>

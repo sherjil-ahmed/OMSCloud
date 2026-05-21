@@ -1,0 +1,23 @@
+﻿@model IEnumerable<OMSCloud.Contracts.ViewModels.ScheduleDisplayModel>
+    @{
+        ViewBag.Title = "Shop's Delivery Schedule List";
+
+    }
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <p>
+            <a href="@Url.Action("Create", new { Id = ViewData["SupplierID"]})" class="btn btn-md btn-default"><i class="glyphicon glyphicon-plus"></i> Create New</a>
+        </p>
+    </div>
+    <div class="panel-body">
+        @Html.Partial("Partial/_Index", Model)
+    </div>
+</div>@*
+    @Html.ActionLink("Edit", "Edit", new { id = item.ScheduleID }) |
+    @Html.ActionLink("Details", "Details", new { id = item.ScheduleID }) |
+    @Html.ActionLink("Delete", "Delete", new { id = item.ScheduleID })
+
+
+    <a href="@Url.Action("Index", "CartItem", new { id = item.CartID })" class="btn btn-xs btn-success" data-toggle="tooltip" data-placement="top" title="Cart Items"><i class="glyphicon glyphicon-align-center"></i></a>
+    <a href="@Url.Action("Delete", new { id = item.CartID })" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Delete"><i class="glyphicon glyphicon-remove-sign"></i></a>
+    <a href="@Url.Action("Details", new { id = item.CartID })" class="btn btn-xs btn-info" data-toggle="tooltip" data-placement="top" title="Details"><i class="glyphicon glyphicon-eye-open"></i></a>*@

@@ -1,0 +1,261 @@
+﻿@model IEnumerable<OMSCloud.Contracts.ViewModels.CustomerReviewDetailModel>
+@using OMSCloud.Contracts.Common.DBEnums
+@{
+    ViewBag.Title = "All Customer Review & Feedback";
+}
+@helper Truncate(string input, int length)
+{
+    if (input.Length <= length)
+    {
+        @input
+    }
+    else
+    {
+        @input.Substring(0, length)<text>...</text>
+    }
+}
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="col-md-12">
+            <form class="pull-right form-inline" method="get" action="/Admin/Review/Index">
+                <div class="form-group">
+                    <input type="text" class="form-control input-sm" placeholder="Search Reviews" value="@ViewBag.SearchString" name="searchString">
+                </div>
+                <button type="submit" class="btn btn-default btn-sm">Submit</button>
+            </form>
+        </div>   <br /><br />
+        <table id="allReviewsTable" class="table table-striped table-hover table-responsive table-bordered">
+            <thead>
+                <tr>
+                    <th class="">
+                        @Html.CheckBox("Select All", false, htmlAttributes: new { @class = "checkAll", onclick = "", onchange = "OnClickSelectAll(this)" })
+                    </th>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.CustomerReviewID)
+                    </th>
+                    <th>
+                        @Html.ActionLink("View Reviewed Item", "Index", new { sortOrder = ViewBag.SubjectRowIDSortParm, searchString = ViewBag.SearchString }, new { @style = " color: #000;" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Reviewed On", "Index", new { sortOrder = ViewBag.SubjectIDSortParm, searchString = ViewBag.SearchString }, new { @style = " color: #000;" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Review Text", "Index", new { sortOrder = ViewBag.ReviewTextSortParm, searchString = ViewBag.SearchString }, new { @style = " color: #000;" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Rating", "Index", new { sortOrder = ViewBag.RatingSortParm, searchString = ViewBag.SearchString }, new { @style = " color: #000;" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Status", "Index", new { sortOrder = ViewBag.StatusSortParm, searchString = ViewBag.SearchString }, new { @style = " color: #000;" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Reviewer's Name", "Index", new { sortOrder = ViewBag.ReviewerNameSortParm, searchString = ViewBag.SearchString }, new { @style = " color: #000;" })
+                    </th>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.ReviewerImage)
+                    </th>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.RequestedByProfileId)
+                    </th>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.CreatedBy)
+                    </th>
+                    <th class="">
+                        @Html.ActionLink("Review Date/Time", "Index", new { sortOrder = ViewBag.CreatedOnSortParm, searchString = ViewBag.SearchString }, new { @style = " color: #000;" })                        
+                    </th>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.ModifiedBy)
+                    </th>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.ModifiedOn)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td id="reviewId_checkBox" class="">
+                                @Html.CheckBox(item.CustomerReviewID.ToString(), false, htmlAttributes: new { @id= "ReviewId_CheckBox", @class = "CheckBox reviewId_CheckBox_" + item.CustomerReviewID, onclick = "OnClickSelectOne(this);" })
+                            </td>
+
+                            <td class="hidden">
+                                @Html.DisplayFor(modelItem => item.CustomerReviewID)
+                            </td>
+                            <td>
+                                @*@Html.DisplayFor(modelItem => item.SubjectRowID)*@
+                                @if (item.SubjectID == (long)CustomerReviewSubjectEnum.Product)
+                                {
+                                    <a href='@Url.Action("Edit", "Product", new { Id = item.SubjectRowID })' class='btn btn-md btn-success'>
+                                        <i class='glyphicon glyphicon-arrow-right'> View Product: Id = @item.SubjectRowID</i>
+                                    </a>
+                                }
+                                @if (item.SubjectID == (long)CustomerReviewSubjectEnum.Shop)
+                                {
+                                    <a href="@Url.Action("Edit", "Supplier",new { Id=item.SubjectRowID})" class="btn btn-md btn-success">
+                                        <i class='glyphicon glyphicon-arrow-right'> View Shop: Id = @item.SubjectRowID</i>
+                                    </a>
+                                }
+                                @if (item.SubjectID == (long)CustomerReviewSubjectEnum.Order)
+                                {
+                                    <a href="@Url.Action("Edit", "Order",new { Id=item.SubjectRowID} )" class="btn btn-md btn-success">
+                                        <i class='glyphicon glyphicon-arrow-right'> View Order: Id = @item.SubjectRowID</i>
+                                    </a>
+                                }
+
+                            </td>
+                            <td>
+                                @if (item.SubjectID == (long)CustomerReviewSubjectEnum.Product)
+                                {
+                                    <span>Product</span>
+                                }
+                                else if (item.SubjectID == (long)CustomerReviewSubjectEnum.Shop)
+                                {
+                                    <span>Shop</span>
+                                }
+                                else if (item.SubjectID == (long)CustomerReviewSubjectEnum.Order)
+                                {
+                                    <span>Order</span>
+                                }
+                                else
+                                {
+                                    <span>Unknown</span>
+                                }
+                            </td>
+                            <td>
+                                <span data-toggle="tooltip" data-placement="top" title="@Html.DisplayFor(modelItem => item.ReviewText)">@Truncate(item.ReviewText, 300)</span>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Rating)
+                            </td>
+                            <td>
+                                @if (item.StatusID == (long)DBStatusEnum.New)
+                                {
+                                    <span>New</span>
+                                }
+                                else if (item.StatusID == (long)DBStatusEnum.Active)
+                                {
+                                    <span>Active</span>
+                                }
+                                else if (item.StatusID == (long)DBStatusEnum.InActive)
+                                {
+                                    <span>In-Active</span>
+                                }
+                                else if (item.StatusID == (long)DBStatusEnum.Deleted)
+                                {
+                                    <span>Deleted</span>
+                                }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ReviewerName)
+                            </td>
+                            <td class="hidden">
+                                @Html.DisplayFor(modelItem => item.ReviewerImage)
+                            </td>
+                            <td class="hidden">
+                                @Html.DisplayFor(modelItem => item.RequestedByProfileId)
+                            </td>
+                            <td class="hidden">
+                                @Html.DisplayFor(modelItem => item.CreatedBy)
+                            </td>
+                            <td class="">
+                                @Html.DisplayFor(modelItem => item.CreatedOn)
+                            </td>
+                            <td class="hidden">
+                                @Html.DisplayFor(modelItem => item.ModifiedBy)
+                            </td>
+                            <td class="hidden">
+                                @Html.DisplayFor(modelItem => item.ModifiedOn)
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        <div class="form-group">
+            <div class=" col-md-6">
+                <input type="submit" value="Approve Selected" class="btn btn-success" onclick="PostApproveSelected()" />
+            </div>
+        </div>
+
+        <ul class="pagination pull-right">
+            @if (ViewBag.CurrentPageIndex > 1)
+            {
+                <li>
+                    <a href="/Admin/Review/Index?PageNum=1&searchString=@ViewBag.SearchString&sortOrder=@ViewBag.SortOrder" class="edge">|&lt;</a>
+                </li>
+                <li>
+                    <a href="/Admin/Review/Index?PageNum=@(ViewBag.CurrentPageIndex - 1)&searchString=@ViewBag.SearchString&sortOrder=@ViewBag.SortOrder" class="edge">&lt;</a>
+                </li>
+            }
+            @{
+                var DISPLAY_PAGES = 6;
+                var startIdx = (ViewBag.CurrentPageIndex - DISPLAY_PAGES) < 0 ? 1 : (ViewBag.CurrentPageIndex < ViewBag.PageCount) ? ViewBag.CurrentPageIndex - (DISPLAY_PAGES - 2) : ViewBag.CurrentPageIndex - (DISPLAY_PAGES - 1);
+                var endIdx = (startIdx + DISPLAY_PAGES) - 1 > ViewBag.PageCount ? ViewBag.PageCount : (startIdx + DISPLAY_PAGES) - 1;
+
+                for (var i = startIdx; i <= endIdx; i++)
+                {
+                    if (i != ViewBag.CurrentPageIndex)
+                    {
+                        <li><a href="/Admin/Review/Index?PageNum=@i&searchString=@ViewBag.SearchString&sortOrder=@ViewBag.SortOrder">@i</a></li>
+                    }
+                    else
+                    {
+                        <li><span class="active">@i</span></li>
+                    }
+                }
+            }
+            @if (ViewBag.CurrentPageIndex < ViewBag.PageCount)
+            {
+                <li>
+                    <a href="/Admin/Review/Index?PageNum=@(ViewBag.CurrentPageIndex + 1)&searchString=@ViewBag.SearchString&sortOrder=@ViewBag.SortOrder" class="edge">&gt;</a>
+                </li>
+                <li>
+                    <a href="/Admin/Review/Index?PageNum=@(ViewBag.PageCount)&searchString=@ViewBag.SearchString&sortOrder=@ViewBag.SortOrder" class="edge">&gt;|</a>
+                </li>
+            }
+
+        </ul>
+
+    </div>
+</div>
+<script>
+    var OnClickSelectAll = function (sender) {
+        $('.CheckBox').toggleClass("checked");
+        $("#allReviewsTable input#ReviewId_CheckBox[type=checkbox]").each((i, ele) => { ele.value = !ele.value; ele.checked = !ele.checked })
+    }
+
+    var OnClickSelectOne = function (sender) {
+        var x = $(sender).toggleClass("checked");
+        $('.CheckBox').val('false');
+        $('.checked').val('true');
+    }
+    var PostApproveSelected = function () {
+        var values = [];
+        $('.checked').each(
+            function (obj) {
+                values.push($(this).attr('name'));
+            });
+            var form = $('#__AjaxAntiForgeryForm');
+            var token = $('input[name="__RequestVerificationToken"]', form).val();
+
+            var mydata = {
+                values: values,
+                "__RequestVerificationToken": token,
+                };
+
+        $.ajax({
+            type: "POST",
+            //url: '@Url.Action("ApproveReviewList", "Review")',
+            url: "/admin/Review/ApproveReviewList?ReviewCSV=" + values,
+            data: mydata,
+            success: function (data) {
+                location.reload();
+            },
+            error: function () {
+            }
+        });
+    }
+</script>

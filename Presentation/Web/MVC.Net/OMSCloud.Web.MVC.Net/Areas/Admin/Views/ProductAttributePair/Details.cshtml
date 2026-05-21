@@ -1,0 +1,73 @@
+﻿@model OMSCloud.Contracts.ViewModels.ProductAttributePairModel
+@{
+    ViewBag.Title = "Product-Attribute Detail";
+}
+
+<h2>@ViewBag.Title </h2>
+<hr />
+
+<div>
+
+    <dl class="dl-horizontal">
+        <dt class="hidden">
+            @Html.DisplayNameFor(model => model.ProductAttributePairID)
+        </dt>
+
+        <dd class="hidden">
+            @Html.DisplayFor(model => model.ProductAttributePairID)
+        </dd>
+
+        <dt class="hidden">
+            @Html.DisplayNameFor(model => model.ProductID)
+        </dt>
+
+        <dd class="hidden">
+            @Html.DisplayFor(model => model.ProductID)
+        </dd>
+
+        <dt class="hidden">
+            @Html.DisplayNameFor(model => model.AttributeID)
+        </dt>
+
+        <dd class="hidden">
+            @Html.DisplayFor(model => model.AttributeID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AttributeName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AttributeName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AttributeValue)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AttributeValue)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DisplayOrder)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DisplayOrder)
+        </dd>
+
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

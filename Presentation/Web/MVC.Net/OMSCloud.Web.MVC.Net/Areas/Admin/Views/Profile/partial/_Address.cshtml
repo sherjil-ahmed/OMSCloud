@@ -1,0 +1,119 @@
+﻿@model OMSCloud.Contracts.ViewModels.AddressModel
+
+<div class="form-horizontal">
+    <h4>AddressModel</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group hidden">
+        @Html.LabelFor(model => model.AddressID, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.EditorFor(model => model.AddressID, new { htmlAttributes = new { @class = "form-control", id = "addressID" } })
+            @Html.ValidationMessageFor(model => model.AddressID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.AddressTypeID, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.DropDownListFor(model => model.AddressTypeID, ViewBag.AddressType as SelectList, "--please select--", new { @class = "form-control" , id = "addressTypeID" })
+            @Html.ValidationMessageFor(model => model.AddressTypeID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.PlotNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.EditorFor(model => model.PlotNumber, new { htmlAttributes = new { @class = "form-control" , id = "plotNumber" } })
+            @Html.ValidationMessageFor(model => model.PlotNumber, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.StreetNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.EditorFor(model => model.StreetNumber, new { htmlAttributes = new { @class = "form-control" ,id= "streetNumber" } })
+            @Html.ValidationMessageFor(model => model.StreetNumber, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.LocationID, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.DropDownListFor(model => model.LocationID, ViewBag.Location as SelectList, "--please select--", new { @class = "form-control" , id = "locationID" })
+            @Html.ValidationMessageFor(model => model.LocationID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.NearestLandmark, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.EditorFor(model => model.NearestLandmark, new { htmlAttributes = new { @class = "form-control" , id= "nearestLandmark" } })
+            @Html.ValidationMessageFor(model => model.NearestLandmark, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.PostalCode, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.EditorFor(model => model.PostalCode, new { htmlAttributes = new { @class = "form-control", id= "postalCode" } })
+            @Html.ValidationMessageFor(model => model.PostalCode, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-md-3">
+            <a href="#" class="btn btn-success" onclick="AddNewRecord()">Create</a>
+        </div>
+    </div>
+</div>
+<script>
+    var AddNewRecord = function () {
+
+        var AddressTypeIDText = $("#addressTypeID option:selected").text();
+        var LocationIDText = $("#LocationID option:selected").text();
+
+        var form = $('#__AjaxAntiForgeryForm');
+        var token = $('input[name="__RequestVerificationToken"]', form).val();
+
+        var myData = {
+            AddressTypeID: $("#addressTypeID option:selected").val(),
+            PlotNumber: $('#plotNumber').val(),
+            LocationID: $("#LocationID option:selected").val(),
+            StreetNumber: $('#streetNumber').val(),
+            NearestLandmark: $('#nearestLandmark').val(),
+            PostalCode: $('#postalCode').val(),
+            ProfileID: @ViewContext.RouteData.Values["id"].ToString(),
+            "__RequestVerificationToken": token
+        };
+        
+        
+        $.ajax({
+            type: "POST",
+            url: "/Admin/Profile/insertNewRecord/",
+            data: myData ,
+            success: function (result) {
+                if(result == undefined || result == "")
+                {
+                    alert('unable to associate address. Please retry.');
+                    return;
+                }
+                else
+                {
+                    //alert(result);
+                    var row = "<tr><td>"+
+                                            AddressTypeIDText
+                        +"</td><td>"+
+                                            myData.PlotNumber
+                        +"</td><td>"+
+                                            myData.StreetNumber
+                        +"</td><td>"+
+                                            LocationIDText
+                        +"</td><td>"+
+                                            myData.NearestLandmark
+                        +"</td><td>"+
+                                            myData.PostalCode
+                        +"</td></tr>"
+
+                    $("#addressGrid").append(row);
+                }
+            }
+        });
+    }
+</script>

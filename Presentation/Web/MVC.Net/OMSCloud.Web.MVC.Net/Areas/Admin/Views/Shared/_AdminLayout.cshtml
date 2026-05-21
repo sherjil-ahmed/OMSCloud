@@ -1,0 +1,38 @@
+﻿@using OMSCloud.Contracts.ViewModels
+@using OMSCloud.Contracts.Common.DBEnums
+
+<!DOCTYPE html>
+<html class="sidebar-left-collapsed">
+<head>
+    @Html.Partial("~/Areas/Admin/Views/Partial/_AdminHeader.cshtml")    
+</head>
+<body>
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+    {
+        @Html.AntiForgeryToken()
+    }
+    @{
+        try
+        {
+            Html.RenderAction("GetBodyHeader", "Home", new { area = "Admin" });
+        }
+        catch (Exception ex)
+        {
+            var str = ex.Message;
+        }
+    }
+    <div class="inner-wrapper">
+        @Html.Partial("~/Areas/Admin/Views/Partial/_LeftSlidebar.cshtml")
+        <section role="main" class="content-body">
+            @Html.Partial("~/Areas/Admin/Views/Partial/_PageHeader.cshtml")
+            <div id="adminLayout_RenderBodySection">
+                @RenderBody()
+            </div>
+        </section>
+    </div>
+    @*@Html.Partial("~/Areas/Admin/Views/Partial/_RightSliderbar.cshtml")*@
+    @Html.Partial("~/Areas/Admin/Views/Partial/_Script.cshtml")
+    @Html.Partial("~/Areas/Admin/Views/Partial/_SignalRScript.cshtml")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

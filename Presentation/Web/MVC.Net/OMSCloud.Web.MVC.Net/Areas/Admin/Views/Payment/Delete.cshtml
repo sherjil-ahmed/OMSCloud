@@ -1,0 +1,112 @@
+﻿@model OMSCloud.Contracts.ViewModels.PaymentModel
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>PaymentModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RequestedByProfileId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RequestedByProfileId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModifiedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModifiedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModifiedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModifiedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PaymentID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaymentID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PayTypeID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PayTypeID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Amount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Amount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PaymentGatewayTransactionID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaymentGatewayTransactionID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PaymentToken)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaymentToken)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsAmountVerified)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsAmountVerified)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

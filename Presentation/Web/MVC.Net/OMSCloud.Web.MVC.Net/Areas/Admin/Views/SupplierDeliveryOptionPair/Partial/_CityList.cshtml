@@ -1,0 +1,75 @@
+﻿@model IEnumerable<OMSCloud.Contracts.ViewModels.LocationLookup>
+
+<div class="table-responsive">
+
+</div>
+<table class="table table-striped table-hover table-bordered dataTable" style="width:100%" id="CityListTable">
+    <tr>
+        <th class="hidden">
+            @Html.DisplayNameFor(model => model.RequestedByProfileId)
+        </th>
+        <th class="hidden">
+            @Html.DisplayNameFor(model => model.LocationID)
+        </th>
+        <th>
+            @*@Html.DisplayNameFor(model => model.LocationName)*@
+            Cities
+        </th>
+        @*<th></th>*@
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td class="hidden">
+            @Html.DisplayFor(modelItem => item.RequestedByProfileId)
+        </td>
+        <td class="hidden">
+            @Html.DisplayFor(modelItem => item.LocationID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LocationName)
+        </td>
+        @*<td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>*@
+    </tr>
+}
+
+</table>
+
+<script>
+    const AddSurroundingCity = function ()
+    {
+        var cityIDs = $("#cityIDs").val();
+        var selectedOption = $("#SurroundingCitiesDropDown").find('option:selected').text();
+        var selectedOptionID = $("#SurroundingCitiesDropDown").find('option:selected').val();
+        if (selectedOption.toString().search("---") >= 0) {
+            return;
+        }
+        console.log('selected city=> ', selectedOption)
+        console.log('selected city id=> ', selectedOptionID)
+        var row = `<tr id='${selectedOptionID}'>
+                                                    <td class='hidden'>${selectedOptionID}</td>
+                                                    <td>${selectedOption}</td>
+                                                </tr>`
+        $('#CityListTable').append(row);
+        $(`#SurroundingCitiesDropDown option[value='${selectedOptionID}']`).remove()
+
+        if (cityIDs == "")
+        {
+            console.log('yes')
+            cityIDs = selectedOptionID;
+        }
+        else
+        {
+            console.log('no')
+            cityIDs = cityIDs.concat(`,${selectedOptionID}`)
+        }
+        $("#cityIDs").val(cityIDs)
+        console.log('cityIDs=> ', cityIDs)
+
+
+    }
+</script>

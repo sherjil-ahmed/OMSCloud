@@ -1,0 +1,108 @@
+﻿@model OMSCloud.Contracts.ViewModels.ProfileVerificationModelForUser
+@using OMSCloud.Contracts.Common.ConfigMgmt
+@using OMSCloud.Contracts.Common
+@{
+    ViewBag.Title = "Modify Verification Document by LoggedIn-User";
+    Layout = "~/Areas/Admin/Views/Shared/" + ViewBag.Layout + ".cshtml";
+}
+@{
+    string Imageurl = "";
+    if ( ! string.IsNullOrEmpty(ApplicationSession.Country))
+    {
+        if (!String.IsNullOrEmpty(Model.DocumentImagePath))
+        {
+            Imageurl = Config.GetWebAPIHost(ApplicationSession.Country) + Config.DynamicContent + ImageRoute.ProfileVerification.ToString() + "/" + Model.VerificationID.ToString() + "/" + Model.DocumentImagePath;
+        }
+    }
+}
+<div class="panel panel-default">
+    <div class="panel-body">
+        @using (Html.BeginForm("EditPublic", "ProfileVerification", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group hidden">
+                    @Html.LabelFor(model => model.VerificationID, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.ProfileID, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.VerificationID, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.VerificationID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FullName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control", @disabled = "true" } })
+                        @*<span>@ViewBag.FullName</span>*@
+                        @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DocumentTypeTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        @Html.DropDownListFor(model => model.DocumentTypeID, ViewBag.DocumentType as SelectList, "--please select--", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.DocumentTypeID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DocumentNumberByUser, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.DocumentNumberByUser, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.DocumentNumberByUser, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                @*<div class="form-group">
+                        @Html.LabelFor(model => model.DocumentImagePath, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.DocumentImagePath, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.DocumentImagePath, "", new { @class = "text-danger" })
+                        </div>
+                    </div>*@
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DocumentImagePath, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        <div style="padding:13px">
+                            @Html.EditorFor(model => model.DocumentImagePath, new { htmlAttributes = new { @class = "form-control hidden" } })
+                            @if (!string.IsNullOrEmpty(ViewBag.DocumentImagePath))
+                            {
+                                <img src="@Imageurl" alt="IMAGES" style="height:450px ; width:450px" />
+                            }
+                        </div>
+                        <div class="col-md-6">
+                            <div class="btn btn-facebook" style="width:450px">
+                                <input type="file" id="file" name="file" multiple="multiple" class="input-files" />
+                            </div>
+                            <div id="imgPreview" class="thumbnail" style="display:none">
+                                <img class="img-responsive" id="targetImg" />
+                                <div class="caption">
+                                    <a href="#" onclick="ClearPreview()"><i class="glyphicon glyphicon-trash"></i></a>
+                                    <span id="description"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-6">
+                        <input type="submit" value="Update" class="btn btn-success" />
+                    </div>
+                </div>
+
+            </div>
+        }
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Back to List", "IndexPublic", new { id = Model.ProfileID }, new { @class = "btn btn-success" })
+</div>

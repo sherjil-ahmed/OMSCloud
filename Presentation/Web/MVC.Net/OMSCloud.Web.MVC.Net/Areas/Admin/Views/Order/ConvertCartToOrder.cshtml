@@ -1,0 +1,101 @@
+﻿@model OMSCloud.Contracts.ViewModels.ConvertCartToOrders_SpParams
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <p>
+            <a href="@Url.Action("Create", "Address")" class="btn btn-md btn-default"><i class="glyphicon glyphicon-plus"></i> Create New Order</a>
+        </p>
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group hidden">
+                    @Html.HiddenFor(model => model.existing_CartId, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group hidden">
+                    
+                    @Html.EditorFor(model => model.new_DeliveryAddressID, new { htmlAttributes = new { @class = "form-control", id = "new_DeliveryAddressId" } })
+                </div>
+                <table class="table table-striped table-bordered dataTable" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th class="">
+                                Select Delivery Address
+                            </th>
+                            <th class="">
+                                @Html.DisplayNameFor(model => model.AddressList.FirstOrDefault().PlotNumber)
+                            </th>
+                            <th class="">
+                                @Html.DisplayNameFor(model => model.AddressList.FirstOrDefault().StreetNumber)
+                            </th>
+                            <th class="">
+                                @Html.DisplayNameFor(model => model.AddressList.FirstOrDefault().PostalCode)
+                            </th>
+                            <th class="">
+                                @Html.DisplayNameFor(model => model.AddressList.FirstOrDefault().NearestLandmark)
+                            </th>
+                            <th class="">
+                                @Html.DisplayNameFor(model => model.AddressList.FirstOrDefault().LocationID)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model.AddressList)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.RadioButtonFor(modelItem => modelItem.new_DeliveryAddressID, 
+                                       item.AddressID, 
+                                       new { onchange = "OnDeliveryAddressSelection(" + item.AddressID + ")" })
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PlotNumber)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.StreetNumber)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PostalCode)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NearestLandmark)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.LocationID)
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <input type="submit" value="Place Order" class="btn btn-success" />
+                    </div>
+                </div>
+
+            </div>
+        }
+    </div>
+</div>
+
+
+
+<script>
+    function OnDeliveryAddressSelection(addressId) {
+        //alert(addressId);
+        //if ($("#provinceTaxRadioButton").is(":checked")) {
+        //    $("#provinceDropDownTax").prop("disabled", false);
+        //} else {
+        //    $("#provinceDropDownTax").prop("disabled", true);
+        //}
+        $("#new_DeliveryAddressId").val(addressId);
+    }
+
+</script>

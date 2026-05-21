@@ -1,0 +1,80 @@
+﻿@model OMSCloud.Contracts.ViewModels.CartModel
+
+@{
+    ViewBag.Title = "Modify Cart";
+}
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <div class="form-group hidden">
+                    @Html.EditorFor(model => model.CartID, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.BuyerProfileID, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        @Html.DropDownListFor(model => model.BuyerProfileID, ViewBag.ProfileList as SelectList, "--Please Select Profile--", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.BuyerProfileID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CartStatusID, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        @Html.DropDownListFor(model => model.CartStatusID, ViewBag.OrderStatusList as SelectList, "--Please Select Order Status--", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.CartStatusID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.StatusID, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        @Html.DropDownListFor(model => model.StatusID, ViewBag.StatusList as SelectList, "--Please Select Status--", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.StatusID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CartTotal, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.CartTotal, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                        @Html.ValidationMessageFor(model => model.CartTotal, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TaxTotal, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.TaxTotal, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                        @Html.ValidationMessageFor(model => model.TaxTotal, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DiscountTotal, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.DiscountTotal, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                        @Html.ValidationMessageFor(model => model.DiscountTotal, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group hidden">
+                    <div class="col-md-4">
+                        @Html.EditorFor(model => model.ModifiedOn.Ticks, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-6">
+                        <input type="submit" value="Save" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-success" })
+</div>

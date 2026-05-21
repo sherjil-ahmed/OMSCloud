@@ -1,0 +1,65 @@
+﻿@model OMSCloud.Contracts.ViewModels.ProductViewModel
+@{
+    ViewBag.Title = "ProductView Edit";
+
+}
+<div class="panel panel-default">
+    <div class="panel-body">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="col-md-12">
+                    <div class="tabs">
+                        <ul class="nav nav-tabs">
+                            <li class="active">
+                                <a href="#ProductView" data-toggle="tab"><i class="fa fa-star"></i>Product View</a>
+                            </li>
+                            <li class="">
+                                <a href="#ProductViewItem" data-toggle="tab">Product View Item</a>
+                            </li>
+                        </ul>
+                        <div id="productTabContents" class="tab-content">
+                            <div id="ProductView" class="tab-pane active">
+                                @Html.Partial("Partial/_ProductView")
+
+                            </div>
+                            <div id="ProductViewItem" class="tab-pane ">
+                                @{Html.RenderAction("CreateProductViewItem", "ProductView");}
+                                @{ Html.RenderAction("ProductViewItems", "ProductView");}
+                                @*@{ Html.RenderAction("AssocistedProductViewItems", "ProductView");}*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                                    }
+    </div>
+</div>
+
+        <div>
+            @Html.ActionLink("Back to List", "Index",null,new { @class="btn btn-success"})
+        </div>
+        <script>
+            var ShowTabJson = function (Action, divId) {
+                var Form = divId.substr(0, divId.indexOf("_")) + "Form"
+                var form = $("#"+Form+"");
+                if(form.length > 0)// == null || form == undefined)
+                {
+                    return;
+                }
+                $.ajax({
+                    type: "GET",
+                    url: "/Admin/ProductView/" + Action + "/" + @ViewContext.RouteData.Values["id"].ToString(),
+                    success: function (result) {
+                        var o = $("#" + divId + "");
+                        if (o != null || o != undefined) {
+                            o.append(result);
+                        }
+                    }
+                });
+            }
+
+        </script>

@@ -1,0 +1,72 @@
+﻿@model OMSCloud.Contracts.ViewModels.SupplierViewModel
+
+@{
+    ViewBag.Title = "Shop Delete";
+}
+<script>
+    function onDelete(Id, IsSystem) {
+        event.preventDefault();
+        ShowModal();
+    }
+</script>
+<div class="panel panel-default">
+    <div class="panel-body">
+
+
+        <h3>Are you sure you want to delete this?</h3>
+        <div>
+            <dl class="dl-horizontal">
+                <dt class="hidden">
+                    @Html.DisplayNameFor(model => model.SupplierID)
+                </dt>
+
+                <dd class="hidden">
+                    @Html.DisplayFor(model => model.SupplierID)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.SupplierName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.SupplierName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.StatusTitle)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.StatusTitle)
+                </dd>
+
+            </dl>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="Delete" class="btn btn-danger" onclick="onDelete(@Model.SupplierID)" />
+                </div>
+            }
+        </div>
+    </div>
+    @Html.Partial("../partial/DeleteModal", new ViewDataDictionary() {
+                { "Title", "Delete"},
+                { "modalDivId", "DeleteModal"},
+                { "modalBodyId", "DeleteModalBody"},
+                { "URL", "/Admin/Supplier/Delete/" + Model.SupplierID.ToString()}
+            })
+</div>
+<div class="form-actions no-color">
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-success" })
+</div>

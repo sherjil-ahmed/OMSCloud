@@ -1,0 +1,230 @@
+﻿@model IEnumerable<OMSCloud.Contracts.ViewModels.SupplierViewModel>
+@using OMSCloud.Contracts.Common.DBEnums
+
+@{
+    ViewBag.Title = "Shop List";
+}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div>
+            <a href="@Url.Action("Create")" class="btn btn-md btn-default"><i class="glyphicon glyphicon-plus"></i> Create New</a>
+        </div>
+    </div>
+    <div class="panel-body">
+        @{
+            Html.RenderAction("Edit", "Location", new { OperatingCityID = ApplicationSession.CityId });
+        }
+        <div class="col-md-12">
+            <form class="pull-right form-inline" method="get" action="/Admin/Supplier/Index">
+                <div class="form-group">
+                    <input type="text" class="form-control input-sm" placeholder="Search Shops" value="@ViewBag.SearchString" name="searchString">
+                </div>
+                <button type="submit" class="btn btn-default btn-sm">Search</button>
+            </form>
+        </div><br /><br />
+
+        <table id="supplierTable" class="table table-striped table-hover table-responsive table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th class="">
+                        @Html.CheckBox("Select All", false, htmlAttributes: new { @class = "checkAll", onclick = "", onchange = "OnClickSelectAll(this)" })
+                    </th>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.SupplierID)
+                    </th>
+                    <th>
+                        @Html.ActionLink("Shop Name", "Index", new { sortOrder = ViewBag.ShopNameSortParm, searchString = ViewBag.SearchString }, new { @style = " color: #000;" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Description", "Index", new { sortOrder = ViewBag.DescriptionSortParm, searchString = ViewBag.SearchString }, new { @style = " color: #000;" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Shop Requested either Category, Attribute or both", "Index", new { sortOrder = ViewBag.IsRequestedCategoryOrAttributeSortParm, searchString = ViewBag.SearchString }, new { @style = " color: #000;" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Status", "Index", new { sortOrder = ViewBag.StatusSortParm, searchString = ViewBag.SearchString }, new { @style = " color: #000;" })
+                    </th>
+
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                <tr>
+                    <td id="supplierId_checkBox" class="">
+                        @Html.CheckBox(item.SupplierID.ToString(), false, htmlAttributes: new { @id= "SupplierId_CheckBox", @class = "CheckBox supplierId_CheckBox_" + item.SupplierID, onclick = "OnClickSelectOne(this);" })
+                    </td>
+                    <td class="hidden">
+                        @Html.DisplayFor(modelItem => item.SupplierID)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Edit", new { id = item.SupplierID })" class="btn btn-md btn-default" data-toggle="tooltip" data-placement="top" title="Edit"><i class="glyphicon glyphicon-pencil"></i> @Html.DisplayFor(modelItem => item.SupplierName)</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsRequestedCategoryOrAttribute)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StatusTitle)
+                    </td>
+                    <td class="menu_td">
+                        <div class="menu-opener"><i class="fa fa-bars" aria-label="Toggle sidebar"></i></div>
+                        <div class="menu-closer" style="display: none;"><i class="fa fa-close" aria-label="Toggle sidebar"></i></div>
+                        <div class="menu_div">
+                            @*<a href="@Url.Action("Edit", new { id = item.SupplierID })" class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="top" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>*@
+                            <div>
+                                <a href="@Url.Action("Index", "ShopDeliverySchedule", new { id = item.SupplierID })" class="" data-toggle="tooltip" data-placement="top" title=""><i class="btn btn-xs btn-dark glyphicon glyphicon-align-justify"></i> Shop Schedule</a>
+                            </div>
+                            <div>
+                                <a href="/Admin/Product/Index?shopId=@item.SupplierID" class="edge"><i class="btn btn-xs btn-dark glyphicon glyphicon-align-justify"></i>Shop's Products</a>
+                                @*<a href="@Url.Action("Index", "Order", new { shopId = item.SupplierID })" class="" data-toggle="tooltip" data-placement="top" title=""><i class="btn btn-xs btn-info glyphicon glyphicon-align-justify"></i>Shop Orders</a>*@
+                                @*<a href="@Url.Action("Details", new { id = item.SupplierID })" class="btn btn-xs btn-info" data-toggle="tooltip" data-placement="top" title="Details"><i class="glyphicon glyphicon-eye-open"></i></a>
+        <a href="@Url.Action("Delete", new { id = item.SupplierID })" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Delete"><i class="glyphicon glyphicon-remove-sign"></i></a>*@
+                            </div>
+                            @*<div>
+                <a href="@Url.Action("Index", "Order", new { shopId = item.SupplierID})" class="" data-toggle="tooltip" data-placement="top" title=""> <i class="btn btn-xs btn-success glyphicon glyphicon-check"></i>All Orders</a>
+            </div>
+            <div>
+                <a href="@Url.Action("Index", "Order", new { shopId = item.SupplierID, orderStatusId = (int)DBOrderStatusEnum.NewOrder })" data-toggle="tooltip" data-placement="top" title=""><i class="btn btn-xs btn-success glyphicon glyphicon-check"></i>New (Un-piad) Orders</a>
+            </div>*@
+                            <div>
+                                <a href="@Url.Action("Index", "Order", new { shopId = item.SupplierID, orderStatusId = (int)DBOrderStatusEnum.OrderPlaced })" data-toggle="tooltip" data-placement="top" title=""><i class="btn btn-xs btn-success glyphicon glyphicon-check"></i> New Paid</a>
+                            </div>
+                            <div>
+                                <a href="@Url.Action("Index", "Order", new { shopId = item.SupplierID, orderStatusId = (int)DBOrderStatusEnum.OrderInProcess })" data-toggle="tooltip" data-placement="top" title=""><i class="btn btn-xs btn-success glyphicon glyphicon-check"></i> In Process Orders</a>
+                            </div>
+                            <div>
+                                <a href="@Url.Action("Index", "Order", new { shopId = item.SupplierID, orderStatusId = (int)DBOrderStatusEnum.OrderDispatched_ReadyforPickup })" data-toggle="tooltip" data-placement="top" title=""><i class="btn btn-xs btn-success glyphicon glyphicon-check"></i> Order dispatched</a>
+                            </div>
+                            <div>
+                                <a href="@Url.Action("Index", "Order", new { shopId = item.SupplierID, orderStatusId = (int)DBOrderStatusEnum.Order_Delivered_Pickedup })" data-toggle="tooltip" data-placement="top" title=""><i class="btn btn-xs btn-success glyphicon glyphicon-check"></i> Order Delivered</a>
+                            </div>
+                            <div>
+                                <a href="@Url.Action("Index", "Order", new { shopId = item.SupplierID, orderStatusId = (int)DBOrderStatusEnum.OrderCompleted })" data-toggle="tooltip" data-placement="top" title=""><i class="btn btn-xs btn-success glyphicon glyphicon-check"></i> Completed Orders</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                    }
+                }
+                else
+                {
+                    <tr><td colspan="6">There is no record to show</td></tr>
+                }
+
+            </tbody>
+        </table>
+        <div class="form-group">
+            <div class=" col-md-6">
+                <input type="submit" value="Approve Selected" class="btn btn-success" onclick="PostApproveSelected()" />
+            </div>
+        </div>
+        <ul class="pagination pull-right">
+            @if (ViewBag.CurrentPageIndex > 1)
+            {
+                <li>
+                    <a href="/Admin/Supplier/Index?PageNum=1&searchString=@ViewBag.SearchString&sortOrder=@ViewBag.SortOrder" class="edge">|&lt;</a>
+                </li>
+                <li>
+                    <a href="/Admin/Supplier/Index?PageNum=@(ViewBag.CurrentPageIndex - 1)&searchString=@ViewBag.SearchString&sortOrder=@ViewBag.SortOrder" class="edge">&lt;</a>
+                </li>
+            }
+            @{
+                var DISPLAY_PAGES = 6;
+                var startIdx = (ViewBag.CurrentPageIndex - DISPLAY_PAGES) < 0 ? 1 : (ViewBag.CurrentPageIndex < ViewBag.PageCount) ? ViewBag.CurrentPageIndex - (DISPLAY_PAGES - 2) : ViewBag.CurrentPageIndex - (DISPLAY_PAGES - 1);
+                var endIdx = (startIdx + DISPLAY_PAGES) - 1 > ViewBag.PageCount ? ViewBag.PageCount : (startIdx + DISPLAY_PAGES) - 1;
+
+                for (var i = startIdx; i <= endIdx; i++)
+                {
+                    if (i != ViewBag.CurrentPageIndex)
+                    {
+                        <li><a href="/Admin/Supplier/Index?PageNum=@i&searchString=@ViewBag.SearchString&sortOrder=@ViewBag.SortOrder">@i</a></li>
+                    }
+                    else
+                    {
+                        <li><span class="active">@i</span></li>
+                    }
+                }
+            }
+            @if (ViewBag.CurrentPageIndex < ViewBag.PageCount)
+            {
+                <li>
+                    <a href="/Admin/Supplier/Index?PageNum=@(ViewBag.CurrentPageIndex + 1)&searchString=@ViewBag.SearchString&sortOrder=@ViewBag.SortOrder" class="edge">&gt;</a>
+                </li>
+                <li>
+                    <a href="/Admin/Supplier/Index?PageNum=@(ViewBag.PageCount)&searchString=@ViewBag.SearchString&sortOrder=@ViewBag.SortOrder" class="edge">&gt;|</a>
+                </li>
+            }
+
+        </ul>
+    </div>
+    </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script>
+    $(document).ready(function () {
+        //alert('hello');
+        $(".menu-opener").click(function () {
+            //  alert('hello');
+            $(".menu_div").css("display", "none");
+            $(".menu-opener").css("display", "none");
+            $(".menu-closer").css("display", "");
+            $(this).parents(".menu_td").find(".menu_div").toggle();
+
+        });
+        $(".menu-closer").click(function () {
+            //  alert('hello');
+            $(".menu_div").css("display", "none");
+            $(".menu-opener").css("display", "");
+            $(".menu-closer").css("display", "none");
+        });
+    });
+</script>
+
+<script>
+    var OnClickSelectAll = function (sender) {
+
+        $('.CheckBox').toggleClass("checked");
+
+        $("#supplierTable input#SupplierId_CheckBox[type=checkbox]").each((i, ele) => { ele.value = !ele.value; ele.checked = !ele.checked })
+    }
+
+    var OnClickSelectOne = function (sender) {
+        var x = $(sender).toggleClass("checked");
+        $('.CheckBox').val('false');
+        $('.checked').val('true');
+    }
+    var PostApproveSelected = function () {
+        var values = [];
+        $('.checked').each(
+            function (obj) {
+                values.push($(this).attr('name'));
+            });
+        var form = $('#__AjaxAntiForgeryForm');
+        var token = $('input[name="__RequestVerificationToken"]', form).val();
+
+        var mydata = {
+            values: values,
+            "__RequestVerificationToken": token,
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "/admin/Supplier/ApproveSupplierList?SupplierCSV=" + values,
+            data: mydata,
+            success: function (data) {
+                location.reload();
+            },
+            error: function () {
+
+            }
+
+        });
+    }
+</script>

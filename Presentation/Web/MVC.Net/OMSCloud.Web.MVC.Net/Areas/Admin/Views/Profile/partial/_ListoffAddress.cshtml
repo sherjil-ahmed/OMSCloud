@@ -1,0 +1,70 @@
+﻿@model IEnumerable<OMSCloud.Contracts.ViewModels.AddressViewModel>
+
+<div class="panel panel-default">
+    @*<div class="panel-heading">
+
+        <p>
+                <a href="@Url.Action("Create")" class="btn btn-md btn-default"><i class="glyphicon glyphicon-plus"></i> @ViewBag.CreateTtitle </a>
+            </p>
+    </div>*@
+    <div class="panel-body">
+            <table class="table table-striped table-responsive table-bordered dataTable" style="width:100%" id="addressGrid">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.AddressTypeName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PlotNumber)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.NearestLandmark)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.StreetNumber)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.OperatingProvinceTitle)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.OperatingCityTitle)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PostalCode)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AddressTypeName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PlotNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NearestLandmark)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StreetNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OperatingProvinceTitle)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OperatingCityTitle)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PostalCode)
+                        </td>
+                    </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+    </div>
+</div>

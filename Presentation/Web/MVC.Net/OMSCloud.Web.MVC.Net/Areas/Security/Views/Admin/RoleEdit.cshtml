@@ -1,0 +1,114 @@
+﻿@model OMSCloud.Web.MVC.Net.Areas.Security.Models.ApplicationRole
+@{
+    ViewBag.Title = "Modify " + Model.Name + " Role";
+}
+
+@{if (Model != null)
+    {
+
+        using (Html.BeginForm())
+        {
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    @Html.HiddenFor(model => model.Id)
+                    <legend>
+                        <h3>
+                            Modify Role
+                        </h3>
+                    </legend>
+                    <div class="form-group hidden">
+                        @Html.LabelFor(model => model.Id, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.RoleDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.EditorFor(model => model.RoleDescription, new { htmlAttributes = new { @class = "form-control", rows = "8" } })
+                            @Html.ValidationMessageFor(model => model.RoleDescription, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.IsSysAdmin, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.CheckBoxFor(model => model.IsSysAdmin, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.IsSysAdmin, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-6">
+                            <input type="submit" value="Save" class="btn btn-success" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <fieldset>
+                    <legend>
+                        <h3>
+                            Users Associated with this Role
+                        </h3>
+                    </legend>
+                    <div id="UsersTable">
+                        @Html.Partial("_ListUsersTable4Role", Model)
+                        <br />
+                    </div>
+                    <div>
+                        @Html.Partial("_AddUserToUsersTable4Role", Model)
+                    </div>
+                    <br />
+                    <div>
+                        <input class="btn btn-default" type="button" value="Go to Users" onclick="location.href='@Url.Action("Role", "Admin", new { id = Model.Id })'" />
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <br />
+        <br />
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <fieldset>
+                    <legend>
+                        <h3>
+                            Permissions Associated with this Role
+                        </h3>
+                    </legend>
+
+                    <div id="PermissionsTable">
+                        @Html.Partial("_ListPermissions", Model)
+                        <br />
+                    </div>
+                    <div>
+                        @Html.Partial("_AddPermission2PermissionsTable4Role", Model)
+                    </div>
+                    <br />
+                    <div>
+                        <input class="btn btn-default" type="button" value="Go to Permissions" onclick="location.href='@Url.Action("PermissionIndex", "Admin", new { id = Model.Id })'" />
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <br />
+        <div>
+            <input class="btn btn-default" type="button" value="Go to Roles" onclick="location.href='@Url.Action("RoleIndex", "Admin", new { id = Model.Id })'" />
+        </div>
+    }
+}

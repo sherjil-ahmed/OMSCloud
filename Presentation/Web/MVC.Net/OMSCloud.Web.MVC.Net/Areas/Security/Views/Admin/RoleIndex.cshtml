@@ -1,0 +1,75 @@
+﻿@model IEnumerable<OMSCloud.Web.MVC.Net.Areas.Security.Models.ApplicationRole>
+@{
+    ViewBag.Title = "Roles";
+}
+<script type="text/javascript">
+    function DeleteRole(id) {
+        if (confirm('Are you sure you want to permanently delete this role?')) {
+            // delete it!
+            //demonstrates using a dialog confirmation using JavaScript and NOT JQuery...
+            var _url = window.location.href.substring(0, window.location.href.lastIndexOf("/") + 1) + "RoleDelete/" + id;
+            window.location.href(_url);
+        } else {
+            // Do nothing!
+        }
+    };
+</script>
+@*<legend>
+    <h3 style="font-weight:bold; font-size:x-large">
+        Roles
+    </h3>
+</legend>*@
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div>
+            <input class="btn btn-default" type="button" value="Create Role" onclick="location.href='@Url.Action("RoleCreate", "Admin")'" />
+        </div>
+    </div>
+
+    <div class="panel-body">
+        <table class="table table-striped table-hover table-bordered table-responsive dataTable" id="RoleTable" style="width: 100%">
+            <thead>
+                <tr>
+                    <td>Role Name</td>
+                    <td>Role Description</td>
+                    <td>Is System Admin</td>
+                    <td style="width: 8%">Action</td>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.ActionLink(item.Name, "RoleDetails", new { id = item.Id })
+                                </td>
+                                <td>
+                                    @item.RoleDescription
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.IsSysAdmin)
+                                </td>
+                                <td>
+                                    <center>
+                                        <a href="@Url.Action("RoleEdit", "Admin", new { id = item.Id })">
+                                            <img src="@Url.Content("~/Areas/Security/Content/Images/pen.png")" alt="Edit Role" />
+                                        </a>
+                                        <img src="@Url.Content("~/Areas/Security/Content/Images/bin.png")" alt="Delete Role" onclick="DeleteRole('@item.Id')" />
+                                    </center>
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+
+        </table>
+    </div>
+</div>
+    
+<input class="btn btn-default" type="button" value="Go to Users" onclick="location.href='@Url.Action("Index", "Admin")'" />

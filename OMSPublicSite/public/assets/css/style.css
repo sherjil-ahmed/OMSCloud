@@ -1,0 +1,178 @@
+.schedule {
+  display: flex;
+  align-items: center;
+}
+.schedule h2 {
+  margin-right: 30px;
+}
+
+a.days-tabs {
+  display: inline-flex;
+  border-right: 2px solid grey;
+  align-items: center;
+  padding: 10px 5px;
+  width: 122px;
+  height: 40px;
+  text-align: center;
+  color: gray;
+  font-weight: 500;
+  justify-content: center;
+}
+
+a.days-tabs.lastday {
+  border: none;
+  border-left: 2px solid white;
+}
+a.days-tabs.firstday {
+  border-left: none;
+}
+
+ul.weekly-tabs {
+  display: flex;
+  justify-content: space-evenly;
+
+  border: 2px solid gray;
+  border-radius: 5px;
+  padding: 0;
+}
+
+.weekly-tabs li {
+  width: 100%;
+}
+.weekly-tabs li a {
+  width: 100%;
+}
+
+.active-tab {
+  color: white !important;
+  background-color: gray;
+  border-left: 2px solid white;
+}
+
+a.days-tabs:hover {
+  color: white;
+  background-color: gray;
+  /* border:2px solid white ; */
+}
+/* changes */
+#start-date,
+#end-date {
+  /* margin-right: 10px; */
+  margin-left: 10px;
+}
+/* changes */
+
+/* changes */
+
+#start-date-label{
+    margin-left:-16px;
+}
+#end-date-label{
+    margin-left:-10px;
+}
+
+/* changes */
+
+/* .row.date-selector {
+    margin: 0 auto;
+} */
+
+#table-submit-btn {
+  border-radius: 50%;
+  border: none;
+  background-color: grey;
+  color: white;
+  margin-left: 10px;
+  width: 40px;
+  height: 40px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.table-section .add-table form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* changes */
+.add-table form label {
+    /* margin-right: 10px;
+    margin-left: -27px; */
+    margin-left: -8px;
+}
+/* changes */
+
+input[type="date"] {
+  padding: 10px 10px;
+  font-size: 1em;
+}
+
+/* .row.date-selector div form{
+    margin: 30px auto;
+    width: 50%;
+} */
+
+/* changes */
+.row.date-selector div form {
+  margin: 0px auto;
+  margin-bottom: 40px;
+  /* width: 278px; */
+  width: 268px;
+}
+/* changes */
+
+.weekly-form label,
+.schedule label {
+  font-size: 18px;
+  font-weight: 400;
+  margin-left: 8px;
+  color: rgb(143, 142, 142);
+}
+
+.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+.row.tabs-section {
+  margin-bottom: 10px;
+}
+
+/* chnages */
+input#specific-date-select {
+    margin-left: 10px;
+}
+/* chnages */
+
+@media (max-width: 576px) {
+  body {
+    font-size: 1.5em;
+  }
+  ul.weekly-tabs {
+    flex-direction: column;
+  }
+  ul.weekly-tabs li a {
+    border: none;
+    border-bottom: 2px solid gray;
+    font-size: 1.2em;
+  }
+  /* .row.date-selector {
+    width: 100%;
+    padding: 0 76px;
+  } */
+
+  /* .row.date-selector div form{
+        width: 50%;
+    margin: 30px auto;
+    justify-content: center;
+    margin: 20px auto;
+    } */
+
+    /* changes */
+  .row.date-selector div form {
+    /* width: 228px; */
+    /* width: 236px; */
+    width: 248px;
+    margin: 20px auto;
+  }
+  /* chnages */
+}

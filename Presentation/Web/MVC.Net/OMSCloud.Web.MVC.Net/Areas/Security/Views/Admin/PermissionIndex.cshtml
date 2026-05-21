@@ -1,0 +1,19 @@
+﻿@model IEnumerable<OMSCloud.Web.MVC.Net.Areas.Security.Models.PERMISSION>
+@{
+    ViewBag.Title = "Permissions";
+}
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div>
+                <input class="btn btn-default" type="button" value="Create Permission" onclick="location.href='@Url.Action("PermissionCreate", "Admin")'" />
+                @*<input class="btn btn-default" type="button" id="importPermissions2" name="importPermissions2" value="Import Permissions" onclick="location.href='@Url.Action("PermissionsImport", "Admin")'" />*@
+                <br />
+            </div>
+        </div>
+        <div class="panel-body">
+            @Html.Partial("_ListPermissionsTable", Model)
+        </div>
+    </div>
+    <input class="btn btn-default" type="button" id="gotoroles" name="gotoroles" value="Go to Roles" onclick="location.href='@Url.Action("RoleIndex", "Admin")'" />

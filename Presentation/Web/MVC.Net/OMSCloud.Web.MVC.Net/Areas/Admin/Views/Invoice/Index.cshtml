@@ -1,0 +1,165 @@
+﻿@model OMSCloud.Contracts.ViewModels.OrderDetailModel
+
+@{
+    ViewBag.Title = "Invoice";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="invoice">
+    <header class="clearfix">
+        <div class="row">
+            <div class="col-sm-6 mt-md">
+                <h2 class="h2 mt-none mb-sm text-dark text-weight-bold">INVOICE</h2>
+                <h4 class="h4 m-none text-dark text-weight-bold">@Model.OrderNumber</h4>
+            </div>
+            <div class="col-sm-6 text-right mt-md mb-md">
+                <address class="ib mr-xlg">
+                    @Model.ShopName
+                    <br />
+                     Henrietta Street, London, England
+                    <br />
+                    Phone: +12 3 4567-8901
+                    <br />
+                    okler@okler.net
+                </address>
+                <div class="ib">
+                    <img src="assets/images/invoice-logo.png" alt="OKLER Themes" />
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="bill-info">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="bill-to">
+                    <p class="h5 mb-xs text-dark text-weight-semibold">To:</p>
+                    <address>
+                        @Model.BuyerName
+                        <br />
+                        @Model.DeliveryAddress
+                        <br />
+                        Phone: +61 3 8376 6284
+                        <br />
+                        info@envato.com
+                    </address>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="bill-data text-right">
+                    <p class="mb-none">
+                        <span class="text-dark">Invoice Date:</span>
+                        <span class="value">05/20/2014</span>
+                    </p>
+                    <p class="mb-none">
+                        <span class="text-dark">Due Date:</span>
+                        <span class="value">06/20/2014</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="table-responsive">
+        <table class="table invoice-items">
+            <thead>
+                <tr class="h4 text-dark">
+                    <th id="cell-id" class="text-weight-semibold">#</th>
+                    <th id="cell-price" class="text-weight-semibold">Item</th>
+                    @*<th id="cell-ProductType" class="text-weight-semibold">Product Type</th>
+        <th id="cell-status" class="text-weight-semibold">status</th>
+        <th id="cell-Category" class="text-weight-semibold">Category</th>*@
+                    <th id="cell-price" class="text-center text-weight-semibold">Unit Price</th>
+                    <th id="cell-price" class="text-center text-weight-semibold">ItemTotalPrice </th>
+                    <th id="cell-qty" class="text-center text-weight-semibold">Quantity </th>
+                    <th id="cell-price" class="text-center text-weight-semibold">TaxAmount </th>
+                    <th id="cell-price" class="text-center text-weight-semibold">TaxRateApplied </th>
+                    <th id="cell-price" class="text-center text-weight-semibold">DiscountAmount </th>
+                    <th id="cell-total" class="text-center text-weight-semibold">ItemTotalPrice * item.Quantity </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.ItemList != null)
+                {
+                    int i = 1;
+                    foreach (var item in Model.ItemList)
+                    {
+                <tr>
+                    <td>@(i++)</td>
+                    <td class="text-weight-semibold text-dark">@item.ProductTitle</td>
+                    @*<td class="text-left">@item.StatusTitle</td>
+        <td class="text-left">@item.ProductTypeTitle</td>
+        <td class="text-left">@item.Category</td>*@
+                    <td class="text-right">@item.UnitPrice</td>
+                    <td class="text-right">@item.ItemTotalPrice</td>
+                    <td class="text-right">@item.Quantity</td>
+                    <td class="text-right">@item.TaxAmount</td>
+                    <td class="text-right">@item.TaxRateApplied</td>
+                    <td class="text-right">@item.DiscountAmount</td>
+                    <td class="text-right">@(item.ItemTotalPrice * item.Quantity)</td>
+                </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="invoice-summary">
+        <div class="row">
+            <div class="col-sm-4 col-sm-offset-8">
+                <table class="table h5 text-dark">
+                    <tbody>
+                        <tr class="b-top-none">
+                            <td colspan="2">Subtotal</td>
+                            <td class="text-left">$@Model.OrderTotal</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Tax Total</td>
+                            <td class="text-left">$@Model.TaxTotal</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Shipping</td>
+                            <td class="text-left">$@Model.DeliveryTotal</td>
+                        </tr>
+                        <tr class="h4">
+                            <td colspan="2">Grand Total</td>
+                            <td class="text-left">$@Model.PaymentTotal</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="invoice-adminSection">
+        <div class="row">
+            <div class="col-sm-4 col-sm-offset-8">
+                <table class="table h5 text-dark">
+                    <tbody>
+                        @*<tr class="b-top-none">
+                            <td colspan="2">Cart Name</td>
+                            <td class="text-left">$@Model.CartName</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Is Order or Cart</td>
+                            <td class="text-left">$@Model.IsOrder</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Is Paid</td>
+                            <td class="text-left">@Model.IsPaid</td>
+                        </tr>*@
+                        <tr class="h4">
+                            <td colspan="2">Order/Cart Status</td>
+                            <td class="text-left">@Model.OrderStatusTitle</td>
+                        </tr>
+                        <tr class="h4">
+                            <td colspan="2">Status</td>
+                            <td class="text-left">@Model.StatusTitle</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

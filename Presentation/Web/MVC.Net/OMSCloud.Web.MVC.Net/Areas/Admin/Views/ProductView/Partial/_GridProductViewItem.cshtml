@@ -1,0 +1,40 @@
+﻿@model IEnumerable<OMSCloud.Contracts.ViewModels.ProductViewItemModel>
+
+<table class="table table-striped" id="GridView1">
+    <tr>
+    
+        <th>
+            @Html.DisplayNameFor(model => model.ProductViewName)
+        </th>
+       
+        <th>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.ProductMediaName)
+        </th>
+
+    </tr>
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductViewName)
+                </td>
+ 
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductMediaName)
+                </td>
+
+            </tr>
+        }
+    }
+</table>

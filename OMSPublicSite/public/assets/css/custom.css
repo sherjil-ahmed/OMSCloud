@@ -1,0 +1,120 @@
+.header-top .select_top_wrp select.form-control {
+  height: auto;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 13px;
+  min-width: 130px;
+  width: auto;
+  max-width: 200px;
+  margin-right: 10px;
+  float: left;
+  margin-bottom: 0;
+  border: 2px solid #dad9d9;
+}
+
+.header-top .select_top_wrp select.form-control option{
+  font-size: 11px;
+}
+
+.header-top a.become_seller_top{
+  position: relative;
+  width: auto;
+  display: inline-block;
+  float: right;
+}
+
+.become_seller_top .plus_icon_sell{
+  position: absolute;
+  left: 28px;
+  top: 20px;
+  z-index: 2;
+}
+
+.become_seller_top .text_bcsel{
+  font-size: 14px;
+  font-weight: 900;
+  position: absolute;
+  left: 50px;
+  top: 18px;
+  color: #000;
+  text-transform: uppercase;
+  z-index: 2;
+}
+
+.header-top .select_top_wrp .inner_wrp{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-top{background-color: #e1e1e1;padding: 10px 0;}
+
+.svg__sell_circle{
+  width: 210px;
+  height: 101px;
+}
+
+.circle_svg_wrp{
+  overflow: hidden;
+  display: block;
+  width: auto;
+  height: 61px;
+}
+
+.circle_svg_wrp .svg__sell_circle{
+  z-index: 1;
+  position: relative;
+  top: -9px;
+}
+
+.circle_svg_wrp .white_bg_svg{
+  display: block;
+  width: 28px;
+  height: 35px;
+  background: #fff;
+  position: absolute;
+  top: 12px;
+  left: 7px;
+  border-top-left-radius: 31px;
+  border-bottom-left-radius: 33px;
+}
+
+.header-top a.bcmsel_btntop{
+  font-weight: 600;
+  background: gray;
+  padding: 12px 15px;
+  color: #f5f4f4;
+  font-size: 12px;
+  border-radius: 4px;
+  background: #a8aba9;
+  background: -webkit-linear-gradient(to right, #a8aba9, #646767);
+  background: linear-gradient(to right, #a8aba9, #646767);
+  border-radius: 50px;
+  box-shadow: 0 16px 9px -14px rgba(74,74,84,0.4);
+  transition: 0.3s;
+  text-transform: uppercase;
+}
+
+.header-top a.bcmsel_btntop:hover {
+  opacity: 0.8;
+}
+
+.header-top a.bcmsel_btntop i {
+  font-size: 20px;
+  margin-right: 7px;
+  color: #e7e7e7;
+}
+
+@media (max-width: 767px) {
+
+  .header-top .select_top_wrp select.form-control{
+    padding: 1px 5px;
+    width: 90px;
+    min-width: inherit;
+  }
+
+  .header-top a.become_seller_top{display: none;}
+
+}
+

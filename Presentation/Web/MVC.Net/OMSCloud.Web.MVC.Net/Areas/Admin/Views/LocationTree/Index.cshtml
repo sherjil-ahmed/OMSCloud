@@ -1,0 +1,83 @@
+﻿@model IEnumerable<OMSCloud.Contracts.ViewModels.LocationTreeModel>
+
+@{
+    ViewBag.Title = "List of All Countries, Provinces/States and Cities";
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+            <a href="@Url.Action("Create")" class="btn btn-md btn-default"><i class="glyphicon glyphicon-plus"></i> Create New</a>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped table-hover table-responsive table-bordered dataTable" style="width:100%">
+            <thead>
+                <tr>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.RequestedByProfileId)
+                    </th>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.LocationID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.LocationTitle)
+                    </th>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.ParentLocationID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ParentLocationTitle)
+                    </th>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.LocationLevelID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.LocationLevelTitle)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>
+                    @*<th></th>*@
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="hidden">
+                                @Html.DisplayFor(modelItem => item.RequestedByProfileId)
+                            </td>
+                            <td class="hidden">
+                                @Html.DisplayFor(modelItem => item.LocationID)
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Edit", new { id = item.LocationID })" style="color:#000" class="btn btn-md btn-default" data-toggle="tooltip" data-placement="top"><i class="glyphicon glyphicon-pencil"></i> - @Html.DisplayFor(modelItem => item.LocationTitle)</a>
+                            </td>
+                            <td class="hidden">
+                                @Html.DisplayFor(modelItem => item.ParentLocationID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ParentLocationTitle)
+                            </td>
+                            <td class="hidden">
+                                @Html.DisplayFor(modelItem => item.LocationLevelID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LocationLevelTitle)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            @*<td>
+                        <a href="@Url.Action("Edit", new { id = item.LocationID })" class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="top" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
+                        <a href="@Url.Action("Details", new { id = item.LocationID })" class="btn btn-xs btn-info" data-toggle="tooltip" data-placement="top" title="Details"><i class="glyphicon glyphicon-eye-open"></i></a>
+                        <a href="@Url.Action("Delete", new { id = item.LocationID })" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Delete"><i class="glyphicon glyphicon-remove-sign"></i></a>
+                    </td>*@
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

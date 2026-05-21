@@ -1,0 +1,149 @@
+﻿@model IEnumerable<OMSCloud.Contracts.ViewModels.PaymentModel>
+@using OMSCloud.Contracts.Common.DBEnums
+
+@{
+    ViewBag.Title = "Index";
+}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        @*<p>
+                <a href="@Url.Action("Create")" class="btn btn-md btn-default"><i class="glyphicon glyphicon-plus"></i> Create New</a>
+            </p>*@
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped table-hover table-responsive table-bordered dataTable" style="width:100%">
+            <thead>
+                <tr>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.RequestedByProfileId)
+                    </th>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.CreatedBy)
+                    </th>
+                    <th class="">
+                        @Html.DisplayNameFor(model => model.CreatedOn)
+                    </th>
+                    @*<th class="hidden">
+            @Html.DisplayNameFor(model => model.ModifiedBy)
+        </th>*@
+                    <th class="">
+                        @Html.DisplayNameFor(model => model.OrderNumber)
+                    </th>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.PaymentID)
+                    </th>
+                    <th class="">
+                        @*@Html.DisplayNameFor(model => model.PayTypeID)*@
+                        Payment Channel
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Amount)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PaymentGatewayTransactionID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PaymentToken)
+                    </th>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.IsAmountVerified)
+                    </th>
+                    <th>Actual Pay-in</th>
+                    <th>Actual Pay-out</th>
+                    <th>Calculated Pay-in</th>
+                    <th>Calculated Pay-out</th>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.ShopProvinceID)
+                    </th>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.ShopCityID)
+                    </th>
+                    @*<th>Actions</th>*@
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td class="hidden">
+                        @Html.DisplayFor(modelItem => item.RequestedByProfileId)
+                    </td>
+                    <td class="hidden">
+                        @Html.DisplayFor(modelItem => item.CreatedBy)
+                    </td>
+                    <td class="">
+                        @Html.DisplayFor(modelItem => item.CreatedOn)
+                    </td>
+                    @*<td class="hidden">
+            @Html.DisplayFor(modelItem => item.ModifiedBy)
+        </td>*@
+                    <td class="">
+                        <a href="@Url.Action("Edit", "Order", new { id = item.OrderID })" class="btn btn-md btn-default" data-toggle="tooltip" data-placement="top" title="View Order Details">@Html.DisplayFor(modelItem => item.OrderNumber)</a>
+                        @*//Order Number, no editing required*@
+                    </td>
+                    <td class="hidden">
+                        @Html.DisplayFor(modelItem => item.PaymentID)
+                    </td>
+                    <td class="">
+                        @if (item.PayTypeID == (long)DBPaymentMethodEnum.Cash)
+                        {
+                            <span>Cash</span>
+                        }
+                        else if (item.PayTypeID == (long)DBPaymentMethodEnum.PayPal)
+                        {
+                            <span>PayPal</span>
+                        }
+                        else if (item.PayTypeID == (long)DBPaymentMethodEnum.Stripe)
+                        {
+                            <span>Stripe</span>
+                        }
+                        else
+                        {
+                            <span>Unknown</span>
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Amount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PaymentGatewayTransactionID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PaymentToken)
+                    </td>
+                    <td class="hidden">
+                        @Html.DisplayFor(modelItem => item.IsAmountVerified)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ActualPayin)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ActualPayout)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CalculatedPayin)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CalculatedPayout)
+                    </td>
+                    <td class="hidden">
+                        @Html.DisplayFor(modelItem => item.ShopProvinceID)
+                    </td>
+                    <td class="hidden">
+                        @Html.DisplayFor(modelItem => item.ShopCityID)
+                    </td>
+                    @*<td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.PaymentID }) |
+        @Html.ActionLink("Details", "Details", new { id = item.PaymentID }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.PaymentID })
+
+            <a href="@Url.Action("Details", new { id = item.PaymentID })" class="btn btn-xs btn-info" data-toggle="tooltip" data-placement="top" title="Details"><i class="glyphicon glyphicon-eye-open"></i></a>
+            <a href="@Url.Action("Delete", new { id = item.PaymentID })" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Delete"><i class="glyphicon glyphicon-remove-sign"></i></a>
+        </td>*@
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

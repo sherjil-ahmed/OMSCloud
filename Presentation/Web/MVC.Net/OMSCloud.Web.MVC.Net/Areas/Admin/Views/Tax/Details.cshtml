@@ -1,0 +1,91 @@
+﻿@model OMSCloud.Contracts.ViewModels.TaxViewModel
+@{
+    ViewBag.Title = "Tax Detail";
+}
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div>
+            <dl class="dl-horizontal">
+                <dt class="hidden">
+                    @Html.DisplayNameFor(model => model.TaxID)
+                </dt>
+
+                <dd class="hidden">
+                    @Html.DisplayFor(model => model.TaxID)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.TaxValue)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.TaxValue)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.TaxTypeTitle)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.TaxTypeTitle)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.StatusTitle)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.StatusTitle)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.EffectiveDate)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.EffectiveDate)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.IsPercentage)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.IsPercentage)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.TaxTerritoryLevel)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.TaxTerritoryLevel)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.LocationName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.LocationName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+
+
+            </dl>
+        </div>
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.StatusID }, new { @class = "btn btn-success" }) 
+        </p>
+    </div>
+</div>
+<div class="form-actions no-color">
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-success" })
+</div>

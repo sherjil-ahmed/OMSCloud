@@ -1,0 +1,400 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{66C65132-8ABA-4B2A-BCF0-A55DC73B3F7D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>OMSCloud.DataStore.EF</RootNamespace>
+    <AssemblyName>OMSCloud.DataStore.EF</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServerCompact, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.SqlServerCompact.6.1.3\lib\net45\EntityFramework.SqlServerCompact.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NLog.4.4.8\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog.InstallNLogConfig">
+      <HintPath>..\..\packages\NLog.InstallNLogConfig.2.0\tools\netfx45\NLog.InstallNLogConfig.exe</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DBFactory\DBFactory.cs" />
+    <Compile Include="IRepositories\IOMSRepositories.cs" />
+    <Compile Include="IRepositories\OMSRepositoryBase.cs" />
+    <Compile Include="IRepositories\PartialRepositories.cs" />
+    <Compile Include="OMSModel\Address.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\AddressContactInfoPair.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\AddressType.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\AppConfig.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\Attribute.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\AttributeType.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\BankAccount.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\BaseEntities\CustomEntities.cs" />
+    <Compile Include="OMSModel\BaseEntities\Interceptors.cs" />
+    <Compile Include="OMSModel\BaseEntities\PartialEntities.cs" />
+    <Compile Include="OMSModel\BaseEntities\ConcurrentBaseEntity.cs" />
+    <Compile Include="OMSModel\Brand.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\CartItem.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\CartItemAttributePair.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\CartOrder.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\Category.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\CategoryAttributePair.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\CategoryType.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\Chat.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\ChatMessage.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\ContactInfo.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\ContactType.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\Country.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\Currency.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\CustomerReview.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\DataType.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\DbContext\OMSModel.cs" />
+    <Compile Include="OMSModel\DbContext\OMSModel.DirectDBAccess.cs" />
+    <Compile Include="OMSModel\DbContext\OMSModel.SP.Custom.cs" />
+    <Compile Include="OMSModel\DbContext\OMSModel.SP.Standard.cs" />
+    <Compile Include="OMSModel\DeliveryOption.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\DocumentType.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\ExecAction.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\ExecActionParam.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\Group.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\GroupRolePair.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\Language.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\LocaleStringResource.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\LocalizedProperty.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\LocationLevel.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\LocationTree.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\Log.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\MediaContentType.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\NotificationToken.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\Notify.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\OMSModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OMSModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\OMSModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\OMSModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OMSModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\Option.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\OptionType.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\OrderDeliveryDetail.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\OrderPayment.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\OrderStatus.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\OrderStatusMap.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\PackagedProduct.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\Payment.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\PayMode.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\PayOptionMatrix.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\PayType.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\Product.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\ProductAttributePair.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\ProductCategoryPair.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\ProductMediaDetail.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\ProductType.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\ProductView.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\ProductViewItem.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\Profile.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\ProfileVerification.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\Role.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\RoleOptionPair.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\Schedule.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\ScheduleType.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\SearchTerm.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\sp_Catalogue_AllInheritedAttributesByCategory_Result.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\sp_Catalogue_AllNonExistingParentsByChildCategory_Attributes_Result.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\sp_Catalogue_AllNonExistingParentsByChildCategory_Result.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\sp_Catalogue_AllParentsByChildCategory_Result.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\sp_ConvertCartToOrders_Result.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\sp_helpdiagrams_Result.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\StateMachine.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\StateMachineState.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\Status.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\Supplier.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\SupplierDeliveryOptionPair.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\Tax.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\TaxType.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\User.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\UserType.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSModel\VerificationStatus.cs">
+      <DependentUpon>OMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\ExtentionRepositories.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="UnitofWork\OMSUnitOfWork.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="OMSModel\OMSModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>OMSModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="OMSModel\OMSModel.edmx.diagram">
+      <DependentUpon>OMSModel.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Contracts\Caching\OMSCloud.Contracts.Caching\OMSCloud.Contracts.Caching.csproj">
+      <Project>{A099590E-974A-4A33-B9DB-9CF832718467}</Project>
+      <Name>OMSCloud.Contracts.Caching</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Contracts\Common\OMSCloud.Contracts.Common\OMSCloud.Contracts.Common.csproj">
+      <Project>{154f21bc-1a1d-4dc1-bd84-a89aeb2c1f87}</Project>
+      <Name>OMSCloud.Contracts.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UoW_RepositoryFramework\UoW_RepositoryFramework.csproj">
+      <Project>{44f2336b-0f6d-48d7-8488-f921ca077188}</Project>
+      <Name>UoW_RepositoryFramework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="OMSModel\OMSModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>OMSModel.edmx</DependentUpon>
+      <LastGenOutput>OMSModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="OMSModel\OMSModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>OMSModel.edmx</DependentUpon>
+      <LastGenOutput>OMSModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    if not exist "$(TargetDir)x86" md "$(TargetDir)x86"
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\x86\*.*" "$(TargetDir)x86"
+    if not exist "$(TargetDir)amd64" md "$(TargetDir)amd64"
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\amd64\*.*" "$(TargetDir)amd64"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

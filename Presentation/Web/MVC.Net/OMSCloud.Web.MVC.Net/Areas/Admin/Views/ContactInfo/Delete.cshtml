@@ -1,0 +1,65 @@
+﻿@model OMSCloud.Contracts.ViewModels.ContactInfoModel
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>ContactInfoModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt class="hidden">
+            @Html.DisplayNameFor(model => model.RequestedByProfileId)
+        </dt>
+
+        <dd class="hidden">
+            @Html.DisplayFor(model => model.RequestedByProfileId)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContactInfoID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContactInfoID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContactInfo1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContactInfo1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContactPerson)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContactPerson)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContactTypeID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContactTypeID)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

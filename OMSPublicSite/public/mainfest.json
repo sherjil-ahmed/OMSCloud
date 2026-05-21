@@ -1,0 +1,80 @@
+{
+  "baseUrl_API": "http://localhost:8749",
+  "countries": [
+    {
+      "countryId": "0",
+      "countryName": "Canada",
+      "redirectURL": "http://localhost:3000/"
+    },
+    {
+      "countryId": "0",
+      "countryName": "USA",
+      "redirectURL": "http://localhost:3000/"
+    },
+    {
+      "countryId": "0",
+      "countryName": "UK",
+      "redirectURL": "http://localhost:3000/"
+    },
+    {
+      "countryId": "0",
+      "countryName": "Australia",
+      "redirectURL": "http://localhost:3000/"
+    }
+  ],
+  "default_currency": {
+    "symbol": "$",
+    "text": "CAD"
+  },
+  "default_language": {
+    "text": "ENGLISH"
+  },
+  "default_strings": {
+    "IBAN": "Transit / Routing Number",
+    "BANKING": "banking",
+    "PROVINCE": "Province",
+    "POSTAL" : "Postal Code",
+    "POSTAL_REGEX": "",
+    "PHONE_COUNTRY_CODE" : "+92",
+    "ZVONR_ADDRESS": "Zvonr Corporation, 330 Highway 7 East, Unit 305, Richmond Hill, Ontario, L4B 3P8, Canada.",
+    "ZVONR_ADDRESS_CA": "Zvonr Corporation 330 Highway 7 East, Unit 305 Richmond Hill Ontario L4B 3P8 Canada",
+    "ZVONR_ADDRESS_UK": "Zvonr Technology Ltd 71-75 Shelton St Covent Garden London WC2H 9JQ United Kingdom",
+    "ZVONR_ADDRESS_US": "Zvonr Inc. Raven Office Centre 388 Market St. Suite  1300 San Francisco CA 94111 United States",
+    "POSTALC_REGEX" : "^([ABCEGHJKLMNPRSTVXY]\\d[ABCEGHJKLMNPRSTVWXYZ])\\ {0,1}(\\d[ABCEGHJKLMNPRSTVWXYZ]\\d)$",
+    "POSTAL_REGEX_US": "^\\d{5}([\\-]?\\d{4})?$",
+    "POSTAL_REGEX_UK": "^(GIR|[A-Z]\\d[A-Z\\d]??|[A-Z]{2}\\d[A-Z\\d]??)[ ]??(\\d[A-Z]{2})$",
+    "POSTAL_REGEX_AU": "^(0[289][0-9]{2})|([1345689][0-9]{3})|(2[0-8][0-9]{2})|(290[0-9])|(291[0-4])|(7[0-4][0-9]{2})|(7[8-9][0-9]{2})$",
+    "ZVONR_SUPPORT_SHOP_PROFILEID":"12"
+  },
+  "allLanguages": [
+    {
+      "id": "en",
+      "text": "ENGLISH",
+      "mnemonic": "ENG"
+    },
+    {
+      "id": "fr",
+      "text": "FRENCH",
+      "mnemonic": "FR"
+    },
+    {
+      "id": "zh-CN",
+      "text": "CHINESE",
+      "mnemonic": "CH"
+    },
+    {
+      "id": "it",
+      "text": "ITALIAN",
+      "mnemonic": "IT"
+    }
+  ],
+  "appSocials": {
+    "FACEBOOK": "https://www.facebook.com",
+    "TWITTER": "https://www.twitter.com",
+    "LINKEDIN": "https://www.linkedin.com",
+    "PINTEREST": "https://www.pintrest.com",
+    "INSTAGRAM": "https://www.instagram.com",
+    "YOUTUBE": "https://www.youtube.com"
+  },
+  "slider_speed" : "10000"
+}

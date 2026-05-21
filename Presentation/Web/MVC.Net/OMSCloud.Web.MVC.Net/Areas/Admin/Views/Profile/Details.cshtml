@@ -1,0 +1,109 @@
+﻿@model OMSCloud.Contracts.ViewModels.ProfileModel
+
+@{
+    ViewBag.Title = "Profile Detail";
+}
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div>
+
+            <dl class="dl-horizontal">
+                <dt class="hidden">
+                    @Html.DisplayNameFor(model => model.ProfileID)
+                </dt>
+
+                <dd class="hidden">
+                    @Html.DisplayFor(model => model.ProfileID)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.AdminUserTypeID)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.AdminUserTypeID)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.UserName)
+                </dd>
+
+                <dt>
+                    Full Name
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.FirstName)  @Html.DisplayFor(model => model.MiddleName)  @Html.DisplayFor(model => model.LastName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.FatherName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.FatherName)
+                </dd>
+
+                <dt class="hidden">
+                    @Html.DisplayNameFor(model => model.Nationality)
+                </dt>
+
+                <dd class="hidden">
+                    @Html.DisplayFor(model => model.Nationality)
+                </dd>
+
+                <dt class="hidden">
+                    @Html.DisplayNameFor(model => model.Occupation)
+                </dt>
+
+                <dd class="hidden">
+                    @Html.DisplayFor(model => model.Occupation)
+                </dd>
+
+                <dt class="hidden">
+                    @Html.DisplayNameFor(model => model.Education)
+                </dt>
+
+                <dd class="hidden">
+                    @Html.DisplayFor(model => model.Education)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.ImagePath)
+                </dt>
+
+                <dd>
+                    @if (!string.IsNullOrEmpty(ViewBag.ImagePath))
+                    {
+                        <img src="@ViewBag.ImagePath" alt="IMAGES" style="height:100px; width:100px" />
+                    }
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.IsVerified)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.IsVerified)
+                </dd>
+                @*
+        <dt>
+            @Html.DisplayNameFor(model => model.IsVerified)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsVerified)
+        </dd>*@
+
+            </dl>
+        </div>
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.ProfileID }, new { @class = "btn btn-success" }) 
+        </p>
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-success" })
+</div>

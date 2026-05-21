@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="595980cb485b4d1ba71d9d7f356e20e0" Name="Diagram1" ZoomLevel="98">
+        <EntityTypeShape EntityType="OMSModel.AddressContactInfoPair" Width="1.5" PointX="18.25" PointY="16.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.AddressType" Width="1.5" PointX="10.75" PointY="21.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.AppConfig" Width="1.5" PointX="7.75" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.Attribute" Width="1.5" PointX="6" PointY="25.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.AttributeType" Width="1.5" PointX="3.75" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.Brand" Width="1.5" PointX="0.75" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.Category" Width="1.5" PointX="6" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.CategoryAttributePair" Width="1.5" PointX="8.25" PointY="23.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.CategoryType" Width="1.5" PointX="3.75" PointY="20.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.ContactInfo" Width="1.5" PointX="16" PointY="21.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.ContactType" Width="1.5" PointX="13.75" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.DataType" Width="1.5" PointX="3.75" PointY="27.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.DeliveryOption" Width="1.5" PointX="5.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.DocumentType" Width="1.5" PointX="13.75" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.ExecAction" Width="1.5" PointX="6" PointY="30.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.ExecActionParam" Width="1.5" PointX="8.25" PointY="29.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.Group" Width="1.5" PointX="8.25" PointY="42.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.GroupRolePair" Width="1.5" PointX="10.5" PointY="38.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.LocationLevel" Width="1.5" PointX="8.5" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.LocationTree" Width="1.5" PointX="10.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.MediaContentType" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.Option" Width="1.5" PointX="8.25" PointY="32.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.OptionType" Width="1.5" PointX="6" PointY="33.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.OrderPayment" Width="1.5" PointX="19.5" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.OrderStatus" Width="2.125" PointX="0.5" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.OrderStatusMap" Width="1.875" PointX="3" PointY="17" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.PackagedProduct" Width="1.5" PointX="5.25" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.PayMode" Width="1.5" PointX="12.75" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.PayOptionMatrix" Width="1.5" PointX="15" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.PayType" Width="1.5" PointX="12.75" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.ProductAttributePair" Width="1.5" PointX="8.25" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.ProductCategoryPair" Width="1.5" PointX="8.25" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.ProductMediaDetail" Width="1.5" PointX="5.25" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.ProductType" Width="2.125" PointX="0.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.ProductView" Width="1.5" PointX="8.25" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.ProductViewItem" Width="1.5" PointX="10.5" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.Profile" Width="1.5" PointX="10.75" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.ProfileVerification" Width="1.5" PointX="16" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.Role" Width="1.5" PointX="8.25" PointY="38.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.RoleOptionPair" Width="1.5" PointX="10.5" PointY="33.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.StateMachine" Width="1.5" PointX="3" PointY="31" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.StateMachineState" Width="1.875" PointX="3" PointY="33.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.Status" Width="1.5" PointX="10.75" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.TaxType" Width="1.5" PointX="18.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.User" Width="1.5" PointX="20" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.UserType" Width="1.5" PointX="17.75" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="OMSModel.VerificationStatus" Width="1.5" PointX="13.75" PointY="25.125" IsExpanded="true" />
+        <AssociationConnector Association="OMSModel.FK_AddressContactInfoPair_ContactInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="OMSModel.FK_Attribute_AttributeType" ManuallyRouted="false" />
+        <AssociationConnector Association="OMSModel.FK_Attribute_DataType" ManuallyRouted="false" />
+        <AssociationConnector Association="OMSModel.FK_CategoryAttributePair_Attributes" ManuallyRouted="false" />
+        <AssociationConnector Association="OMSModel.FK_ProductAttributePairs_Attributes" ManuallyRouted="false" />
+        <AssociationConnector Association="OMSModel.FK_Categories_Categories" ManuallyRouted="false" />
+        <AssociationConnector Association="OMSModel.FK_Category_CategoryType" ManuallyRouted="false" />
+        <AssociationConnector Association="OMSModel.FK_CategoryAttributePair_Categories" ManuallyRouted="false" />
+        <AssociationConnector Association="OMSModel.FK_ProductCategoryPair_Category" ManuallyRouted="false" />
+        <AssociationConnector Association="OMSModel.FK_ContactInfo_ContactType" ManuallyRouted="false" />
+        <AssociationConnector Association="OMSModel.FK_ExecAction_DataTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="OMSModel.FK_ExecActionParams_DataTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="OMSModel.FK_ProfileVerification_DocumentType" ManuallyRouted="false" />
+        <AssociationConnector Association="OMSModel.FK_ExecActionParams_ExecAction" ManuallyRouted="false" />
+        <AssociationConnector Association="OMSModel.FK_Options_ExecActions" ManuallyRouted="false" />
+        <AssociationConnector Association="OMSModel.FK_GroupRolePairs_Groups" ManuallyRouted="false" />
+        <AssociationConnector Association="OMSModel.FK_GroupRolePairs_Roles" ManuallyRouted="false" />
+        <AssociationConnector Association="OMSModel.FK_LocationTree_LocationLevels" ManuallyRouted="false" />
+        <AssociationConnector Association="OMSModel.FK_ProductMediaDetail_MediaContentType" ManuallyRouted="false" />
+        <AssociationConnector Association="OMSModel.FK_Options_Options" ManuallyRouted="false" />
+        <AssociationConnector Association="OMSModel.FK_Options_OptionTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="OMSModel.FK_RoleOptionPairs_Options" ManuallyRouted="false" />
+        <AssociationConnector Association="OMSModel.FK_OrderStatusMap_OrderStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="OMSModel.FK_OrderStatusMap_OrderStatus1" ManuallyRouted="true" >
+          <ConnectorPoint PointX="0.59375374999999986" PointY="4.8840950520833326" />
+          <ConnectorPoint PointX="0.59375374999999986" PointY="17.798059310302744" />
+          <ConnectorPoint PointX="0.66666666666666663" PointY="17.798059310302744" />
+          <ConnectorPoint PointX="0.83333333333333337" PointY="17.798059310302744" />
+          <ConnectorPoint PointX="3" PointY="17.798059310302744" />
+        </AssociationConnector>
+        <AssociationConnector Association="OMSModel.FK_StateMachines_OrderStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="OMSModel.FK_StateMachineStates_OrderStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="OMSModel.FK_StateMachineStates_OrderStatus1" ManuallyRouted="false" />
+        <AssociationConnector Association="OMSModel.FK_PayOptionMatrix_PayMode" ManuallyRouted="false" />
+        <AssociationConnector Association="OMSModel.FK_PayOptionMatrix_PayType" ManuallyRouted="false" />
+        <AssociationConnector Association="OMSModel.FK_ProductViewProducts_ProductMediaDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="OMSModel.FK_ProductViewProducts_ProductViews" ManuallyRouted="false" />
+        <AssociationConnector Association="OMSModel.FK_ProfileVerification_Profile" ManuallyRouted="false" />
+        <AssociationConnector Association="OMSModel.FK_ProfileVerification_VerificationStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="OMSModel.FK_RoleOptionPairs_Roles" ManuallyRouted="false" />
+        <AssociationConnector Association="OMSModel.FK_User_UserType" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="OMSModel.Country" Width="1.5" PointX="0.75" PointY="20.75" />
+        <EntityTypeShape EntityType="OMSModel.Currency" Width="2.875" PointX="22.75" PointY="0.75" />
+        <EntityTypeShape EntityType="OMSModel.Language" Width="1.5" PointX="20.75" PointY="15" />
+        <EntityTypeShape EntityType="OMSModel.LocaleStringResource" Width="1.5" PointX="23" PointY="17.25" />
+        <EntityTypeShape EntityType="OMSModel.LocalizedProperty" Width="1.5" PointX="23" PointY="14.125" />
+        <EntityTypeShape EntityType="OMSModel.Log" Width="1.5" PointX="22.75" PointY="5.75" />
+        <EntityTypeShape EntityType="OMSModel.SearchTerm" Width="1.5" PointX="22.75" PointY="10.75" />
+        <AssociationConnector Association="OMSModel.LocaleStringResource_Language" />
+        <AssociationConnector Association="OMSModel.LocalizedProperty_Language" />
+        <EntityTypeShape EntityType="OMSModel.OrderDeliveryDetail" Width="1.5" PointX="15.25" PointY="9.375" />
+        <EntityTypeShape EntityType="OMSModel.Tax" Width="1.5" PointX="21" PointY="20.5" />
+        <AssociationConnector Association="OMSModel.FK_Tax_TaxTypes" />
+        <EntityTypeShape EntityType="OMSModel.CartItemAttributePair" Width="1.5" PointX="8.25" PointY="19.25" />
+        <AssociationConnector Association="OMSModel.FK_CartItemAttribute_Attribute" />
+        <EntityTypeShape EntityType="OMSModel.ScheduleType" Width="2.125" PointX="16.75" PointY="25.25" />
+        <EntityTypeShape EntityType="OMSModel.Address" Width="1.5" PointX="13" PointY="15.25" />
+        <AssociationConnector Association="OMSModel.FK_Address_Profiles" />
+        <AssociationConnector Association="OMSModel.FK_AddressContactInfoPair_Address" />
+        <AssociationConnector Association="OMSModel.FK_Addresses_AddressTypes" />
+        <AssociationConnector Association="OMSModel.FK_Addresses_LocationTree" />
+        <AssociationConnector Association="OMSModel.FK_OrderDeliveryDetail_Address" />
+        <EntityTypeShape EntityType="OMSModel.CartItem" Width="1.5" PointX="31.125" PointY="10.875" />
+        <EntityTypeShape EntityType="OMSModel.CartOrder" Width="2" PointX="28.875" PointY="4.25" />
+        <EntityTypeShape EntityType="OMSModel.Product" Width="1.5" PointX="28.875" PointY="11.75" />
+        <EntityTypeShape EntityType="OMSModel.Supplier" Width="1.5" PointX="26.625" PointY="7.5" />
+        <EntityTypeShape EntityType="OMSModel.SupplierDeliveryOptionPair" Width="1.5" PointX="31.875" PointY="6.5" />
+        <AssociationConnector Association="OMSModel.FK_Products_Brands" />
+        <AssociationConnector Association="OMSModel.FK_CartItem_Product" />
+        <AssociationConnector Association="OMSModel.FK_CartItemAttribute_CartItem" />
+        <AssociationConnector Association="OMSModel.FK_CartProductPair_ShoppingCart" />
+        <AssociationConnector Association="OMSModel.FK_CartOrder_CartOrder" />
+        <AssociationConnector Association="OMSModel.FK_CartOrder_Supplier" />
+        <AssociationConnector Association="OMSModel.FK_CartOrder_SupplierDeliveryOptionPair" />
+        <AssociationConnector Association="OMSModel.FK_OrderPayment_CartOrder" />
+        <AssociationConnector Association="OMSModel.FK_ShoppingCart_OrderStatus" />
+        <AssociationConnector Association="OMSModel.FK_Supplier_Currency" />
+        <AssociationConnector Association="OMSModel.FK_SupplierDeliveryOptionPair_DeliveryOption" />
+        <AssociationConnector Association="OMSModel.FK_ProductTree_Products" />
+        <AssociationConnector Association="OMSModel.FK_ProductTree_Products1" />
+        <AssociationConnector Association="OMSModel.FK_Product_ProductType" />
+        <AssociationConnector Association="OMSModel.FK_Product_Supplier" />
+        <AssociationConnector Association="OMSModel.FK_Product_TaxType" />
+        <AssociationConnector Association="OMSModel.FK_ProductAttributePair_Product" />
+        <AssociationConnector Association="OMSModel.FK_ProductCategoryPair_Product" />
+        <AssociationConnector Association="OMSModel.FK_ProductMediaDetails_Products" />
+        <AssociationConnector Association="OMSModel.FK_ProductViewProducts_Products" />
+        <AssociationConnector Association="OMSModel.FK_Supplier_Profile" />
+        <AssociationConnector Association="OMSModel.FK_SupplierDeliveryOptionPair_Supplier" />
+        <EntityTypeShape EntityType="OMSModel.Schedule" Width="1.5" PointX="31.875" PointY="16.25" />
+        <AssociationConnector Association="OMSModel.FK_Schedule_ScheduleType" />
+        <AssociationConnector Association="OMSModel.FK_Schedule_Supplier" />
+        <EntityTypeShape EntityType="OMSModel.Payment" Width="2.75" PointX="34.625" PointY="5.75" />
+        <AssociationConnector Association="OMSModel.FK_Payment_CartOrder" />
+        <AssociationConnector Association="OMSModel.FK_OrderPayment_Payment" />
+        <AssociationConnector Association="OMSModel.FK_Payment_PayType" />
+        <EntityTypeShape EntityType="OMSModel.CustomerReview" Width="2.375" PointX="3.375" PointY="10.75" />
+        <EntityTypeShape EntityType="OMSModel.BankAccount" Width="1.5" PointX="28.875" PointY="0.75" />
+        <EntityTypeShape EntityType="OMSModel.Chat" Width="1.5" PointX="23.375" PointY="21.75" />
+        <EntityTypeShape EntityType="OMSModel.ChatMessage" Width="1.5" PointX="25.625" PointY="21.5" />
+        <AssociationConnector Association="OMSModel.FK_Supplier_BankAccount" />
+        <AssociationConnector Association="OMSModel.FK_Chat_ChatMessage" />
+        <EntityTypeShape EntityType="OMSModel.Notify" Width="1.5" PointX="0.75" PointY="24.75" />
+        <EntityTypeShape EntityType="OMSModel.NotificationToken" Width="1.5" PointX="16.375" PointY="12.75" />
+        <AssociationConnector Association="OMSModel.FK_NotificationToken_Profile" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

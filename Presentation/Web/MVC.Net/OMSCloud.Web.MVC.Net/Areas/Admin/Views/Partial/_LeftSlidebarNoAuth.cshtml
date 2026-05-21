@@ -1,0 +1,217 @@
+﻿@using OMSCloud.Contracts.Common.DBEnums
+@using OMSCloud.Contracts.Common
+
+@{
+    string pageUrl = Request.Url.PathAndQuery.ToString();
+}
+<aside id="sidebar-left" class="sidebar-left">
+    @*<h2>@ViewBag.Title</h2>*@
+    <div class="sidebar-header">
+
+        <div class="sidebar-title">
+            Navigation
+        </div>
+        <div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
+            <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+        </div>
+    </div>
+
+    <div class="nano">
+        <div class="nano-content">
+            <nav id="menu" class="nav-main" role="navigation">
+                <ul class="nav nav-main">
+                    <li class="">
+                        <a href="@Url.Action("Index", "Home")">
+                            <i class="fa fa-home" aria-hidden="true"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-parent  @(ViewBag.P1 == 1 ? "nav-expanded nav-active" : "nav")">
+                        <a>
+                            <i class="fa fa-columns" aria-hidden="true"></i>
+                            <span>Catalogue Management</span>
+                        </a>
+                        <ul class="nav nav-children">
+                            <li class="nav-parent  @(ViewBag.P2 == 1 ? "nav-expanded nav-active" : "nav")">
+                                <a>Catalogue Configuration</a>
+                                <ul class="nav nav-children">
+                                    <li class="nav @(ViewBag.C == 1 ? " nav-active" : "nav")">@Html.ActionLink("Category Types", "Index", "CategoryType")</li>
+                                    <li class="@(ViewBag.C == 2 ? " nav-active" : "nav")">@Html.ActionLink("Product Types", "Index", "ProductType")</li>
+                                    <li class="@(ViewBag.C == 3 ? " nav-active" : "nav")">@Html.ActionLink("Attribute Types", "Index", "AttributeType")</li>
+                                    @*<li>@Html.ActionLink("Media Contents Type (MIME)", "Index", "MediaContentType")</li>*@
+                                </ul>
+                            </li>
+                            <li class="@(ViewBag.C == 10 ? " nav-active" : "nav")">@Html.ActionLink("Attributes", "Index", "Attribute")</li>
+                            <li class="@(ViewBag.C == 11 ? " nav-active" : "nav")">@Html.ActionLink("Categories", "Index", "Category")</li>
+                            <li class="@(ViewBag.C == 12 ? " nav-active" : "nav")">@Html.ActionLink("Products", "Index", "Product")</li>
+                            @*<li>@Html.ActionLink("Product Views", "Index", "ProductView")</li>
+                <li>@Html.ActionLink("Product Media Details", "Index", "ProductMediaDetail")</li>*@
+
+                        </ul>
+
+                    </li>
+
+                    <li class="nav-parent  @(ViewBag.P1 == 6 ? "nav-expanded nav-active" : "nav")">
+                        <a>
+                            <i class="fa fa-columns" aria-hidden="true"></i>
+                            <span>Shop Management</span>
+                        </a>
+                        <ul class="nav nav-children">
+                            <li class="nav-parent  @(ViewBag.P2 == 4 ? "nav-expanded nav-active" : "nav")">
+                                <a>Shop Configuration</a>
+                                <ul class="nav nav-children">
+                                    <li class="@(ViewBag.C == 6 ? " nav-active" : "nav")">@Html.ActionLink("Delivery Options", "Index", "DeliveryOption")</li>
+                                    <li class="@(ViewBag.C == 4 ? " nav-active" : "nav")">@Html.ActionLink("Address Types", "Index", "AddressType")</li>
+                                    <li class="@(ViewBag.C == 6 ? " nav-active" : "nav")">@Html.ActionLink("Tax Types", "Index", "TaxType")</li>
+                                </ul>
+                            </li>
+                            <li class="@(ViewBag.C == 7 ? " nav-active" : "nav")">@Html.ActionLink("Shops", "Index", "Supplier")</li>
+                            <li class="@(ViewBag.C == 6 ? " nav-active" : "nav")">@Html.ActionLink("Shop Delivery Setup", "Index", "SupplierDeliveryOptionPair")</li>
+                            <li class="@(ViewBag.C == 6 ? " nav-active" : "nav")">@Html.ActionLink("Shop Delivery Schedule", "Index", "ShopDeliverySchedule")</li>
+                            
+                            <li class="@(ViewBag.C == 8 ? " nav-active" : "nav")">@Html.ActionLink("Brands", "Index", "Brand")</li>
+                            <li class="@(ViewBag.C == 9 ? " nav-active" : "nav")">@Html.ActionLink("Tax", "Index", "Tax")</li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-parent @(ViewBag.P1 == 2 ? "nav-expanded nav-active" : "nav")">
+                        <a>
+                            <i class="fa fa-copy" aria-hidden="true"></i>
+                            <span>User Profile Management</span>
+                        </a>
+                        <ul class="nav nav-children">
+                            <li class="@(ViewBag.C == 14 ? " nav-active" : "nav")">@Html.ActionLink("User Profiles", "Index", "Profile")</li>
+                            <li class="@(ViewBag.C == 14 ? " nav-active" : "nav")">@Html.ActionLink("Document Type", "Index", "DocumentType")</li>
+
+                            <li class="@(ViewBag.C == 15 ? " nav-active" : "nav")">@Html.ActionLink("User Profile Verification", "IndexAdmin", "ProfileVerification")</li>
+                        </ul>
+                    </li>
+                    <li class="nav-parent @(ViewBag.P1 == 3 ? "nav-expanded nav-active" : "nav")">
+                        <a>
+                            <i class="fa fa-tasks" aria-hidden="true"></i>
+                            <span>Cart Management</span>
+                        </a>
+                        <ul class="nav nav-children">
+                            <li class="@(ViewBag.C == 16 ? " nav-active" : "nav")">
+                                @Html.ActionLink("Show Active User's Cart List", "Index", "Cart")
+                            </li>
+                            @*,  new { Id = (int)OrderType.Cart }, new { @class = "" })*@
+
+                        </ul>
+                    </li>
+                    <li class="nav-parent @(ViewBag.P1 == 4 ? "nav-expanded nav-active" : "nav")">
+                        <a>
+                            <i class="fa fa-list-alt" aria-hidden="true"></i>
+                            <span>Orders Management</span>
+                        </a>
+                        <ul class="nav nav-children ">
+                            <li class="nav-parent  @(ViewBag.P2 == 2 ? "nav-expanded nav-active" : "nav")">
+                                <a>Configuration</a>
+                                <ul class="nav nav-children">
+                                    <li class="@(ViewBag.C == 17 ? " nav-active" : "nav")">@Html.ActionLink("Order Status", "Index", "OrderStatus")</li>
+                                    <li class="@(ViewBag.C == 18 ? " nav-active" : "nav")">@Html.ActionLink("Order Status Map", "Index", "OrderStatusMap")</li>
+                                </ul>
+                            </li>
+
+
+                            <li class="nav-parent @(ViewBag.P2 == 3 ? "nav-expanded nav-active" : "nav")">
+                                <a>Orders by Status</a>
+                                <ul class="nav nav-children">
+                                    @*new { Id = (int)OrderType.Order }*@
+                                    <li class="@(ViewBag.C == 19 ? " nav-active" : "nav")">@Html.ActionLink("All Orders", "Index", "Order", new { @*buyerProfileId = 1, shopId = null orderStatusId = 3, parentCartId = 4,*@}, new { @class = "" })</li>
+                                    <li class="@(ViewBag.C == 20 ? " nav-active" : "nav")">@Html.ActionLink("Unpaid Orders", "Index", "Order", new { orderStatusId = (int)DBOrderStatusEnum.NewOrder }, new { @class = "" })</li>
+                                    <li class="@(ViewBag.C == 21 ? " nav-active" : "nav")">@Html.ActionLink("Newly Placed Orders", "Index", "Order", new { orderStatusId = (int)DBOrderStatusEnum.OrderPlaced }, new { @class = "" })</li>
+                                    <li class="@(ViewBag.C == 22 ? " nav-active" : "nav")">@Html.ActionLink("Orders In Process", "Index", "Order", new { orderStatusId = (int)DBOrderStatusEnum.OrderInProcess }, new { @class = "" })</li>
+                                    <li class="@(ViewBag.C == 23 ? " nav-active" : "nav")">@Html.ActionLink("Ready to Ship Orders", "Index", "Order", new { orderStatusId = (int)DBOrderStatusEnum.OrderDispatched_ReadyforPickup }, new { @class = "" })</li>
+                                    <li class="@(ViewBag.C == 24 ? " nav-active" : "nav")">@Html.ActionLink("Delivered Orders", "Index", "Order", new { orderStatusId = (int)DBOrderStatusEnum.Order_Delivered_Pickedup }, new { @class = "" })</li>
+                                    <li class="@(ViewBag.C == 25 ? " nav-active" : "nav")">@Html.ActionLink("Completed Orders", "Index", "Order", new { orderStatusId = (int)DBOrderStatusEnum.OrderCompleted }, new { @class = "" })</li>
+                                </ul>
+                            </li>
+                            <li class="nav-parent @(ViewBag.P2 == 3 ? "nav-expanded nav-active" : "nav")">
+                                <a>Disputed Orders</a>
+                                <ul class="nav nav-children">
+                                    <li class="@(ViewBag.C == 19 ? " nav-active" : "nav")">@Html.ActionLink("Order Delivery/Pickup Failed", "Index", "Order", new { orderStatusId = (int)DBOrderStatusAdminEnum.Order_Delivery_Pickup_Failed }, new { @class = "" })</li>
+                                    <li class="@(ViewBag.C == 20 ? " nav-active" : "nav")">@Html.ActionLink("Orders Delivered with Issues", "Index", "Order", new { orderStatusId = (int)DBOrderStatusAdminEnum.OrderIssues }, new { @class = "" })</li>
+                                    <li class="@(ViewBag.C == 21 ? " nav-active" : "nav")">@Html.ActionLink("Failed Orders", "Index", "Order", new { orderStatusId = (int)DBOrderStatusAdminEnum.OrderFailed }, new { @class = "" })</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-parent hidden">
+                        <a>
+                            <i class="fa fa-table" aria-hidden="true"></i>
+                            <span>Shipment Management</span>
+                        </a>
+                        <ul class="nav nav-children">
+
+                            <li class="nav-parent">
+                                <a>
+                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                    <span>Global Coniguration</span>
+                                </a>
+                                <ul class="nav nav-children">
+
+
+                                    <li>@Html.ActionLink("Contact Types", "Index", "ContactType")</li>
+                                    <li>@Html.ActionLink("ContactInfo", "Index", "ContactInfo")</li>
+                                    <li>@Html.ActionLink("Location Tree", "Index", "LocationTree")</li>
+                                    <li>@Html.ActionLink("Location Level", "Index", "LocationLevel")</li>
+                                </ul>
+                            </li>
+
+                            <li>@Html.ActionLink("Order Delivery Detail", "Index", "OrderDeliveryDetail")</li>
+                            <li>@Html.ActionLink("Delivery Option Matrix", "Index", "DeliveryOption")</li>
+
+                        </ul>
+                    </li>
+                    <li class="nav-parent hidden">
+                        <a>
+                            <i class="fa fa-table" aria-hidden="true"></i>
+                            <span>Payment Management</span>
+                        </a>
+                        <ul class="nav nav-children">
+                            <li class="nav-parent">
+                                <a>Configuration</a>
+                                <ul class="nav nav-children">
+                                    <li>@Html.ActionLink("Pay Option Matrix", "Index", "PayOptionMatrix")</li>
+                                    <li>@Html.ActionLink("Pay Types", "Index", "PayType")</li>
+                                    <li>@Html.ActionLink("Pay Modes", "Index", "PayMode")</li>
+
+                                </ul>
+                            </li>
+                            <li>@Html.ActionLink("Pendding Payments", "Index", "Payment")</li>
+                            <li>@Html.ActionLink("Received Payments", "Index", "Payment")</li>
+                            <li>@Html.ActionLink("Order Payments", "Index", "OrderPayment")</li>
+                        </ul>
+                    </li>
+                    <li class="nav-parent @(ViewBag.P1 == 5 ? "nav-expanded nav-active" : "nav")">
+                        <a>
+                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                            <span>Global Coniguration</span>
+                        </a>
+                        <ul class="nav nav-children">
+                            <li class="@(ViewBag.C == 26 ? " nav-active" : "nav")">@Html.ActionLink("General Configuration", "Index", "AppConfig")</li>
+                            <li class="@(ViewBag.C == 27 ? " nav-active" : "nav")">@Html.ActionLink("General Status Config", "Index", "Status")</li>
+                            <li class="@(ViewBag.C == 13 ? " nav-active" : "nav")">@Html.ActionLink("Addresses", "Index", "Address")</li>
+                            @*<li class="@(ViewBag.C == 13 ? " nav-active" : "nav")">@Html.ActionLink("Location Tree", "Index", "LocationTree")</li>
+                            <li class="@(ViewBag.C == 13 ? " nav-active" : "nav")">@Html.ActionLink("Location Level", "Index", "LocationLevel")</li>*@
+                            <li class="@(ViewBag.C == 5 ? " nav-active" : "nav")">@Html.ActionLink("Data Types", "Index", "DataType")</li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </nav>
+        </div>
+        <script>
+            // Preserve Scroll Position
+            if (typeof localStorage !== 'undefined') {
+                if (localStorage.getItem('sidebar-left-position') !== null) {
+                    var initialPosition = localStorage.getItem('sidebar-left-position'),
+                        sidebarLeft = document.querySelector('#sidebar-left .nano-content');
+
+                    sidebarLeft.scrollTop = initialPosition;
+                }
+            }
+        </script>
+    </div>
+</aside>

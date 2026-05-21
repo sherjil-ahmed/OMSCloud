@@ -1,0 +1,220 @@
+﻿@model IEnumerable<OMSCloud.Contracts.ViewModels.ProductAdminModel>
+@{
+    /**/
+
+    ViewBag.Title = "Product List";
+}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <a href="@Url.Action("Create")" class="btn btn-md btn-default"><i class="glyphicon glyphicon-plus"></i> Create New</a>
+    </div>
+    <div class="panel-body">
+        <div class="col-md-12">
+            <form class="pull-right form-inline" method="get" action="/Admin/Product/Index">
+                <div class="form-group">
+                    <input type="text" class="form-control input-sm" placeholder="Search Products" value="@ViewBag.SearchString" name="searchString">
+                </div>
+                <button type="submit" class="btn btn-default btn-sm">Submit</button>
+            </form>
+        </div>   <br /><br />
+        
+        <table id="productTable" class="table table-striped table-hover table-responsive table-bordered " style="width:100%">
+            <thead class="thead-dark" >
+                <tr>
+                    <th class="">
+                        @Html.CheckBox("Select All", false, htmlAttributes: new { @class = "checkAll", onclick = "", onchange = "OnClickSelectAll(this)" })
+                    </th>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.ProductID)
+                    </th>
+                    <th>
+                        @Html.ActionLink("Product Name", "Index", new { sortOrder = ViewBag.ProductTitleSortParm, searchString = ViewBag.SearchString }, new { @style = " color: #000;" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Selling Price", "Index", new { sortOrder = ViewBag.SellingPriceSortParm, searchString = ViewBag.SearchString }, new { @style = " color: #000;" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Discount", "Index", new { sortOrder = ViewBag.DiscountSortParm, searchString = ViewBag.SearchString }, new { @style = " color: #000;" }) 
+                    </th>
+                    <th class="">
+                        @Html.ActionLink("User Rating", "Index", new { sortOrder = ViewBag.UserRatingSortParm, searchString = ViewBag.SearchString }, new { @style = " color: #000;" })
+                    </th>
+                    <th class="">
+                        @Html.ActionLink("Analysis Rank", "Index", new { sortOrder = ViewBag.AnalysisRankSortParm, searchString = ViewBag.SearchString }, new { @style = " color: #000;" })
+                    </th>
+                      <th>
+                        @Html.ActionLink("Category", "Index", new { sortOrder = ViewBag.CategoryNameSortParm, searchString = ViewBag.SearchString }, new { @style = " color: #000;" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Product Type", "Index", new { sortOrder = ViewBag.ProductTypeNameSortParm, searchString = ViewBag.SearchString }, new { @style = " color: #000;" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Shop Name", "Index", new { sortOrder = ViewBag.SupplierNameSortParm, searchString = ViewBag.SearchString }, new { @style = " color: #000;" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Status", "Index", new { sortOrder = ViewBag.StatusNameSortParm, searchString = ViewBag.SearchString }, new { @style = " color: #000;" })
+                    </th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody >
+                @{
+                    if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                <tr>
+                   
+                    <td id="productId_checkBox" class="">
+                        @Html.CheckBox(item.ProductID.ToString(), false, htmlAttributes: new {@id= "ProductId_CheckBox", @class = "CheckBox productId_CheckBox_" + item.ProductID, onclick = "OnClickSelectOne(this);" })
+                    </td>
+                    <td id="productId" class="hidden">
+                        <span @*class = "productId_CheckBox_@item.ProductID"*@>
+                            @Html.DisplayFor(modelItem => item.ProductID)
+                        </span>
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Edit", new { id = item.ProductID })" style="color:black" class="btn btn-md btn-default" data-toggle="tooltip" data-placement="top" title="Edit"><i class="glyphicon glyphicon-pencil"></i> - @Html.DisplayFor(modelItem => item.ProductName)</a>
+
+                    </td>
+                    <td class="hidden">
+                        @Html.DisplayFor(modelItem => item.BasePrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SellingPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Discount)
+                        @if (item.IsDiscountPercentage)
+                        {
+                            <span>%</span>
+                        }
+                        else
+                        {
+                            <span></span>
+                        }
+                    </td>
+                    <td class="">
+                        @Html.DisplayFor(modelItem => item.Rating)
+                    </td>
+                    <td class="">
+                        @Html.DisplayFor(modelItem => item.AnalysisRank)
+                    </td>
+                    <td class="hidden">
+                        @Html.DisplayFor(modelItem => item.BriefDescription)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.CategoryTitle)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductTypeName)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Edit", "Supplier", new { id = item.ShopId})" class="btn btn-md btn-default" data-toggle="tooltip" data-placement="top" title="Edit"><i class="glyphicon glyphicon-pencil"></i> @Html.DisplayFor(modelItem => item.ShopName)</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StatusName)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("GetProductByTitle", new { ProductName= item.ProductName , ShopName = item.ShopName})" class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="top" title="Action"><i class="glyphicon glyphicon-eye-open"></i></a>
+                        <a href="@Url.HttpRouteUrl("GetProductByTitle", new { ProductName= item.ProductName , ShopName = item.ShopName})" class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="top" title="Http Route URL"><i class="glyphicon glyphicon-pencil"></i></a>
+                        <a href="@Url.RouteUrl("GetProductByTitle", new { ProductName= item.ProductName , ShopName = item.ShopName})" class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="top" title="Route URL"><i class="glyphicon glyphicon-alert"></i></a>
+                        @*<a href="@Url.Action("Details", new { id = item.ProductID })" class="0btn btn-xs btn-info" data-toggle="tooltip" data-placement="top" title="Details"><i class="glyphicon glyphicon-eye-open"></i></a>
+        <a href="@Url.Action("Delete", new { id = item.ProductID })" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Delete"><i class="glyphicon glyphicon-remove-sign"></i></a>
+        <a href="@Url.Action("Create", "CartItem", new { id = item.ProductID })" class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="top" title="Add to Cart"><i class="glyphicon glyphicon-shopping-cart"></i></a>
+                        *@
+                    </td>
+                </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+
+        <div class="form-group">
+            <div class=" col-md-6">
+                <input type="submit" value="Approve Selected" class="btn btn-success" onclick="PostApproveSelected()" />
+            </div>
+        </div>
+
+        <ul class="pagination pull-right">
+            @if (ViewBag.CurrentPageIndex > 1)
+            {
+                <li>
+                    <a href="/Admin/Product/Index?PageNum=1&searchString=@ViewBag.SearchString&sortOrder=@ViewBag.SortOrder" class="edge">|&lt;</a>
+                </li>
+                <li>
+                    <a href="/Admin/Product/Index?PageNum=@(ViewBag.CurrentPageIndex - 1)&searchString=@ViewBag.SearchString&sortOrder=@ViewBag.SortOrder" class="edge">&lt;</a>
+                </li>
+            }
+            @{
+                var DISPLAY_PAGES = 6;
+                var startIdx = (ViewBag.CurrentPageIndex - DISPLAY_PAGES) < 0 ? 1 : (ViewBag.CurrentPageIndex < ViewBag.PageCount) ? ViewBag.CurrentPageIndex - (DISPLAY_PAGES - 2) : ViewBag.CurrentPageIndex - (DISPLAY_PAGES - 1);
+                var endIdx = (startIdx + DISPLAY_PAGES) - 1 > ViewBag.PageCount ? ViewBag.PageCount : (startIdx + DISPLAY_PAGES) - 1;
+
+                for (var i = startIdx; i <= endIdx; i++)
+                {
+                    if (i != ViewBag.CurrentPageIndex)
+                    {
+                        <li><a href="/Admin/Product/Index?PageNum=@i&searchString=@ViewBag.SearchString&sortOrder=@ViewBag.SortOrder">@i</a></li>
+                    }
+                    else
+                    {
+                        <li><span class="active">@i</span></li>
+                    }
+                }
+            }
+            @if (ViewBag.CurrentPageIndex < ViewBag.PageCount)
+            {
+                <li>
+                    <a href="/Admin/Product/Index?PageNum=@(ViewBag.CurrentPageIndex + 1)&searchString=@ViewBag.SearchString&sortOrder=@ViewBag.SortOrder" class="edge">&gt;</a>
+                </li>
+                <li>
+                    <a href="/Admin/Product/Index?PageNum=@(ViewBag.PageCount)&searchString=@ViewBag.SearchString&sortOrder=@ViewBag.SortOrder" class="edge">&gt;|</a>
+                </li>
+            }
+
+        </ul>
+    </div>
+</div>
+<script>
+    var OnClickSelectAll = function (sender) {
+        $('.CheckBox').toggleClass("checked");
+        $("#productTable input#ProductId_CheckBox[type=checkbox]").each((i, ele) => { ele.value = !ele.value; ele.checked = !ele.checked })
+    }
+
+    var OnClickSelectOne = function (sender) {
+        var x = $(sender).toggleClass("checked");
+        $('.CheckBox').val('false');
+        $('.checked').val('true');
+    }
+    var PostApproveSelected = function () {
+        var values = [];
+        $('.checked').each(
+            function (obj) {
+                values.push($(this).attr('name'));
+            });
+
+        var form = $('#__AjaxAntiForgeryForm');
+        var token = $('input[name="__RequestVerificationToken"]', form).val();
+
+        var mydata = {
+            values: values,
+            "__RequestVerificationToken": token,
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "/admin/product/ApproveProductList?ProductCSV=" + values,
+            data: mydata,
+            success: function (data) {
+                location.reload();
+            },
+            error: function () {
+
+            }
+
+        });
+    }
+</script>
+

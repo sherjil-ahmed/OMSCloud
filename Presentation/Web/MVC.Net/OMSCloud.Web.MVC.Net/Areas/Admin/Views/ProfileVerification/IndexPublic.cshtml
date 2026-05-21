@@ -1,0 +1,76 @@
+﻿@model IEnumerable<OMSCloud.Contracts.ViewModels.ProfileVerificationModelForUser>
+
+@{
+    ViewBag.Title = "Verification Documents List for Selected User";
+    Layout = "~/Areas/Admin/Views/Shared/" + ViewBag.Layout + ".cshtml";
+}
+
+@{
+    if (Model.Count() > 0)
+    {
+        <span>Verification of User: </span>
+        <b>
+            @Model.FirstOrDefault().FullName
+        </b>
+    }
+}
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <a href="@Url.Action("CreatePublic", new { id = @ViewContext.RouteData.Values["id"].ToString() })" class="btn btn-md btn-default"><i class="glyphicon glyphicon-plus"></i> Create New</a>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped table-responsive table-hover table-bordered dataTable" style="width:100%">
+            <thead>
+                <tr>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.VerificationID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DocumentTypeTitle)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.VerificationStatusTitle)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DocumentNumberByUser)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        @*@item.ProfileID = ViewContext.RouteData.Values["id"].ToString();*@
+
+                        <tr>
+                            <td class="hidden">
+                                @Html.DisplayFor(modelItem => item.VerificationID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DocumentTypeTitle)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.VerificationStatusTitle)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DocumentNumberByUser)
+                            </td>
+                            <td>
+                                <a href="@Url.Action("EditPublic", "ProfileVerification", new { id = item.VerificationID })" class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="top" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
+                                <a href="@Url.Action("EditAdmin", "ProfileVerification", new { id = item.VerificationID })" class="btn btn-xs btn-info" data-toggle="tooltip" data-placement="top" title="Verify"><i class="glyphicon glyphicon-eye-open"></i></a>
+                                @*<a href="@Url.Action("Delete", new { id = item.VerificationID })" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Delete"><i class="glyphicon glyphicon-remove-sign"></i></a>
+        <a href="@Url.Action("Details", new { id = item.VerificationID })" class="btn btn-xs btn-info" data-toggle="tooltip" data-placement="top" title="Details"><i class="glyphicon glyphicon-eye-open"></i></a>
+        <a href="@Url.Action("Delete", new { id = item.VerificationID })" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Delete"><i class="glyphicon glyphicon-remove-sign"></i></a>
+                                *@
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

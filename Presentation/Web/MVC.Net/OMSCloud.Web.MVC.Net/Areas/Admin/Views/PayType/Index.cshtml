@@ -1,0 +1,72 @@
+﻿@model IEnumerable<OMSCloud.Contracts.ViewModels.PayTypeModel>
+
+@{
+    ViewBag.Title = "PayType List";
+}
+<p>
+    @*@Html.ActionLink("Create New", "Create")*@
+    <a href="@Url.Action("Create")" class="btn btn-md btn-default"><i class="glyphicon glyphicon-plus"></i> Create New</a>
+</p>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <a href="@Url.Action("Create")" class="btn btn-md btn-default"><i class="glyphicon glyphicon-plus"></i> Create New</a>
+    </div>
+    <div class="panel-body">
+        <table class="table table-hover table-bordered table-responsive  table-striped dataTable" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.PayTypeID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PayTypeTitle)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.StatusTitle)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IsSystem)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="hidden">
+                                @Html.DisplayFor(modelItem => item.PayTypeID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PayTypeTitle)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StatusTitle)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IsSystem)
+                            </td>
+                            <td>
+                                @*@Html.ActionLink("Edit", "Edit", new { id = item.PayTypeID }) |
+                                    @Html.ActionLink("Details", "Details", new { id = item.PayTypeID }) |
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.PayTypeID })*@
+                                <a href="@Url.Action("Edit", new { id = item.PayTypeID })" class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="top" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
+                                <a href="@Url.Action("Details", new { id = item.PayTypeID })" class="btn btn-xs btn-info" data-toggle="tooltip" data-placement="top" title="Details"><i class="glyphicon glyphicon-eye-open"></i></a>
+                                <a href="@Url.Action("Delete", new { id = item.PayTypeID })" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Delete"><i class="glyphicon glyphicon-remove-sign"></i></a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+
+        </table>
+    </div>
+</div>

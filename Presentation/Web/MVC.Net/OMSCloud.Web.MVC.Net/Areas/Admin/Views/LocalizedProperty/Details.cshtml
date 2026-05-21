@@ -1,0 +1,66 @@
+﻿@model OMSCloud.Contracts.ViewModels.LocalizedPropertyModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>LocalizedPropertyModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RequestedByProfileId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RequestedByProfileId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EntityId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EntityId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LanguageId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LanguageId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LocaleKeyGroup)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LocaleKeyGroup)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LocaleKey)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LocaleKey)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LocaleValue)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LocaleValue)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

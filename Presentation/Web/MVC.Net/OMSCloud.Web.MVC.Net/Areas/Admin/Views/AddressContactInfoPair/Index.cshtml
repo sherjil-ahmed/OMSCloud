@@ -1,0 +1,63 @@
+﻿@model IEnumerable<OMSCloud.Contracts.ViewModels.AddressContactInfoPairModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+<p>
+    @*@Html.ActionLink("Create New", "Create")*@
+    <a href="@Url.Action("Create")" class="btn btn-md btn-default"><i class="glyphicon glyphicon-plus"></i> Create New</a>
+</p>
+<table class="table table-striped table-bordered dataTable" style="width:100%">
+    <thead>
+        <tr>
+            <th class="hidden">
+                @Html.DisplayNameFor(model => model.RequestedByProfileId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AddressContactInfoPairID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AddressID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactInfoID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsPrimary)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="hidden">
+                    @Html.DisplayFor(modelItem => item.RequestedByProfileId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AddressContactInfoPairID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AddressID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContactInfoID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsPrimary)
+                </td>
+                <td>
+                    @*@Html.ActionLink("Edit", "Edit", new { id = item.AddressContactInfoPairID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.AddressContactInfoPairID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.AddressContactInfoPairID })*@
+                    <a href="@Url.Action("Edit", new { id = item.AddressContactInfoPairID })" class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="top" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
+                    <a href="@Url.Action("Details", new { id = item.AddressContactInfoPairID })" class="btn btn-xs btn-info" data-toggle="tooltip" data-placement="top" title="Details"><i class="glyphicon glyphicon-eye-open"></i></a>
+                    <a href="@Url.Action("Delete", new { id = item.AddressContactInfoPairID })" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Delete"><i class="glyphicon glyphicon-remove-sign"></i></a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>

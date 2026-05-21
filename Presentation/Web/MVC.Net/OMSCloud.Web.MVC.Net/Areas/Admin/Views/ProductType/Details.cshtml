@@ -1,0 +1,54 @@
+﻿@model OMSCloud.Contracts.ViewModels.ProductTypeModel
+@{
+    ViewBag.Title = "Product Type Details";
+    }
+<div class="panel panel-default">
+    <div class="panel-body">
+        <dl class="dl-horizontal">
+            <dt class="hidden">
+                @Html.DisplayNameFor(model => model.ProductTypeID)
+            </dt>
+
+            <dd class="hidden">
+                @Html.DisplayFor(model => model.ProductTypeID)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ProductTypeTitle)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ProductTypeTitle)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ProductTypeDescription)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ProductTypeDescription)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.StatusName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.StatusName)
+            </dd>
+
+            <dt class="">
+                @Html.DisplayNameFor(model => model.IsSystem)
+            </dt>
+
+            <dd class="">
+                @Html.DisplayFor(model => model.IsSystem)
+            </dd>
+
+        </dl>
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.ProductTypeID }, new { @class = "btn btn-success" }) | 
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-success" })
+        </p>
+    </div>
+</div>

@@ -1,0 +1,112 @@
+﻿@model OMSCloud.Contracts.ViewModels.CountryModel
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>CountryModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt class="hidden">
+            @Html.DisplayNameFor(model => model.RequestedByProfileId)
+        </dt>
+
+        <dd class="hidden">
+            @Html.DisplayFor(model => model.RequestedByProfileId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AllowsBilling)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AllowsBilling)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AllowsShipping)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AllowsShipping)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TwoLetterIsoCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TwoLetterIsoCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ThreeLetterIsoCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ThreeLetterIsoCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumericIsoCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumericIsoCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SubjectToVat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubjectToVat)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Published)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Published)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DisplayOrder)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DisplayOrder)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LimitedToStores)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LimitedToStores)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

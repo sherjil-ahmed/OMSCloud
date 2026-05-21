@@ -1,0 +1,57 @@
+﻿@model IEnumerable<OMSCloud.Contracts.ViewModels.CategoryAttributePairLookupModel>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <table class="table table-hover table-bordered table-responsive  table-striped dataTable" id="CategoryAttributePairTable" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.CategoryAttributePairID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AttributeTitle)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AttributeValue)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DisplayOrder)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IsAssigned)
+                    </th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                <tr id="@item.CategoryAttributePairID">
+                    <td class="hidden">
+                        @Html.DisplayFor(modelItem => item.CategoryAttributePairID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AttributeTitle)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.AttributeValue)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.DisplayOrder)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.IsAssigned)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Edit", new { id = item.CategoryAttributePairID })" class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="top" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
+                        @*<a href="@Url.Action("Delete", new { id = item.CategoryAttributePairID })" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Delete"><i class="glyphicon glyphicon-remove-sign"></i></a>*@
+                        
+                    </td>
+                </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

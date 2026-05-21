@@ -1,0 +1,99 @@
+﻿@model OMSCloud.Web.MVC.Net.Areas.Security.Models.ApplicationUser
+<script type="text/javascript">
+    $(document).ready(function () {
+        var $dialog = $('<div class="ui-dialog"></div>')
+            .html('Do you wish to delete this Role?')
+            .dialog({
+                autoOpen: false,
+                resizable: false,
+                height: 150,
+                modal: true,
+                title: 'Delete Confirmation?',
+                open: function () {
+                    $("#deletebtn").button({ icons: { primary: "ui-icon-trash" } });
+                },
+                buttons: [
+                    {
+                        text: "Delete",
+                        id: "deletebtn",
+                        click: function () {
+                            var _url = window.location;
+                            var _userId = window.location.pathname.substring(window.location.pathname.lastIndexOf("/") + 1);
+                            var _id = $(this).data('id');
+
+                            var _parameters = { userId: _userId, id: _id };
+                            $.ajax({
+                                url: "/Security/Admin/DeleteUserRoleReturnPartialView",
+                                type: "GET",
+                                data: _parameters,
+                                success: function (data, textStatus, jqXHR) {
+                                    $('#RolesTable').html(data);
+                                }
+                            });
+                            $(this).dialog('close');
+                        }
+                    },
+                    {
+                        text: "Cancel",
+                        id: "cancelbtn",
+                        click: function () { $(this).dialog("close"); }
+                    }]
+            });
+
+        $(".bin").click(function () {
+            $dialog.data("id", $(this).attr("id")).dialog("open");
+        });
+    })
+</script>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <fieldset style="padding: 1em; font: 100%; color: Black; border-color: Black; border-style: solid;
+    border-width: thin; border-color: Silver; width: 100%">
+            <legend><strong>Assigned Roles</strong></legend>
+            @{if (Model.Roles.Count == 0)
+                {
+                    <h2><font color="red">No Associated Roles...</font></h2>
+                    <br />
+                }
+                else
+                {
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <table class="table table-striped table-hover table-bordered table-responsive dataTable" style="width:100%" id="RoleTable">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 30%">
+                                            Role
+                                        </th>
+                                        <th style="width: 60%">
+                                            Description
+                                        </th>
+                                        <th>
+                                            Action
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var role in Model.Roles.OrderBy(r => r.RoleId))
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.ActionLink(role.Role.Name, "RoleDetails", new { id = role.RoleId })
+                                            </td>
+                                            <td>
+                                                @role.Role.RoleDescription
+                                            </td>
+                                            <td>
+                                                <center><img class="bin" src="@Url.Content("~/Areas/Security/Content/Images/bin.png")" alt="Delete" id="@role.RoleId" /></center>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                }
+            }
+        </fieldset>
+    </div>
+</div>

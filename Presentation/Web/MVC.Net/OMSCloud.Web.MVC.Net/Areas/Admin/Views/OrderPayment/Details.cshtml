@@ -1,0 +1,66 @@
+﻿@model OMSCloud.Contracts.ViewModels.OrderPaymentModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>OrderPaymentModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt class="hidden">
+            @Html.DisplayNameFor(model => model.RequestedByProfileId)
+        </dt>
+
+        <dd class="hidden">
+            @Html.DisplayFor(model => model.RequestedByProfileId)
+        </dd>
+
+        <dt class="hidden">
+            @Html.DisplayNameFor(model => model.OrderPaymentID)
+        </dt>
+
+        <dd class="hidden">
+            @Html.DisplayFor(model => model.OrderPaymentID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CartOrderID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CartOrderID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PaymentID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaymentID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Amount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Amount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BillingAddressID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BillingAddressID)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = item.OrderPaymentID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

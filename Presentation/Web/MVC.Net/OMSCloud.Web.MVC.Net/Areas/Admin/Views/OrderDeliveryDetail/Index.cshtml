@@ -1,0 +1,85 @@
+﻿@model IEnumerable<OMSCloud.Contracts.ViewModels.OrderDeliveryDetailModel>
+
+@{
+    ViewBag.Title = "Order Delivery Detail";
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <a href="@Url.Action("Create")" class="btn btn-md btn-default"><i class="glyphicon glyphicon-plus"></i> Create New</a>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped table-hover table-responsive table-bordered dataTable" style="width:100%">
+            <thead>
+                <tr>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.RequestedByProfileId)
+                    </th>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.OrderDeliveryDetailID)
+                    </th>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.CartOrderID)
+                    </th>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.DeliveryProductID)
+                    </th>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.DeliveryAddressID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CartOrderName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DeliveryProductTitle)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DeliveryAddress)
+                    </th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="hidden">
+                            @Html.DisplayFor(modelItem => item.RequestedByProfileId)
+                        </td>
+                        <td class="hidden">
+                            @Html.DisplayFor(modelItem => item.OrderDeliveryDetailID)
+                        </td>
+                        <td class="hidden">
+                            @Html.DisplayFor(modelItem => item.CartOrderID)
+                        </td>
+                        <td class="hidden">
+                            @Html.DisplayFor(modelItem => item.DeliveryProductID)
+                        </td>
+                        <td class="hidden">
+                            @Html.DisplayFor(modelItem => item.DeliveryAddressID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CartOrderName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DeliveryProductTitle)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DeliveryAddress)
+                        </td>
+                        <td>
+                            @*@Html.ActionLink("Edit", "Edit", new { id = item.OrderDeliveryDetailID }) |
+                                @Html.ActionLink("Details", "Details", new { id = item.OrderDeliveryDetailID }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.OrderDeliveryDetailID })*@
+                            <a href="@Url.Action("Edit", new { id = item.OrderDeliveryDetailID })" class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="top" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
+                            <a href="@Url.Action("Details", new { id = item.OrderDeliveryDetailID })" class="btn btn-xs btn-info" data-toggle="tooltip" data-placement="top" title="Details"><i class="glyphicon glyphicon-eye-open"></i></a>
+                            <a href="@Url.Action("Delete", new { id = item.OrderDeliveryDetailID })" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Delete"><i class="glyphicon glyphicon-remove-sign"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+        </div>
+</div>

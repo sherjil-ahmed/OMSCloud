@@ -1,0 +1,123 @@
+﻿@model OMSCloud.Contracts.ViewModels.CategoryModel
+@{
+    ViewBag.Title = "Category List";
+}
+<div class="panel panel-default">
+    <div class="panel-body">
+        <h3>Are you sure you want to delete this?</h3>
+        <div>
+            <dl class="dl-horizontal">
+                <dt class="hidden">
+                    @Html.DisplayNameFor(model => model.CategoryID)
+                </dt>
+
+                <dd class="hidden">
+                    @Html.DisplayFor(model => model.CategoryID)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.CategoryTitle)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.CategoryTitle)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.LogoPath)
+                </dt>
+
+                <dd>
+                    @if (!string.IsNullOrEmpty(ViewBag.LogoPath))
+                    {
+                        <img src="@ViewBag.LogoPath" alt="IMAGES" style="height:100px; width:100px" />
+                    }
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.CategoryTypeTitle)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.CategoryTypeTitle)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.CategoryParentTitle)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.CategoryParentTitle)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.StatusName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.StatusName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.IsSystem)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.IsSystem)
+                </dd>
+                <dt class="hidden">
+                    @Html.DisplayNameFor(model => model.CreatedBy)
+                </dt>
+
+                <dd class="hidden">
+                    @Html.DisplayFor(model => model.CreatedBy)
+                </dd>
+
+                <dt class="hidden">
+                    @Html.DisplayNameFor(model => model.CreatedOn)
+                </dt>
+
+                <dd class="hidden">
+                    @Html.DisplayFor(model => model.CreatedOn)
+                </dd>
+
+                <dt class="hidden">
+                    @Html.DisplayNameFor(model => model.ModifiedBy)
+                </dt>
+
+                <dd class="hidden">
+                    @Html.DisplayFor(model => model.ModifiedBy)
+                </dd>
+
+                <dt class="hidden">
+                    @Html.DisplayNameFor(model => model.ModifiedOn)
+                </dt>
+
+                <dd class="hidden">
+                    @Html.DisplayFor(model => model.ModifiedOn)
+                </dd>
+
+            </dl>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="Delete" class="btn btn-danger" />
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-success" })
+</div>

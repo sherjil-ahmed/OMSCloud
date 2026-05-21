@@ -1,0 +1,171 @@
+﻿@model OMSCloud.Contracts.ViewModels.PackagedProductModel
+
+<div>
+    <form id="PackagedProductForm">
+        <div class="form-vertical">
+            <h4>Packaged Products </h4>
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group hidden">
+                @Html.LabelFor(model => model.PackageID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.PackageID, new { htmlAttributes = new { @class = "form-control" , @Id = "mySameNew_PackageId"} })
+                    @Html.ValidationMessageFor(model => model.PackageID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group hidden ">
+                @Html.LabelFor(model => model.ProductTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-6">
+                    @Html.DropDownListFor(model => model.ProductID, ViewBag.ProductList as SelectList, "--Please Select--", new { @class = "form-control", @id = "PackagedProduct_productId", @readonly = "true" })
+                    @Html.ValidationMessageFor(model => model.ProductID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ChildProductTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-6">
+                    @Html.DropDownListFor(model => model.ChildProductID, ViewBag.ProductList as SelectList, "--Please Select--", new { @class = "form-control", @id = "childProductId" })
+                    @Html.ValidationMessageFor(model => model.ChildProductID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control", @id = "quantity" } })
+                    @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.PercentagePrice, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.PercentagePrice, new { htmlAttributes = new { @class = "form-control", @id = "percentagePrice" } })
+                    @Html.ValidationMessageFor(model => model.PercentagePrice, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.OtherDetails, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.OtherDetails, new { htmlAttributes = new { @class = "form-control", id = "otherDetails" } })
+                    @Html.ValidationMessageFor(model => model.OtherDetails, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+
+                @Html.LabelFor(model => model.IncludedByDefault, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-9">
+                    <div class="col-md-2">
+                        @Html.CheckBoxFor(model => model.IncludedByDefault, new { id = "includedByDefault" })
+                        @Html.ValidationMessageFor(model => model.IncludedByDefault, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                @*<div class="form-group">
+                        <div class="col-md-offset-2 col-md-6">
+                            <input type="submit" value="Save" class="btn btn-default" />
+                        </div>
+                    </div>*@
+
+                <div class="col-md-offset-7 col-md-8">
+                    <a id="btnSavePackagedProduct" href="#" class="btn btn-success" onclick="AddPackagedProduct()">Create</a>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            var AddPackagedProduct = function () {
+
+                var packageID = $('#mySameNew_PackageId').val();
+                var productID = @ViewContext.RouteData.Values["id"].ToString();
+                var ProductTitle = $('#PackagedProduct_productId option:selected').text();
+                var childProductID = $('#childProductId option:selected').val();
+                var childProductTitle = $('#childProductId option:selected').text();
+                var quantity = $('#quantity').val();
+                var includedByDefault = $('#includedByDefault').val();
+                //alert("includedByDefault : " + includedByDefault);
+                var percentagePrice = $('#percentagePrice').val();
+                var otherDetails = $('#otherDetails').val();
+
+                var form = $('#__AjaxAntiForgeryForm');
+                var token = $('input[name="__RequestVerificationToken"]', form).val();
+
+                var mydata = {
+                    PackageID: packageID,
+                    ProductID: productID,
+                    ChildProductID: childProductID,
+                    Quantity: quantity,
+                    IncludedByDefault: includedByDefault,
+                    PercentagePrice: percentagePrice,
+                    OtherDetails: otherDetails,
+                    "__RequestVerificationToken": token
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/PackagedProduct/CreatePackagedProduct/",
+                    data: mydata,
+                    success: function (result) {
+                        if (result == undefined || result == "") {
+                            alert('unable to associate Category with Product. Please retry.');
+                            return;
+                        }
+                        else {
+                            var newPackageId = result.PackageID;
+                            var newRow = "<tr>" +
+                                "<td class='hidden'>" +
+                                    newPackageId +
+                                "</td>" +
+                                "<td class='hidden'>" +
+                                productID +
+                                "</td>" +
+                                "<td class='hidden'>" +
+                                    ProductTitle   +
+                                "</td>" +
+                                "<td class='hidden'>" +
+                                    childProductID +
+                                "</td>" +
+                                "<td>" +
+                                    childProductTitle +
+                                "</td>" +
+                                "<td>" +
+                                    quantity +
+                                "</td>" +
+                                "<td>" +
+                                    includedByDefault +
+                                "</td>" +
+                                "<td>" +
+                                    percentagePrice +
+                                "</td>" +
+                                "<td>" +
+                                    otherDetails +
+                                "</td>" +
+                                //"<td>" +
+	                                //"<a href='/Admin/PackagedProduct/Edit/" + productID + "'>Edit</a>" +
+	                                //"<a href='/Admin/PackagedProduct/Details/" + productID + "'>Details</a> |" +
+	                                //"<a href='/Admin/PackagedProduct/Delete/" + productID + "'>Delete</a>" +
+                                //"</td>" +
+                                "</tr>"
+                            if ($("#btnSavePackagedProduct").text() == "Create") {
+                                $('#PackagedProductTable').append(newRow);
+                            } else {
+                                //alert('PackageId_' + newPackageId);
+                                //alert($('#PackageId_' + newPackageId).text());
+                                $('#PackageId_' + newPackageId).replaceWith(newRow);
+                            }
+                            $('#mySameNew_PackageId').val('');
+                            $('#productID').val('');
+                            $('#childProductId').val('');
+                            $('#quantity').val('');
+                            $('#includedByDefault').val('');
+                            $('#percentagePrice').val('');
+                            $('#otherDetails').val('');
+                        }
+                    }
+                });
+            }
+        </script>
+
+
+    </form>
+</div>

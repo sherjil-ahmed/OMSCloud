@@ -1,0 +1,64 @@
+﻿@model IEnumerable<OMSCloud.Contracts.ViewModels.OrderStatusModel>
+@{
+    ViewBag.Title = "Order Status List";
+}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <a href="@Url.Action("Create")" class="btn btn-md btn-default"><i class="glyphicon glyphicon-plus"></i> Create New</a>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped  table-hover table-responsive  table-bordered dataTable" style="width:100%">
+            <thead>
+                <tr>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.OrderStatusID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrderStatusTitle)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IsSystem)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IsOrder)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="hidden">
+                                @Html.DisplayFor(modelItem => item.OrderStatusID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OrderStatusTitle)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IsSystem)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IsOrder)
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Edit", new { id = item.OrderStatusID })" class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="top" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
+                                @*<a href="@Url.Action("Details", new { id = item.OrderStatusID })" class="btn btn-xs btn-info" data-toggle="tooltip" data-placement="top" title="Details"><i class="glyphicon glyphicon-eye-open"></i></a>
+                                <a href="@Url.Action("Delete", new { id = item.OrderStatusID })" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Delete"><i class="glyphicon glyphicon-remove-sign"></i></a>*@
+                            </td>
+                        </tr>
+                    }
+                }
+                </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+/* Progress Bar */
+.checkout-progress-bar li {
+    width: 175px;
+}
+   
+.checkout-progress-bar li.active:before, .checkout-progress-bar li.active>span:before {
+    /* background-color: #5A6978 ; */
+} 
+
+/* End Progress Bar */
+
+
+/* Global Css */
+
+a.btn.btn-outline-dark.custom-btn {
+    border: 1px solid #5a6978 !important;
+  }
+  a.btn.btn-outline-dark.custom-btn:hover {
+    background-color: #5a6978 !important;
+    color: #fff;
+  }
+
+  .row.btn-row {
+    text-align: center;
+  }
+
+textarea#description {
+    min-height: 120px;
+}
+
+
+
+
+/*End Global Css */
+
+
+@media(min-width:481px){
+    .checkout-progress-bar li {width: 20%;}
+}
+
+@media (max-width:480px){
+    .checkout-progress-bar li { width: 100%;}
+}

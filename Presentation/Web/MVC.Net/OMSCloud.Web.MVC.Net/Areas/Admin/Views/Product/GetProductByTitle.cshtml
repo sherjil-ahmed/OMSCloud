@@ -1,0 +1,145 @@
+﻿@model OMSCloud.Contracts.ViewModels.ProductModel
+@{
+    ViewBag.Title = "Product Details";
+}
+<div class="panel panel-default">
+    <div class="panel-body">
+        <dl class="dl-horizontal">
+            <dt class="hidden">
+                @Html.DisplayNameFor(model => model.ProductID)
+            </dt>
+
+            <dd class="hidden">
+                @Html.DisplayFor(model => model.ProductID)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ProductTitle)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ProductTitle)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.BrifeDescription)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.BrifeDescription)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ProductActualImagePath)
+            </dt>
+
+            <dd>
+                <img src=@ViewBag.ProductActualImagePath alt="IMAGES" style="height:100px; width:100px" />
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ProductImagePath)
+            </dt>
+
+            <dd>
+                <img src=@ViewBag.ProductImagePath alt="IMAGES" style="height:100px; width:100px" />
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.StockCount)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.StockCount)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.WebLink)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.WebLink)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.BasePrice)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.BasePrice)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.SellingPrice)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.SellingPrice)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.UserRating)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.UserRating)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.AnalysisRank)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.AnalysisRank)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ProductTypeName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ProductTypeName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.BrandName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.BrandName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.SupplierName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.SupplierName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.StatusName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.StatusName)
+            </dd>
+        </dl>
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.ProductID }, new { @class = "btn btn-success" })
+        </p>
+
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-success" })
+</div>
+

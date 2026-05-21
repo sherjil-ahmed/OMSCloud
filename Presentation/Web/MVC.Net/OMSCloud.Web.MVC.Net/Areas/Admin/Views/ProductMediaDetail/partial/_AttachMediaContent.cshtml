@@ -1,0 +1,237 @@
+﻿@model OMSCloud.Contracts.ViewModels.ProductMediaDetailModel
+
+<form id="ProductMediaDetailForm">
+    <div class="form-horizontal">
+
+        <div class="form-group hidden">
+            @Html.LabelFor(model => model.ProductMediaID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.ProductMediaID, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ProductMediaID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group hidden">
+            @Html.LabelFor(model => model.ProductMediaTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.ProductMediaTitle, new { htmlAttributes = new { @class = "form-control", id = "productMediaTitle" } })
+                @Html.ValidationMessageFor(model => model.ProductMediaTitle, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group hidden">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @id = "descre", @rows = "8" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group hidden">
+            @Html.LabelFor(model => model.MediaContentTypeTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.DropDownListFor(model => model.MediaContentTypeID, ViewBag.MediaContentType as SelectList, "--Please Select--", new { @class = "form-control", id = "mediaContentTypeID" })
+                @Html.ValidationMessageFor(model => model.MediaContentTypeID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group hidden">
+            @Html.LabelFor(model => model.Width, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.Width, new { htmlAttributes = new { @class = "form-control", id = "width", @type = "number" } })
+                @Html.ValidationMessageFor(model => model.Width, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group hidden">
+            @Html.LabelFor(model => model.Height, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.Height, new { htmlAttributes = new { @class = "form-control", id = "height", @type = "number" } })
+                @Html.ValidationMessageFor(model => model.Height, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group hidden">
+            @Html.LabelFor(model => model.TransparencyLevel, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.TransparencyLevel, new { htmlAttributes = new { @class = "form-control", id = "transparencyLevel", @type = "number" } })
+                @Html.ValidationMessageFor(model => model.TransparencyLevel, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group hidden">
+            @Html.LabelFor(model => model.StatusTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.DropDownListFor(model => model.StatusID, ViewBag.Status as SelectList, "--Please Select--", new { @class = "form-control", id = "statusID" })
+                @Html.ValidationMessageFor(model => model.StatusID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelForModel( "Add new Product Image", htmlAttributes: new { @class = "control-label col-md-2", id = "mediaFilePath" })
+            <div class="col-md-6">
+                <div class="btn btn-facebook">
+                    <input type="file" id="file" name="file" multiple="multiple" class="input-files" />
+                </div>
+                
+                <div id="imgPreview" class="thumbnail" style="display:none">
+                    <img class="img-responsive" id="targetImg" />
+                    <div class="caption">
+                        <a href="#" onclick="ClearPreview()"><i class="glyphicon glyphicon-trash"></i></a>
+                        <span id="description"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.MediaFilePath, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                <div class="btn btn-facebook">
+                    <input type="file" id="file" name="file" multiple="multiple" class="input-files" />
+                </div>
+                <hr />
+                <div id="imgPreview" class="thumbnail" style="display:none">
+                    <img class="img-responsive" id="targetImg" />
+                    <div class="caption">
+                        <a href="#" onclick="ClearPreview()"><i class="glyphicon glyphicon-trash"></i></a>
+                        <span id="description"></span>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+        @*<div class="form-group">
+            <div class="col-md-offset-7 col-md-8">
+                <a href="#" class="btn btn-success" onclick="AddMediaDetail()">Upload Image</a>
+            </div>
+        </div>*@
+    </div>
+</form>
+@*<script src="~/Scripts/jquery-3.1.1.min.js"></script>*@
+@*<script src="~/Scripts/ImageDisplay.js"></script>*@
+
+<script>
+    //var OnImageChange = function (e) {
+    //    var form = new FormData();
+    //    alert('dsdfsdfs');
+    //    console.write(form);
+    //    console.log(e.target.files)
+    //}
+    //document.getElementById("file").addEventListener('change', function (e) {
+    //    console.log(e.target.files)
+    //    for (let file of event.target.files) {
+    //        let form = new FormData();
+    //        form.append(file.name, file, "");
+    //        //
+    //        $.ajax({
+    //            url: "http://localhost:8749/api/Category/PutImageByCategoryId?Id=" + 1,//+ "&isDefault=false",
+    //            type: "POST",
+    //            timeout: 0,
+    //            processData: false,
+    //            mimeType: "multipart/form-data",
+    //            contentType: false,
+    //            data: form,
+    //            success: function (result) {
+    //                console.log(result);
+    //            }
+    //        });
+    //    }
+    //})
+
+</script>
+
+<script>
+
+    $('#file').on('change', function (e) {
+        //alert('sdfsdfsfsf');
+        var files = e.target.files;
+        var productId =@ViewContext.RouteData.Values["id"].ToString();
+        if (files.length > 0) {
+
+            var form = $('#__AjaxAntiForgeryForm');
+            var token = $('input[name="__RequestVerificationToken"]', form).val();
+
+            var data = new FormData();
+            data.append("file", files[0]);
+            data.append("productId", productId);
+            data.append("__RequestVerificationToken", token);
+            //console.log(data);
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("CreateMediaContentDetail", "ProductMediaDetail")',
+                contentType: false,
+                processData: false,
+                data: data,
+                success: function (data) {
+                    model.MediaFilePath = data;
+                    //var newRow = "<li><a href='#' >" +
+                    //"<img src='http://localhost:8749/DynamicContent/UploadedImages/ProductMediaDetail/data.ProductMediaID/data.MediaFilePath' class='img-responsive' id='targetImg' width='200' height='200' />" + 
+                    //"</a>    </li>";
+
+                    //$('#productImageList').append(newRow);
+
+                },
+                error: function () {
+
+                }
+
+            });
+        }
+    });
+</script>
+@*    <script>
+        var AddMediaDetail = function () {
+            //alert("yes");
+            var MediaContentTypeTitle = $('#mediaContentTypeID option:selected').text();
+            var StatusTitle = $('#statusID option:selected').text();
+
+            var form = $('#__AjaxAntiForgeryForm');
+            var token = $('input[name="__RequestVerificationToken"]', form).val();
+
+            var mydata = {
+                ProductMediaTitle: $('#productMediaTitle').val(),
+                Description: $('#descre').val(),
+                MediaContentTypeID: $('#mediaContentTypeID option:selected').val(),
+                ProductID: @ViewContext.RouteData.Values["id"].ToString(),
+                Width: $('#width').val(),
+                Height: $('#height').val(),
+                TransparencyLevel: $('#transparencyLevel').val(),
+                StatusID: $('#statusID option:selected').val(),
+                "__RequestVerificationToken": token,
+                //MediaContentTypeTitle: MediaContentTypeTitle,
+                //StatusTitle: StatusTitle
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/Admin/ProductMediaDetail/CreateMediaContentDetail/",
+                data: mydata,
+                success: function (result) {
+                    console.log('result: ' + result);
+                    if (result == undefined || result == "") {
+                        alert('unable to associate Media Contents. Please retry.');
+                        return;
+                    }
+                    else {
+                        var newRow =
+                            "<tr><td class='hidden'>" +
+                            result
+                            + "</td><td>" +
+                            mydata.ProductMediaTitle
+                            + "</td><td>" +
+                            MediaContentTypeTitle
+                            + "</td><td>" +
+                            mydata.Width
+                            + "</td><td>" +
+                            mydata.Height
+                            + "</td><td>" +
+                            mydata.TransparencyLevel
+                            + "</td><td>" +
+                            StatusTitle
+                            + "</td></tr>"
+
+                        $('#productMediaDetail').append(newRow);
+                    }
+                }
+            });
+        }
+    </script>*@

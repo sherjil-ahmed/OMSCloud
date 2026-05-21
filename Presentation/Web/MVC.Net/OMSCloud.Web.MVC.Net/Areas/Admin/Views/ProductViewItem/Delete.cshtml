@@ -1,0 +1,79 @@
+﻿@model OMSCloud.Contracts.ViewModels.ProductViewItemModel
+
+@{
+    ViewBag.Title = "ProductView-Item Delete";
+
+}
+<h2>@ViewBag.Title</h2>
+<hr />
+<h3>Are you sure you want to delete this?</h3>
+<div>
+
+    <dl class="dl-horizontal">
+        <dt hidden>
+            @Html.DisplayNameFor(model => model.ProductViewProductID)
+        </dt>
+
+        <dd hidden>
+            @Html.DisplayFor(model => model.ProductViewProductID)
+        </dd>
+
+        <dt hidden>
+            @Html.DisplayNameFor(model => model.ProductViewID)
+        </dt>
+
+        <dd hidden>
+            @Html.DisplayFor(model => model.ProductViewID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductViewName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductViewName)
+        </dd>
+
+        <dt hidden>
+            @Html.DisplayNameFor(model => model.ProductID)
+        </dt>
+
+        <dd hidden>
+            @Html.DisplayFor(model => model.ProductID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductName)
+        </dd>
+
+        <dt hidden>
+            @Html.DisplayNameFor(model => model.ProductMediaID)
+        </dt>
+
+        <dd hidden>
+            @Html.DisplayFor(model => model.ProductMediaID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductMediaName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductMediaName)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

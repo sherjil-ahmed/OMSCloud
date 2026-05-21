@@ -1,0 +1,104 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Basic -->
+    <meta charset="UTF-8">
+    <title>Dashboard | Zvonr Admin - Best Shopping Experience ever - Powered by AvatureBytes.com</title>
+    <meta name="keywords" content="e-Commerce online shopping web portal avanturebytes avanturebytes.com" />
+    <meta name="description" content="Zvonr Admin Panel by avanturebytes.com">
+    <meta name="author" content="www.avanturebytes.com">
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <!-- Web Fonts  -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
+    <!-- Vendor CSS -->
+    <link rel="stylesheet" href="/Areas/admin/Contents/assets/vendor/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="/Areas/admin/Contents/assets/vendor/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="/Areas/admin/Contents/assets/vendor/magnific-popup/magnific-popup.css" />
+    <link rel="stylesheet" href="/Areas/admin/Contents/assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css" />
+    <!-- Specific Page Vendor CSS -->
+    <link rel="stylesheet" href="/Areas/admin/Contents/assets/vendor/jquery-ui/jquery-ui.css" />
+    <link rel="stylesheet" href="/Areas/admin/Contents/assets/vendor/jquery-ui/jquery-ui.theme.css" />
+    <link rel="stylesheet" href="/Areas/admin/Contents/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css" />
+    <link rel="stylesheet" href="/Areas/admin/Contents/assets/vendor/morris.js/morris.css" />
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="/Areas/admin/Contents/assets/stylesheets/theme.css" />
+    <!-- Theme Custom CSS -->
+    <link rel="stylesheet" href="/Areas/admin/Contents/assets/stylesheets/theme-custom.css">
+    <!--Upload-->
+    <link rel="stylesheet" href="/Areas/admin/Contents/assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.css" />
+
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" />
+
+    <!-- Head Libs -->
+    <script src="/Areas/admin/Contents/assets/vendor/modernizr/modernizr.js"></script>
+    <script src="/Areas/admin/Contents/assets/vendor/style-switcher/style.switcher.localstorage.js"></script>
+
+
+</head>
+
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+    <div class="container body-content">
+        <div class="">@*inner-wrapper*@
+
+            <section role="main" class="content-body">
+                <div id="adminLayout_RenderBodySection">
+                    <h1>MVC BASE CONTROLLER LEVEL EXCEPTION HANDLING</h1>                    
+                    <div>
+                        @{
+                            object obj = TempData["Exception"];
+
+                            if (obj != null && obj is Exception)
+                            {
+                                var ExceptionDetail = TempData["ExceptionDetail"]?.ToString();
+                                var AdditionalExceptionDetail = TempData["AdditionalExceptionDetail"]?.ToString();
+                                var ExceptionType = TempData["ExceptionType"]?.ToString();
+                                <h1>Response Details</h1>
+                                <h2>@ExceptionType</h2>
+                                <h3>@ExceptionDetail</h3>
+                                <h3>@AdditionalExceptionDetail</h3>
+
+                                if (obj is System.Web.Http.HttpResponseException)
+                                {
+                                    var ex2 = obj as System.Web.Http.HttpResponseException;
+                                    <h2>StatusCode: @ex2.Response.StatusCode</h2>
+                                    <h2>RequestMessage: @ex2.Response.RequestMessage</h2>
+                                    <h2>ReasonPhrase: @ex2.Response.ReasonPhrase</h2>
+                                }
+                                else if (obj is ArgumentException)
+                                {
+                                    var ex3 = obj as ArgumentException;
+                                    <h2>ParamName: @ex3.ParamName</h2>
+                                }
+                                else if (obj is System.Web.Mvc.HttpAntiForgeryException)
+                                {
+                                    var ex4 = obj as System.Web.Mvc.HttpAntiForgeryException;
+                                    <h2>ErrorCode: @ex4.ErrorCode</h2>
+                                    <h2>WebEventCode: ex.WebEventCode</h2>
+                                }
+                            }
+                        }
+
+                    </div>
+                    <hr />
+                    <h1><a href="/Admin">Back to Home</a></h1>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

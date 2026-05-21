@@ -1,0 +1,31 @@
+﻿using OMSCloud.Business.Core;
+using OMSCloud.Contracts.Common;
+using OMSCloud.Contracts.Interfaces.IServices;
+using OMSCloud.Contracts.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Controllers;
+using System.Web.Http.Description;
+
+namespace OMSCloud.Services.WebAPIs.Controllers
+{
+    public partial class PackagedProductController : ApiController, IPackagedProductController
+    {
+
+
+        // GET: api/PackagedProduct
+        [ReturnType(DataType = typeof(List<PackagedProductModel>))]
+        public IHttpActionResult GetListByProductId(long Id)
+        {
+            return Ok<List<PackagedProductModel>>(comp.GetListByProductId(Id));
+        }
+
+
+
+    }
+}

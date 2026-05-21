@@ -1,0 +1,53 @@
+/*User Shop Css*/
+.mainsliwrapper {
+    margin-bottom: 20px;
+}
+.SearchSelectItem {
+    padding: 5px;
+    padding-left: 10px;
+    cursor: pointer;
+}
+div.SearchSelectItem:hover {
+    background-color: #d3d3d3;
+}
+.SearchSelectItem-focus {
+    background-color: #e0f7fa;
+    border-style: dotted;
+}
+.tab-main {
+    height: 56px;
+    margin-top: 35px;
+}
+.tab-main ul li {
+    display: inline-block;
+}
+.tab-main ul li a {
+    background: #150101;
+    color: #fff;
+    padding: 13px;
+    border-radius: 3px;
+    margin-left: 6px;
+    font-size: 15px;
+    box-sizing: border-box;
+    border: 1px solid #150101;
+}
+.ins {
+    margin-bottom: 0 !important;
+}
+.tab-main ul li a:hover {
+    border: 1px solid #150101;
+    background: transparent;
+    color: #150101;
+    box-sizing: border-box;
+}
+.upl-main {
+    justify-content: left !important;
+    width: 100% !important;
+}
+.upl-main div {
+    height: 180px;
+}
+.upload-col {
+    max-width: 18% !important;
+}
+/*User Shop Css*/

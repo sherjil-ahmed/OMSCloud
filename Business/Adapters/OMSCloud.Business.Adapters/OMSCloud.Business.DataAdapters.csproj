@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6F033CD0-5BF8-4675-9D35-B9AA0EA5F264}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>OMSCloud.Business.Adapters</RootNamespace>
+    <AssemblyName>OMSCloud.Business.Adapters</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="LinqKit.EntityFramework, Version=1.1.8.0, Culture=neutral, PublicKeyToken=b6c8cfc71f7a6a80, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\LinqKit.EntityFramework.1.1.8.0\lib\net461\LinqKit.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Linq.Dynamic, Version=1.0.6132.35681, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.Linq.Dynamic.1.0.7\lib\net40\System.Linq.Dynamic.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Linq.Dynamic.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0f07ec44de6ac832, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.Linq.Dynamic.Core.1.0.6.10\lib\net461\System.Linq.Dynamic.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AllAdapters_SP.cs" />
+    <Compile Include="BaseAdapter.cs" />
+    <Compile Include="AllAdapters.cs" />
+    <Compile Include="EntityAdapters\CartOrderManagement\CartAdapter.cs" />
+    <Compile Include="EntityAdapters\CartOrderManagement\OrderStatusMapAdapter.cs" />
+    <Compile Include="EntityAdapters\CartOrderManagement\PaymentAdapter.cs" />
+    <Compile Include="EntityAdapters\CartOrderManagement\PayOptionMatrixAdapter.cs" />
+    <Compile Include="EntityAdapters\CatalogueManagement\AttributeTypeAdapter.cs" />
+    <Compile Include="EntityAdapters\CatalogueManagement\ProductSearchAdapter.cs" />
+    <Compile Include="EntityAdapters\Address\AddressAdapter.cs" />
+    <Compile Include="EntityAdapters\Address\AddressTypeAdapter.cs" />
+    <Compile Include="EntityAdapters\CatalogueManagement\ScheduleAdapter.cs" />
+    <Compile Include="EntityAdapters\CatalogueManagement\SupplierDeliveryOptionPairAdapter.cs" />
+    <Compile Include="EntityAdapters\Misc\NotifyAdapter.cs" />
+    <Compile Include="EntityAdapters\Misc\BankAccountAdapter.cs" />
+    <Compile Include="EntityAdapters\Misc\ChatAdapter.cs" />
+    <Compile Include="EntityAdapters\Misc\ChatMessageAdapter.cs" />
+    <Compile Include="EntityAdapters\Misc\Config\AppConfigAdapter.cs" />
+    <Compile Include="EntityAdapters\CatalogueManagement\AttributeAdapter.cs" />
+    <Compile Include="EntityAdapters\CatalogueManagement\BrandAdapter.cs" />
+    <Compile Include="EntityAdapters\CartOrderManagement\CartItemAdapter.cs" />
+    <Compile Include="EntityAdapters\CartOrderManagement\OrderAdapter.cs" />
+    <Compile Include="EntityAdapters\CatalogueManagement\CategoryAdapter.cs" />
+    <Compile Include="EntityAdapters\CatalogueManagement\CategoryAttributePairAdapter.cs" />
+    <Compile Include="EntityAdapters\CatalogueManagement\CategoryTypeAdapter.cs" />
+    <Compile Include="EntityAdapters\Misc\CustomerReviewAdapter.cs" />
+    <Compile Include="EntityAdapters\UserSecurity\DocumentTypeAdapter.cs" />
+    <Compile Include="EntityAdapters\Misc\DataTypeAdapter.cs" />
+    <Compile Include="EntityAdapters\CartOrderManagement\DeliveryOptionAdapter.cs" />
+    <Compile Include="EntityAdapters\UserSecurity\ExecActionAdapter.cs" />
+    <Compile Include="EntityAdapters\UserSecurity\ExecActionParamAdapter.cs" />
+    <Compile Include="EntityAdapters\UserSecurity\GroupAdapter.cs" />
+    <Compile Include="EntityAdapters\UserSecurity\GroupRolePairAdapter.cs" />
+    <Compile Include="EntityAdapters\Address\LocationLevelAdapter.cs" />
+    <Compile Include="EntityAdapters\Address\LocationTreeAdapter.cs" />
+    <Compile Include="EntityAdapters\CatalogueManagement\MediaContentTypeAdapter.cs" />
+    <Compile Include="EntityAdapters\UserSecurity\OptionAdapter.cs" />
+    <Compile Include="EntityAdapters\UserSecurity\OptionTypeAdapter.cs" />
+    <Compile Include="EntityAdapters\CartOrderManagement\OrderDeliveryDetailAdapter.cs" />
+    <Compile Include="EntityAdapters\CartOrderManagement\OrderPaymentAdapter.cs" />
+    <Compile Include="EntityAdapters\CartOrderManagement\OrderStatusAdapter.cs" />
+    <Compile Include="EntityAdapters\CatalogueManagement\PackagedProductAdapter.cs" />
+    <Compile Include="EntityAdapters\CartOrderManagement\PayModeAdapter.cs" />
+    <Compile Include="EntityAdapters\CartOrderManagement\PayTypeAdapter.cs" />
+    <Compile Include="EntityAdapters\CatalogueManagement\ProductAdapter.cs" />
+    <Compile Include="EntityAdapters\CatalogueManagement\ProductAttributePairAdapter.cs" />
+    <Compile Include="EntityAdapters\CatalogueManagement\ProductMediaDetailAdapter.cs" />
+    <Compile Include="EntityAdapters\CatalogueManagement\ProductTypeAdapter.cs" />
+    <Compile Include="EntityAdapters\CatalogueManagement\ProductViewAdapter.cs" />
+    <Compile Include="EntityAdapters\CatalogueManagement\ProductViewItemAdapter.cs" />
+    <Compile Include="EntityAdapters\UserSecurity\ProfileAdapter.cs" />
+    <Compile Include="EntityAdapters\UserSecurity\ProfileVerificationAdapter.cs" />
+    <Compile Include="EntityAdapters\UserSecurity\RoleAdapter.cs" />
+    <Compile Include="EntityAdapters\UserSecurity\RoleOptionPairAdapter.cs" />
+    <Compile Include="EntityAdapters\Misc\UnUsed\StateMachineAdapter.cs" />
+    <Compile Include="EntityAdapters\Misc\UnUsed\StateMachineStateAdapter.cs" />
+    <Compile Include="EntityAdapters\Misc\StatusAdapter.cs" />
+    <Compile Include="EntityAdapters\CatalogueManagement\SupplierAdapter.cs" />
+    <Compile Include="EntityAdapters\Misc\TaxAdapter.cs" />
+    <Compile Include="EntityAdapters\Misc\TaxTypeAdapter.cs" />
+    <Compile Include="EntityAdapters\UserSecurity\UserAdapter.cs" />
+    <Compile Include="EntityAdapters\UserSecurity\UserTypeAdapter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Contracts\Common\OMSCloud.Contracts.Common\OMSCloud.Contracts.Common.csproj">
+      <Project>{154F21BC-1A1D-4DC1-BD84-A89AEB2C1F87}</Project>
+      <Name>OMSCloud.Contracts.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Contracts\ViewModels\OMSCloud.Contracts.ViewModels\OMSCloud.Contracts.ViewModels.csproj">
+      <Project>{FF7B0FEA-9B94-44FD-B252-2CDE40F11FE2}</Project>
+      <Name>OMSCloud.Contracts.ViewModels</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\DataStore\OMSCloud.DataStore.EF\OMSCloud.DataStore.EF.csproj">
+      <Project>{66c65132-8aba-4b2a-bcf0-a55dc73b3f7d}</Project>
+      <Name>OMSCloud.DataStore.EF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\DataStore\UoW_RepositoryFramework\UoW_RepositoryFramework.csproj">
+      <Project>{44f2336b-0f6d-48d7-8488-f921ca077188}</Project>
+      <Name>UoW_RepositoryFramework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

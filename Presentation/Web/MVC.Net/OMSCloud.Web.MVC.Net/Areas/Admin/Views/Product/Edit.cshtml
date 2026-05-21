@@ -1,0 +1,96 @@
+﻿@model OMSCloud.Contracts.ViewModels.ProductModel
+@{
+    ViewBag.Title = "Modify Product: " + Model.ProductTitle;
+}
+<div class="panel panel-default">
+    <div class="panel-body">
+        @using (Html.BeginForm("Edit", "Product", FormMethod.Post, new { enctype = "multipart/form-data", id = "productEdit" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="col-md-12">
+                    <div class="tabs">
+                        <ul class="nav nav-tabs">
+                            <li class="active">
+                                <a href="#Basic" data-toggle="tab"><i class="fa fa-star"></i>Basic</a>
+                            </li>
+                            <li class="">
+                                <a href="#Detailed" data-toggle="tab">Details</a>
+                            </li>
+                            <li class="">
+                                <a href="#ProductCategory_TabContent" onclick="ShowTabJson('ShowProductCategory', 'ProductCategory_TabContent');" data-toggle="tab">Product's Categories</a>
+                            </li>
+                            <li class="">
+                                <a href="#ProductMediaDetail_TabContent" onclick="ShowTabJson('ShowProductMediaDetail', 'ProductMediaDetail_TabContent');" data-toggle="tab">Product Images</a>
+                            </li>
+                            <li class="">
+                                <a href="#ProductAttribute_TabContent" onclick="ShowTabJson('ShowProductAttributeTab', 'ProductAttribute_TabContent');" data-toggle="tab">Product's Attributes</a>
+                            </li>
+                            @*<li class="">
+                                <a href="#PackagedProduct_TabContent" onclick="ShowTabJson('ShowPackagedProduct', 'PackagedProduct_TabContent');" data-toggle="tab">Packaged Product</a>
+                            </li>*@
+                            <li class="">
+                                <a href="#ProductReview_TabContent" data-toggle="tab">Reviews</a>
+                            </li>
+                        </ul>
+                        <div id="productTabContents" class="tab-content">
+                            <div id="Basic" class="tab-pane active">
+                                @Html.Partial("Partial/_ProductBasicInfo")
+                            </div>
+                            <div id="Detailed" class="tab-pane ">
+                                @Html.Partial("Partial/_ProductDetailedInfo")
+                            </div>
+                            <div id="ProductCategory_TabContent" class="tab-pane ">
+                                @*@{Html.RenderAction("ShowProductCategory", "Product", new { id = Model.ProductID });}*@
+                            </div>
+                            <div id="ProductMediaDetail_TabContent" class="tab-pane ">
+
+                            </div>
+                            <div id="ProductAttribute_TabContent" class="tab-pane ">
+                                @*@{Html.RenderAction("ShowProductAttributeTab", "Product", new { id = Model.ProductID });}*@
+                            </div>
+                            @*<div id="PackagedProduct_TabContent" class="tab-pane ">
+                                @{Html.RenderAction("ShowPackagedProduct", "Product", new { id = Model.ProductID });}
+                            </div>*@
+                            <div id="ProductReview_TabContent" class="tab-pane ">
+                                @{Html.RenderAction("ShowProductReviewTab", "Product", new { id = Model.ProductID });}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group hidden">
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.ModifiedOn.Ticks, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Back to List", "Index",null, new { @class = "btn btn-success" })
+</div>
+<script>
+    var ShowTabJson = function (Action, divId) {
+        var Form = divId.substr(0, divId.indexOf("_")) + "Form"
+        var form = $("#"+Form+"");
+        if(form.length > 0)// == null || form == undefined)
+        {
+            return;
+        }
+        $.ajax({
+            type: "GET",
+            url: "/Admin/Product/" + Action + "/" + @ViewContext.RouteData.Values["id"].ToString(),
+            success: function (result) {
+                var o = $("#" + divId + "");
+                if (o != null || o != undefined) {
+                    o.append(result);
+                }
+            }
+        });
+    }
+
+</script>
+
+

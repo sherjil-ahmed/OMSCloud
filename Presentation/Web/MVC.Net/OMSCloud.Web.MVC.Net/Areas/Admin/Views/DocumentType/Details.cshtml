@@ -1,0 +1,60 @@
+﻿@model OMSCloud.Contracts.ViewModels.DocumentTypeModel
+
+@{
+    ViewBag.Title = "Document Type Details";
+}
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div>
+            <dl class="dl-horizontal">
+                <dt hidden>
+                    @Html.DisplayNameFor(model => model.RequestedByProfileId)
+                </dt>
+
+                <dd hidden>
+                    @Html.DisplayFor(model => model.RequestedByProfileId)
+                </dd>
+
+                <dt hidden>
+                    @Html.DisplayNameFor(model => model.DocumentTypeID)
+                </dt>
+
+                <dd hidden>
+                    @Html.DisplayFor(model => model.DocumentTypeID)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.DocumentTypeTitle)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.DocumentTypeTitle)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.IsSystem)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.IsSystem)
+                </dd>
+
+            </dl>
+        </div>
+        <p>
+            @Html.ActionLink("Modify", "Edit", new { id = Model.DocumentTypeID }, new { @class = "btn btn-success" }) 
+        </p>
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-success" })
+</div>

@@ -1,0 +1,138 @@
+﻿@using OMSCloud.Contracts.Common.DBEnums
+@using OMSCloud.Contracts.Common
+@using OMSCloud.Contracts.ViewModels;
+@using OMSCloud.Web.MVC.Net;
+@{
+    string pageUrl = Request.Url.PathAndQuery.ToString();
+    int count = pageUrl.Split('/').Length - 1;
+    while (count > 2)
+    {
+        int last = pageUrl.LastIndexOf('/');
+        pageUrl = pageUrl.Substring(0, last);
+        count = pageUrl.Split('/').Length - 1;
+    }
+    List<RoleOptionPairModel> roleOptionPairModelList = ApplicationSession.RoleOptionPairModelList.OrderBy(x => x.Option.DisplayOrder).ToList();
+
+}
+
+<aside id="sidebar-left" class="sidebar-left">
+    @*<h2>@ViewBag.Title</h2>*@
+    <div class="sidebar-header">
+
+        <div class="sidebar-title">
+            Navigation
+        </div>
+        <div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
+            <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+        </div>
+    </div>
+
+    <div class="nano">
+        <div class="nano-content">
+            <nav id="menu" class="nav-main" role="navigation">
+                <ul class="nav nav-main">                                       
+                    @{
+                        foreach (RoleOptionPairModel optionPairModel in roleOptionPairModelList)
+                        {
+                            if (optionPairModel.Children.Count == 0)
+                            {
+                                <li class="">
+                                    <a href="@optionPairModel.Option.PageURL">
+                                        <i class="@optionPairModel.Option.ItemTitle" aria-hidden="true"></i>
+                                        <span>@optionPairModel.Option.MenuTitle</span>
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
+                                bool isexpended = false;
+                                if(optionPairModel.Option.PageURL == pageUrl)
+                                {
+                                    isexpended = true;
+                                }
+                                foreach (RoleOptionPairModel firstChild1 in optionPairModel.Children)
+                                {
+                                    if (firstChild1.Option.PageURL == pageUrl)
+                                    {
+                                        isexpended = true;
+                                    }
+                                    if (firstChild1.Children.Where(x=>x.Option.PageURL == pageUrl).ToList().Count > 0)
+                                    {
+                                        isexpended = true;
+                                    }
+                                    foreach (RoleOptionPairModel secondChild1 in firstChild1.Children)
+                                    {
+                                        if (secondChild1.Option.PageURL == pageUrl)
+                                        {
+                                            isexpended = true;
+                                        }
+                                        if (secondChild1.Children.Where(x => x.Option.PageURL == pageUrl).ToList().Count > 0)
+                                        {
+                                            isexpended = true;
+                                        }
+                                    }
+                                }
+
+                                <li class="nav-parent @(isexpended  ? "nav-expanded nav-active" : "nav")">
+                                    <a>
+                                        <i class="@optionPairModel.Option.ItemTitle" aria-hidden="true"></i>
+                                        <span>@optionPairModel.Option.MenuTitle</span>
+                                    </a>
+                                    <ul class="nav nav-children">
+                                        @{
+                                            foreach (RoleOptionPairModel firstChild in optionPairModel.Children.OrderBy(x => x.Option.DisplayOrder).ToList())
+                                            {
+                                                if (firstChild.Children.Count == 0)
+                                                {
+                                                    <li class="@(pageUrl==firstChild.Option.PageURL ? " nav-active" : "nav")">
+                                                        <a href="@firstChild.Option.PageURL">
+                                                            <span>@firstChild.Option.MenuTitle</span>
+                                                        </a>
+                                                    </li>
+                                                }
+                                                else
+                                                {
+                                                    <li class="nav-parent @(firstChild.Children.Where(x=>x.Option.PageURL==pageUrl).ToList().Count > 0 ? "nav-expanded nav-active" : "nav")">
+                                                        <a>
+                                                            <i class="@firstChild.Option.ItemTitle" aria-hidden="true"></i>
+                                                            <span>@firstChild.Option.MenuTitle</span>
+                                                        </a>
+                                                        <ul class="nav nav-children">
+                                                            @{
+                                                                foreach (RoleOptionPairModel secondChild in firstChild.Children.OrderBy(x => x.Option.DisplayOrder).ToList())
+                                                                {
+                                                                    <li class="@(pageUrl==secondChild.Option.PageURL ? " nav-active" : "nav")">
+                                                                        <a href="@secondChild.Option.PageURL">
+                                                                            <span>@secondChild.Option.MenuTitle</span>
+                                                                        </a>
+                                                                    </li>
+                                                                }
+                                                            }
+                                                        </ul>
+                                                    </li>
+                                                }
+                                            }
+                                        }
+                                    </ul>
+                                </li>
+                            }
+                        }
+                    }
+                    
+
+                </ul>
+            </nav>
+        </div>
+        <script>
+            // Preserve Scroll Position
+            if (typeof localStorage !== 'undefined') {
+                if (localStorage.getItem('sidebar-left-position') !== null) {
+                    var initialPosition = localStorage.getItem('sidebar-left-position'),
+                        sidebarLeft = document.querySelector('#sidebar-left .nano-content');
+
+                    sidebarLeft.scrollTop = initialPosition;
+                }
+            }
+        </script>
+    </div>
+</aside>

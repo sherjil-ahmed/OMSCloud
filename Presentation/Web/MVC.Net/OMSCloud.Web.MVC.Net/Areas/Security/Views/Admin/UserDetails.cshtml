@@ -1,0 +1,38 @@
+﻿@model OMSCloud.Web.MVC.Net.Areas.Security.Models.ApplicationUser
+@{
+    ViewBag.Title = "Modify UserDetail: " + Model.Email;
+}
+
+@using (Html.BeginForm("UserDetails", "Admin", FormMethod.Post))
+{
+    <div class="panel panel-default">
+        <div class="panel-body">
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <fieldset>
+                @Html.Partial("_userDetails", Model)
+                <input class="btn btn-success" type="button" value="Edit" onclick="location.href='@Url.Action("UserEdit", "Admin", new { id = Model.Id })'" />
+            </fieldset>
+        </div>
+    </div>
+}
+<div class="panel panel-default">
+    <div class="panel-body">
+        <fieldset>
+            <legend>
+                <h3>
+                    Roles Associated with this User
+                </h3>
+            </legend>
+            <div class="panel" id="RolesTable">
+                @Html.Partial("_ListUserRoleTable", Model)
+            </div>
+        </fieldset>
+    </div>
+</div>
+
+
+<div>
+    <input class="btn btn-default" type="button" value="Go to Users" onclick="location.href='@Url.Action("Index", "Admin", new { id = Model.Id })'" />
+
+</div>

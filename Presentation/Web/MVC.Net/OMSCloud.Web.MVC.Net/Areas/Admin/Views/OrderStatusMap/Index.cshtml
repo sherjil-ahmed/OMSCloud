@@ -1,0 +1,214 @@
+﻿@model IEnumerable<OMSCloud.Contracts.ViewModels.OrderStatusMapModel>
+
+@{
+    ViewBag.Title = "Order Status Map List";
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <a href="@Url.Action("Create")" class="btn btn-md btn-default"><i class="glyphicon glyphicon-plus"></i> Create New</a>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped table-hover table-responsive table-bordered dataTable" style="width:100%">
+            <thead>
+                <tr @*style="background-color: ActiveCaption"*@>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.RequestedByProfileId)
+                    </th>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.OrderStatusMapID)
+                    </th>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.ParentOrderStatusID)
+                    </th>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.ChildOrderStatusID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ParentOrderStatusTitle)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IsDefault)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ChildOrderStatusTitle)
+                    </th>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.StatusID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.StatusTitle)
+                    </th>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                            <tr>
+                                <td class="hidden">
+                                    @Html.DisplayFor(modelItem => item.RequestedByProfileId)
+                                </td>
+                                <td class="hidden">
+                                    @Html.DisplayFor(modelItem => item.OrderStatusMapID)
+                                </td>
+                                <td class="hidden">
+                                    @Html.DisplayFor(modelItem => item.ParentOrderStatusID)
+                                </td>
+                                <td class="hidden">
+                                    @Html.DisplayFor(modelItem => item.ChildOrderStatusID)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ParentOrderStatusTitle)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.IsDefault)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ChildOrderStatusTitle)
+                                </td>
+                                <td class="hidden">
+                                    @Html.DisplayFor(modelItem => item.StatusID)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.StatusTitle)
+                                </td>
+                                <td class="hidden">
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("Edit", new { id = item.OrderStatusMapID })" class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="top" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
+                                    @*<a href="@Url.Action("Details", new { id = item.OrderStatusMapID })" class="btn btn-xs btn-info" data-toggle="tooltip" data-placement="top" title="Details"><i class="glyphicon glyphicon-eye-open"></i></a>
+                                    <a href="@Url.Action("Delete", new { id = item.OrderStatusMapID })" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Delete"><i class="glyphicon glyphicon-remove-sign"></i></a>*@
+                                </td>
+                            </tr>
+                    }
+                }
+                </tbody>
+        </table>
+    </div>
+</div>
+
+@*<div class="panel-body">
+        <div id="treeCheckbox" class="jstree jstree-2 jstree-default jstree-checkbox-selection" role="tree" aria-multiselectable="true" tabindex="0" aria-activedescendant="j2_1" aria-busy="false">
+            <ul class="jstree-container-ul jstree-children" role="group">
+                <li role="treeitem" aria-selected="false" aria-level="1" aria-labelledby="j2_1_anchor" aria-expanded="true" id="j2_1" class="jstree-node  jstree-open">
+                    <i class="jstree-icon jstree-ocl" role="presentation"></i>
+                    <a class="jstree-anchor" href="#" tabindex="-1" id="j2_1_anchor">
+                        <i class="jstree-icon jstree-checkbox jstree-undetermined" role="presentation"></i>
+                        <i class="jstree-icon jstree-themeicon fa fa-folder jstree-themeicon-custom" role="presentation"></i>
+                        Root Node
+                    </a>
+                    <ul role="group" class="jstree-children">
+                        <li role="treeitem" data-jstree="{ &quot;selected&quot; : true }" aria-selected="true" aria-level="2" aria-labelledby="j2_2_anchor" id="j2_2" class="jstree-node  jstree-leaf">
+                            <i class="jstree-icon jstree-ocl" role="presentation"></i>
+                            <a class="jstree-anchor  jstree-clicked" href="#" tabindex="-1" id="j2_2_anchor">
+                                <i class="jstree-icon jstree-checkbox" role="presentation"></i>
+                                <i class="jstree-icon jstree-themeicon fa fa-folder jstree-themeicon-custom" role="presentation"></i>
+                                Selected Node
+                            </a>
+                        </li>
+                        <li role="treeitem" data-jstree="{ &quot;opened&quot; : true }" aria-selected="false" aria-level="2" aria-labelledby="j2_3_anchor" aria-expanded="true" id="j2_3" class="jstree-node  jstree-open">
+                            <i class="jstree-icon jstree-ocl" role="presentation"></i>
+                            <a class="jstree-anchor" href="#" tabindex="-1" id="j2_3_anchor">
+                                <i class="jstree-icon jstree-checkbox" role="presentation"></i>
+                                <i class="jstree-icon jstree-themeicon fa fa-folder jstree-themeicon-custom" role="presentation"></i>
+                                Opened Node
+                            </a>
+                            <ul role="group" class="jstree-children">
+                                <li role="treeitem" data-jstree="{ &quot;disabled&quot; : true }" aria-selected="false" aria-level="3" aria-labelledby="j2_4_anchor" aria-disabled="true" id="j2_4" class="jstree-node  jstree-leaf">
+                                    <i class="jstree-icon jstree-ocl" role="presentation"></i>
+                                    <a class="jstree-anchor  jstree-disabled" href="#" tabindex="-1" id="j2_4_anchor">
+                                        <i class="jstree-icon jstree-checkbox" role="presentation"></i>
+                                        <i class="jstree-icon jstree-themeicon fa fa-folder jstree-themeicon-custom" role="presentation"></i>
+                                        Disabled Node
+                                    </a>
+                                </li>
+                                <li role="treeitem" data-jstree="{ &quot;type&quot; : &quot;file&quot; }" aria-selected="false" aria-level="3" aria-labelledby="j2_5_anchor" id="j2_5" class="jstree-node  jstree-leaf jstree-last">
+                                    <i class="jstree-icon jstree-ocl" role="presentation"></i><a class="jstree-anchor" href="#" tabindex="-1" id="j2_5_anchor">
+                                        <i class="jstree-icon jstree-checkbox" role="presentation"></i><i class="jstree-icon jstree-themeicon fa fa-file jstree-themeicon-custom" role="presentation"></i>
+                                        Child Node
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li role="treeitem" data-jstree="{ &quot;icon&quot; : &quot;fa fa-picture-o&quot; }" aria-selected="false" aria-level="2" aria-labelledby="j2_6_anchor" id="j2_6" class="jstree-node  jstree-leaf">
+                            <i class="jstree-icon jstree-ocl" role="presentation"></i><a class="jstree-anchor" href="#" tabindex="-1" id="j2_6_anchor">
+                                <i class="jstree-icon jstree-checkbox" role="presentation"></i><i class="jstree-icon jstree-themeicon fa fa-picture-o jstree-themeicon-custom" role="presentation"></i>
+                                Custom Icon
+                            </a>
+                        </li>
+                        <li role="treeitem" data-jstree="{ &quot;icon&quot; : &quot;assets/images/icon.png&quot; }" aria-selected="false" aria-level="2" aria-labelledby="j2_7_anchor" id="j2_7" class="jstree-node  jstree-leaf jstree-last">
+                            <i class="jstree-icon jstree-ocl" role="presentation"></i><a class="jstree-anchor" href="#" tabindex="-1" id="j2_7_anchor">
+                                <i class="jstree-icon jstree-checkbox" role="presentation"></i><i class="jstree-icon jstree-themeicon jstree-themeicon-custom" role="presentation" style="background-image: url(&quot;assets/images/icon.png&quot;); background-position: center center; background-size: auto;"></i>
+                                Custom Icon Image
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li role="treeitem" aria-selected="false" aria-level="1" aria-labelledby="j2_8_anchor" id="j2_8" class="jstree-node colored jstree-leaf">
+                    <i class="jstree-icon jstree-ocl" role="presentation"></i><a class="jstree-anchor" href="#" tabindex="-1" id="j2_8_anchor">
+                        <i class="jstree-icon jstree-checkbox" role="presentation"></i><i class="jstree-icon jstree-themeicon fa fa-folder jstree-themeicon-custom" role="presentation"></i>
+                        Colored
+                    </a>
+                </li>
+                <li role="treeitem" aria-selected="false" aria-level="1" aria-labelledby="j2_9_anchor" id="j2_9" class="jstree-node colored-icon jstree-leaf">
+                    <i class="jstree-icon jstree-ocl" role="presentation"></i><a class="jstree-anchor" href="#" tabindex="-1" id="j2_9_anchor">
+                        <i class="jstree-icon jstree-checkbox" role="presentation"></i><i class="jstree-icon jstree-themeicon fa fa-folder jstree-themeicon-custom" role="presentation"></i>
+                        Colored Icon Only
+                    </a>
+                </li>
+                <li role="treeitem" aria-selected="false" aria-level="1" aria-labelledby="j2_10_anchor" id="j2_10" class="jstree-node folder jstree-leaf jstree-last">
+                    <i class="jstree-icon jstree-ocl" role="presentation"></i><a class="jstree-anchor" href="#" tabindex="-1" id="j2_10_anchor">
+                        <i class="jstree-icon jstree-checkbox" role="presentation"></i><i class="jstree-icon jstree-themeicon fa fa-folder jstree-themeicon-custom" role="presentation"></i>
+                        Folder Style
+                    </a>
+                </li>
+                <li role="treeitem" aria-selected="false" aria-level="1" aria-labelledby="j2_1_anchor" aria-expanded="true" id="j2_1" class="jstree-node  jstree-open">
+                    <i class="jstree-icon jstree-ocl" role="presentation"></i><a class="jstree-anchor" href="#" tabindex="-1" id="j2_1_anchor">
+                        <i class="jstree-icon jstree-checkbox jstree-undetermined" role="presentation"></i><i class="jstree-icon jstree-themeicon fa fa-folder jstree-themeicon-custom" role="presentation"></i>
+                        Root Node
+                    </a><ul role="group" class="jstree-children">
+                        <li role="treeitem" data-jstree="{ &quot;selected&quot; : true }" aria-selected="true" aria-level="2" aria-labelledby="j2_2_anchor" id="j2_2" class="jstree-node  jstree-leaf"><i class="jstree-icon jstree-ocl" role="presentation"></i><a class="jstree-anchor  jstree-clicked" href="#" tabindex="-1" id="j2_2_anchor"><i class="jstree-icon jstree-checkbox" role="presentation"></i><i class="jstree-icon jstree-themeicon fa fa-folder jstree-themeicon-custom" role="presentation"></i>Selected Node</a></li>
+                        <li role="treeitem" data-jstree="{ &quot;opened&quot; : true }" aria-selected="false" aria-level="2" aria-labelledby="j2_3_anchor" aria-expanded="true" id="j2_3" class="jstree-node  jstree-open">
+                            <i class="jstree-icon jstree-ocl" role="presentation"></i><a class="jstree-anchor" href="#" tabindex="-1" id="j2_3_anchor">
+                                <i class="jstree-icon jstree-checkbox" role="presentation"></i><i class="jstree-icon jstree-themeicon fa fa-folder jstree-themeicon-custom" role="presentation"></i>
+                                Opened Node
+                            </a><ul role="group" class="jstree-children">
+                                <li role="treeitem" data-jstree="{ &quot;disabled&quot; : true }" aria-selected="false" aria-level="3" aria-labelledby="j2_4_anchor" aria-disabled="true" id="j2_4" class="jstree-node  jstree-leaf">
+                                    <i class="jstree-icon jstree-ocl" role="presentation"></i><a class="jstree-anchor  jstree-disabled" href="#" tabindex="-1" id="j2_4_anchor">
+                                        <i class="jstree-icon jstree-checkbox" role="presentation"></i><i class="jstree-icon jstree-themeicon fa fa-folder jstree-themeicon-custom" role="presentation"></i>
+                                        Disabled Node
+                                    </a>
+                                </li>
+                                <li role="treeitem" data-jstree="{ &quot;type&quot; : &quot;file&quot; }" aria-selected="false" aria-level="3" aria-labelledby="j2_5_anchor" id="j2_5" class="jstree-node  jstree-leaf jstree-last">
+                                    <i class="jstree-icon jstree-ocl" role="presentation"></i><a class="jstree-anchor" href="#" tabindex="-1" id="j2_5_anchor">
+                                        <i class="jstree-icon jstree-checkbox" role="presentation"></i><i class="jstree-icon jstree-themeicon fa fa-file jstree-themeicon-custom" role="presentation"></i>
+                                        Child Node
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li role="treeitem" data-jstree="{ &quot;icon&quot; : &quot;fa fa-picture-o&quot; }" aria-selected="false" aria-level="2" aria-labelledby="j2_6_anchor" id="j2_6" class="jstree-node  jstree-leaf">
+                            <i class="jstree-icon jstree-ocl" role="presentation"></i><a class="jstree-anchor" href="#" tabindex="-1" id="j2_6_anchor">
+                                <i class="jstree-icon jstree-checkbox" role="presentation"></i><i class="jstree-icon jstree-themeicon fa fa-picture-o jstree-themeicon-custom" role="presentation"></i>
+                                Custom Icon
+                            </a>
+                        </li>
+                        <li role="treeitem" data-jstree="{ &quot;icon&quot; : &quot;assets/images/icon.png&quot; }" aria-selected="false" aria-level="2" aria-labelledby="j2_7_anchor" id="j2_7" class="jstree-node  jstree-leaf jstree-last">
+                            <i class="jstree-icon jstree-ocl" role="presentation"></i><a class="jstree-anchor" href="#" tabindex="-1" id="j2_7_anchor">
+                                <i class="jstree-icon jstree-checkbox" role="presentation"></i><i class="jstree-icon jstree-themeicon jstree-themeicon-custom" role="presentation" style="background-image: url(&quot;assets/images/icon.png&quot;); background-position: center center; background-size: auto;"></i>
+                                Custom Icon Image
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>*@

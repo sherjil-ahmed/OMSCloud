@@ -1,0 +1,113 @@
+﻿@model OMSCloud.Contracts.ViewModels.ProfileVerificationModelForAdmin
+@using OMSCloud.Contracts.Common.ConfigMgmt
+@using OMSCloud.Contracts.Common
+@{
+    ViewBag.Title = "Modify Verification Document";
+}
+@{
+    string Imageurl = "";
+    if ( ! string.IsNullOrEmpty(ApplicationSession.Country))
+    {
+        if (!String.IsNullOrEmpty(Model.DocumentImagePath))
+        {
+            Imageurl = Config.GetWebAPIHost(ApplicationSession.Country) + Config.DynamicContent + ImageRoute.ProfileVerification.ToString() + "/" + Model.VerificationID.ToString() + "/" + Model.DocumentImagePath;
+        }
+    }
+}
+<div class="panel panel-default">
+    <div class="panel-body">
+        @using (Html.BeginForm("EditAdmin", "ProfileVerification", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+                <div class="form-group hidden">
+                    @Html.LabelFor(model => model.VerificationID, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.VerificationID, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.VerificationID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FullName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control", @disabled = "true" } })
+                        @Html.HiddenFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control", @disabled = "true" } })
+                        @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.VerificationStatusTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        @Html.EnumDropDownListFor(model => model.VerificationStatus, "Select Verification Status", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.VerificationStatus, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="form-group hidden">
+                    @Html.LabelFor(model => model.Verified, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        <div class="checkbox">
+                            @Html.HiddenFor(model => model.Verified)
+                            @Html.ValidationMessageFor(model => model.Verified, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DocumentNumberByVerifier, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.DocumentNumberByVerifier, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.DocumentNumberByVerifier, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DocumentTypeTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        @Html.HiddenFor(model => model.RequestedByProfileId, new { htmlAttributes = new { @class = "form-control", @disabled = "true" } })
+                        @Html.HiddenFor(model => model.DocumentTypeID, new { htmlAttributes = new { @class = "form-control", @disabled = "true" } })
+                        @Html.EditorFor(model => model.DocumentTypeTitle, new { htmlAttributes = new { @class = "form-control", @disabled = "true" } })
+                        @Html.HiddenFor(model => model.DocumentTypeTitle, new { htmlAttributes = new { @class = "form-control", @disabled = "true" } })
+                        @Html.ValidationMessageFor(model => model.DocumentTypeTitle, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Comments, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.Comments, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DocumentImagePath, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        <div style="padding:13px">
+                            @Html.EditorFor(model => model.DocumentImagePath, new { htmlAttributes = new { @class = "form-control hidden" } })
+                            @if (!string.IsNullOrEmpty(ViewBag.DocumentImagePath))
+                            {
+                                <img src="@Imageurl" alt="IMAGES" style="height:450px; width:450px;" />
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Back to List", "IndexAdmin", null, new { @class = "btn btn-success" })
+</div>

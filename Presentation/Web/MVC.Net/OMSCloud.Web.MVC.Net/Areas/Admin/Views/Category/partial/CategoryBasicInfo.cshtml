@@ -1,0 +1,101 @@
+﻿@model OMSCloud.Contracts.ViewModels.CategoryModel
+@using OMSCloud.Contracts.Common.ConfigMgmt
+@using OMSCloud.Contracts.Common
+@{ 
+    string Imageurl = "";
+    if( ! string.IsNullOrEmpty(ApplicationSession.Country))
+    {
+        if(!String.IsNullOrEmpty(Model.LogoPath))
+        {
+            Imageurl = Config.GetWebAPIHost(ApplicationSession.Country) + Config.DynamicContent + ImageRoute.Category.ToString() + "/" + Model.CategoryID.ToString() + "/" + Model.LogoPath;
+        }
+    }
+}
+
+<div class="form-group hidden">
+    @Html.LabelFor(model => model.CategoryID, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-6">
+        @Html.EditorFor(model => model.CategoryID, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.CategoryTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-6">
+        @Html.EditorFor(model => model.CategoryTitle, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.CategoryTitle, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.CategoryParentTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-6">
+        @Html.DropDownListFor(model => model.CategoryParentID, ViewBag.categoryType as SelectList, "--Please Select--", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.CategoryParentID, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.CategoryTypeTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-6">
+        @Html.DropDownListFor(model => model.CategoryTypeID, ViewBag.categoryParent as SelectList, "--Please Select--", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.CategoryTypeID, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.StatusName, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-6">
+        @Html.DropDownListFor(model => model.StatusID, ViewBag.status as SelectList, "--Please Select--", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.StatusID, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="form-group">
+    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-6">
+        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", rows = "8" } })
+        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.IsSystem, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-6">
+        <div class="checkbox col-md-1">
+            @Html.EditorFor(model => model.IsSystem)
+            @Html.ValidationMessageFor(model => model.IsSystem, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.LogoPath, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-6">
+        <div style="padding:13px">
+            @Html.EditorFor(model => model.LogoPath, new { htmlAttributes = new { @class = "form-control hidden" } })
+            @if (!string.IsNullOrEmpty(Model.LogoPath))
+            {
+                <img src= '@Imageurl' alt="IMAGES" style="height:450px ; width:450px" />
+            }
+        </div>
+        <div class="col-md-6">
+            <div class="btn btn-facebook" style="width:450px">
+                <input type="file" id="file" name="file" multiple="multiple" class="input-files" />
+            </div>
+            <div id="imgPreview" class="thumbnail" style="display:none">
+                <img class="img-responsive" id="targetImg" />
+                <div class="caption">
+                    <a href="#" onclick="ClearPreview()"><i class="glyphicon glyphicon-trash"></i></a>
+                    <span id="description"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-6">
+        <input type="submit" value="Save/Update" class="btn btn-success" />
+    </div>
+</div>

@@ -1,0 +1,74 @@
+﻿@model OMSCloud.Contracts.ViewModels.SupplierDeliveryOptionPairModel
+
+@{
+    ViewBag.Title = "Details";
+}
+<div class="panel panel-default">
+    <div class="panel-body">
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RequestedByProfileId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RequestedByProfileId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SupplierDeliveryOptionPairID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SupplierDeliveryOptionPairID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SupplierID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SupplierID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DeliveryOptionID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeliveryOptionID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DeliveryCharges)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeliveryCharges)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MinOrderLimit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MinOrderLimit)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SurroundingCitiesIDs)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SurroundingCitiesIDs)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.SupplierDeliveryOptionPairID }, new { @class="btn btn-success"}) |
+    @Html.ActionLink("Back to List", "Index", null, new { @class="btn btn-success"})
+</p>
+    </div>
+</div>

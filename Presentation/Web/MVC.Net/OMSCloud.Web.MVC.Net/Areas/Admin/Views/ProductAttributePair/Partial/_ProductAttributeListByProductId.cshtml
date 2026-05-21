@@ -1,0 +1,118 @@
+﻿@model IEnumerable<OMSCloud.Contracts.ViewModels.ProductAttributePairModel>
+    <table class="table table-hover table-bordered table-responsive table-striped dataTable" id="ProductAttributePairTable" style="width:100%">
+        <thead>
+            <tr>
+                <th class="hidden">
+                    @Html.DisplayNameFor(model => model.AttributeID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AttributeName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AttributeValue)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DisplayOrder)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsAssigned)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.IsSelectedForVariation)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.VariationInPrice)
+                </th>
+
+                <th class="hidden">
+                    @Html.DisplayNameFor(model => model.ProductAttributePairID)
+                </th>
+                @*<th>Actions</th>*@
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr id="ProductAttributePairList_@item.ProductAttributePairID">
+                    <td class="hidden">
+                        @Html.DisplayFor(modelItem => item.AttributeID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AttributeName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AttributeValue)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DisplayOrder)
+                    </td>
+                    <td class="hidden">
+                        @Html.DisplayFor(modelItem => item.ProductAttributePairID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsAssigned)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsSelectedForVariation)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.VariationInPrice)
+                    </td>
+
+                    <td>
+                        <a href="@Url.Action("Edit", new { id = item.ProductAttributePairID })" class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="top" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
+                        @*<a href="@Url.Action("Delete", new { id = item.ProductAttributePairID })" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Delete"><i class="glyphicon glyphicon-remove-sign"></i></a>*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+<script>
+    $(document).ready(function () {
+        var myTr = [];
+        $("tbody tr").click(function () {
+            $(this).find('td').each(function () {
+                myTr.push($(this).text());
+            });
+            var valu = myTr[0];
+            var name = myTr[1].toLowerCase().trim();
+            var i = 0;
+            $("#cmbAttribute option").each(function () {
+                var optionName = $(this).html().toLowerCase().trim();
+                if (optionName == name) {
+                    return false;
+                }
+                i++;
+            });
+            $("#cmbAttribute")[0].selectedIndex = i;
+            var attributeValue = myTr[2];
+            $("#attributeValue").val(attributeValue.trim())
+            var orderValue = myTr[3];
+            $("#OrderValue").val(orderValue.trim())
+            var ProductAttributePairID = myTr[4];
+            $("#ProductAttributePairID").val(ProductAttributePairID.trim())
+
+
+
+            var IsAssigned = myTr[5];
+            $("#IsAssigned").prop("checked", IsAssigned);
+            //$("#IsAssigned").val(IsAssigned.trim())
+            var IsSelectedForVariation = myTr[6];
+            $("#IsSelectedForVariation").prop("checked", IsSelectedForVariation);
+            //$("#IsSelectedForVariation").val(IsSelectedForVariation.trim())
+            var VariationInPrice = myTr[7];
+            $("#VariationInPrice").val(VariationInPrice.trim())
+
+
+
+            myTr = [];
+            $("#btnSaveAttributePair").text("Update");
+        });
+    });
+</script>
+

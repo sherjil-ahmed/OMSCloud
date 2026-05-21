@@ -1,0 +1,63 @@
+﻿@model OMSCloud.Contracts.ViewModels.ProductCategoryPairModel
+
+<div>
+    <form id="ProductCategoryForm">
+        <div class="form-horizontal">
+            <h4>Product Categories</h4>
+            <div class="form-group">
+                @Html.LabelFor(model => model.CategoryTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-6">
+                    @Html.DropDownListFor(model => model.CategoryID, ViewBag.categoryList as SelectList, "--Please Select--", new { @class = "form-control", id = "cmbCategory" })
+                    @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="col-md-3 col-lg-offset-3">
+                    <a href="#" class="btn btn-success" onclick="AddCategoryPair()">+</a>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-9">
+                    @{
+                        Html.RenderAction("ShowCategoryListByProductId", "Product");
+                    }
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    var AddCategoryPair = function () {
+
+        var categoryId = $("#cmbCategory option:selected").val();
+        var categoryTitle = $("#cmbCategory option:selected").text();
+
+        var mydata = {
+            CategoryID: categoryId,
+            ProductID: @ViewContext.RouteData.Values["id"].ToString(),
+        };
+
+                    $.ajax({
+                        type: "GET",
+                        url: "/Admin/ProductCategoryPair/GetAllNonExistingCategoryList/",
+                        data: mydata,
+                        success: function (result1)
+                        {
+                            result1.data.forEach(element =>
+                            {
+                                if (element.CategoryTitle != 'noCategory')
+                                    var row =   `<tr id='${element.CategoryID}'> 
+                                                    //<td class='hidden'>${element.newProductCategoryPairId}</td>
+                                                    <td class='hidden'>${element.CategoryID}</td>
+                                                    <td>${element.CategoryTitle}</td>
+                                                </tr>`
+                                    $('#ProductCategoryPairTable').append(row);
+                                    $(`#cmbCategory option[value='${element.CategoryID}']`).remove()
+                            })
+                        }
+                    })
+                }
+</script>

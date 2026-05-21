@@ -1,0 +1,88 @@
+﻿@model IEnumerable<OMSCloud.Contracts.ViewModels.ShopUserModel>
+
+@{
+    ViewBag.Title = "Profile List";
+}
+<div class="panel panel-default">
+    @*<div class="panel-heading">
+        <p>
+            <a href="@Url.Action("Create")" class="btn btn-md btn-default"><i class="glyphicon glyphicon-plus"></i> Create New</a>
+        </p>
+    </div>*@
+    <div class="panel-body">
+        <table class="table table-striped table-hover table-responsive table-bordered dataTable" style="width:100%">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ShopName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Firstname)
+                        @Html.DisplayNameFor(model => model.Lastname)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.UserCreatedOn)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.LastModified)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Inactive)
+                    </th>
+                    @*<th>
+                        @Html.DisplayNameFor(model => model.UserId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ProfileId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.shopId)
+                    </th>*@
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <a href="@Url.Action("Edit", "Supplier", new { Id = item.ShopId })" class="btn btn-md btn-default">
+                                    <i class='glyphicon glyphicon-bookmark'> @Html.DisplayFor(modelItem => item.ShopName)</i>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Edit", "Profile", new { Id = item.ProfileId })" class="btn btn-md btn-default">
+                                    <i class='glyphicon glyphicon-bishop'>
+                                        @Html.DisplayFor(modelItem => item.Firstname),
+
+                                        @Html.DisplayFor(modelItem => item.Lastname)
+                                    </i>
+                                </a>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UserCreatedOn)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LastModified)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Inactive)
+                            </td>
+                            @*<td>
+                                @Html.DisplayFor(modelItem => item.UserId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ProfileId)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.shopId)
+                            </td>*@
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

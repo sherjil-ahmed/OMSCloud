@@ -1,0 +1,76 @@
+﻿@model OMSCloud.Contracts.ViewModels.AddressViewModel
+
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+<div class="form-group hidden">
+    @Html.LabelFor(model => model.AddressID, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.EditorFor(model => model.AddressID, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.AddressID, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group ">
+    @Html.LabelFor(model => model.ProfileName, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.DropDownListFor(model => model.ProfileID, ViewBag.profileList as SelectList, "--please select--", new { @class = "form-control"@*, @disabled = "disalbled"*@ })
+        @Html.ValidationMessageFor(model => model.ProfileID, "", new { @class = "text-danger" })
+    </div>
+    @*</div>
+        <div class="form-group">*@
+    @Html.LabelFor(model => model.AddressTypeName, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.DropDownListFor(model => model.AddressTypeID, ViewBag.AddressType as SelectList, "--please select--", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.AddressTypeID, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.StreetNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-6">
+        @Html.EditorFor(model => model.StreetNumber, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.StreetNumber, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="form-group">
+    @Html.LabelFor(model => model.PlotNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-6">
+        @Html.EditorFor(model => model.PlotNumber, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.PlotNumber, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+
+<div class="form-group">
+    @Html.LabelFor(model => model.NearestLandmark, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-6">
+        @Html.EditorFor(model => model.NearestLandmark, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.NearestLandmark, "", new { @class = "text-danger" })
+    </div>
+</div>
+@{
+    Html.RenderAction("Edit", "Location", new { OperatingCityID = Model.OperatingCityID });
+}
+<div class="form-group">
+    @Html.LabelFor(model => model.PostalCode, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.EditorFor(model => model.PostalCode, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.PostalCode, "", new { @class = "text-danger" })
+    </div>
+
+    @*</div>
+
+        <div class="form-group">*@
+    @*@Html.LabelFor(model => model.MapLink, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.EditorFor(model => model.MapLink, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.MapLink, "", new { @class = "text-danger" })
+        </div>*@
+</div>
+
+<div class="form-group hidden">
+    <div class="col-md-6">
+        @Html.EditorFor(model => model.AddressModifiedOn.Ticks, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+</div>
+

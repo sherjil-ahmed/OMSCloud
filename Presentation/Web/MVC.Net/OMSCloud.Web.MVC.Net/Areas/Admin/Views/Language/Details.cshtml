@@ -1,0 +1,98 @@
+﻿@model OMSCloud.Contracts.ViewModels.LanguageModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>LanguageModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RequestedByProfileId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RequestedByProfileId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LanguageCulture)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LanguageCulture)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UniqueSeoCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UniqueSeoCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FlagImageFileName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FlagImageFileName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Rtl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rtl)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LimitedToStores)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LimitedToStores)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DefaultCurrencyId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DefaultCurrencyId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Published)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Published)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DisplayOrder)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DisplayOrder)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

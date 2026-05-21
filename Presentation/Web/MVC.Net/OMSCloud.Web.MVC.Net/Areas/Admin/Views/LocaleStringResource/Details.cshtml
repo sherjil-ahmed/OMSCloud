@@ -1,0 +1,50 @@
+﻿@model OMSCloud.Contracts.ViewModels.LocaleStringResourceModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>LocaleStringResourceModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt class="hidden">
+            @Html.DisplayNameFor(model => model.RequestedByProfileId)
+        </dt>
+
+        <dd class="hidden">
+            @Html.DisplayFor(model => model.RequestedByProfileId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LanguageId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LanguageId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ResourceName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ResourceName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ResourceValue)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ResourceValue)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

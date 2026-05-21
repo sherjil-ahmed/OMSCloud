@@ -1,0 +1,61 @@
+﻿@model IEnumerable<OMSCloud.Contracts.ViewModels.TaxTypeModel>
+
+@{
+    ViewBag.Title = "Tax Type List";
+}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <p>            
+            <a href="@Url.Action("Create")" class="btn btn-md btn-default"><i class="glyphicon glyphicon-plus"></i> Create New</a>
+        </p>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped table-hover table-responsive table-bordered dataTable" style="width:100%">
+            <thead>
+                <tr>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.TaxTypeID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TaxTypeTitle)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IsSystem)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="hidden">
+                                @Html.DisplayFor(modelItem => item.TaxTypeID)
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Edit", new { id = item.TaxTypeID })" style="color:#000" data-toggle="tooltip" data-placement="top"><i> @Html.DisplayFor(modelItem => item.TaxTypeTitle)</i></a>
+
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IsSystem)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Edit", new { id = item.TaxTypeID })" class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="top" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
+                                @*<a href="@Url.Action("Details", new { id = item.TaxTypeID })" class="btn btn-xs btn-info" data-toggle="tooltip" data-placement="top" title="Details"><i class="glyphicon glyphicon-eye-open"></i></a>
+                                <a href="@Url.Action("Delete", new { id = item.TaxTypeID })" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Delete"><i class="glyphicon glyphicon-remove-sign"></i></a>*@
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

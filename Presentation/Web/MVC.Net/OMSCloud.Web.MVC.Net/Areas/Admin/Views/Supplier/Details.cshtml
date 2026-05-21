@@ -1,0 +1,152 @@
+﻿@model OMSCloud.Contracts.ViewModels.SupplierViewModel
+@{
+    ViewBag.Title = "Shop Detail";
+}
+
+<h2>@ViewBag.Title</h2>
+<hr />
+
+<div>
+    <dl class="dl-horizontal">
+        <dt class="hidden">
+            @Html.DisplayNameFor(model => model.SupplierID)
+        </dt>
+
+        <dd class="hidden">
+            @Html.DisplayFor(model => model.SupplierID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SupplierName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SupplierName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StatusTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StatusTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StatusNotes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StatusNotes)
+        </dd>
+
+        <dt class="hidden">
+            @Html.DisplayNameFor(model => model.BusinessAddressID)
+        </dt>
+
+        <dd class="hidden">
+            @Html.DisplayFor(model => model.BusinessAddressID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsBusinessAddressVisible)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsBusinessAddressVisible)
+        </dd>
+        @{ 
+            Html.RenderAction("Details","Location", new { OperatingAreaID = Model.OperatingAreaID });
+        }
+        @*<dt>
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModifiedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModifiedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModifiedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModifiedOn)
+        </dd>*@
+        <dt>
+            @Html.DisplayNameFor(model => model.IsCOD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsCOD)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProfileID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProfileID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProcessingFee)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProcessingFee)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PaymentGatewayFee)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaymentGatewayFee)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsProcessingFeePercentage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsProcessingFeePercentage)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsPaymentGatewayFeePercentage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsPaymentGatewayFeePercentage)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new {  id = Model.SupplierID  }, new { @class = "btn btn-success"})
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-success"})
+</p>

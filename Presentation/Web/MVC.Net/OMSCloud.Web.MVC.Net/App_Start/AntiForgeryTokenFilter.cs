@@ -1,0 +1,23 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Web.Mvc;
+
+namespace OMSCloud.Web.MVC.Net
+{
+    public class AntiForgeryTokenFilter : IFilterProvider
+    {
+        public IEnumerable<Filter> GetFilters(ControllerContext controllerContext, ActionDescriptor actionDescriptor)
+        {
+            List<Filter> result = new List<Filter>();
+
+            string incomingVerb = controllerContext.HttpContext.Request.HttpMethod;
+
+            if (String.Equals(incomingVerb, "POST", StringComparison.OrdinalIgnoreCase))
+            {
+                result.Add(new Filter(new ValidateAntiForgeryTokenAttribute(), FilterScope.Global, null));
+            }
+
+            return result;
+        }
+    }
+}

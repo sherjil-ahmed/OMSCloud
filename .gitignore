@@ -1,0 +1,11 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+/.vs
+bin/
+obj/
+DBLog/
+Logs/
+/Services/WebAPI/OMSCloud.Services.WebAPI/BackgroundServiceData
+
+/Services/WebAPI/OMSCloud.Services.WebAPI/_bin_deployableAssemblies

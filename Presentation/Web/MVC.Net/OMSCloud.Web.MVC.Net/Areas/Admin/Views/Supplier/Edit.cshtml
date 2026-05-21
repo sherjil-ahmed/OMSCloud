@@ -1,0 +1,326 @@
+﻿@model OMSCloud.Contracts.ViewModels.SupplierViewModel
+
+@using OMSCloud.Contracts.ViewModels
+@using OMSCloud.Contracts.Common.ConfigMgmt
+@using OMSCloud.Contracts.Common
+
+@{
+    ViewBag.Title = "Modify Shop: " + Model.SupplierName;
+
+    string Imageurl = "";
+    if ( ! string.IsNullOrEmpty(ApplicationSession.Country))
+    {
+        if (!String.IsNullOrEmpty(Model.Logo))
+        {
+            Imageurl = Config.GetWebAPIHost(ApplicationSession.Country) + 
+                Config.DynamicContent + 
+                ImageRoute.Supplier.ToString() + "/" + 
+                Model.SupplierID.ToString() + "/" + 
+                Model.Logo;
+        }
+
+    }
+
+}
+<div class="panel panel-default">
+    <div class="panel-body">
+        @using (Html.BeginForm("Edit", "Supplier", FormMethod.Post, new { enctype = "multipart/form-data", id = "SupplierEditForm" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="col-md-12">
+                    <div class="tabs">
+                        <ul class="nav nav-tabs">
+                            <li class="active">
+                                <a href="#ShopLocation" data-toggle="tab">Shop Location</a>
+                            </li>
+                            <li class="">
+                                <a href="#ShopPreferences" data-toggle="tab">Shop Preferences</a>
+                            </li>
+                            <li class="">
+                                <a href="#ShopBasicInfo" data-toggle="tab">Shop Basic Info</a>
+                            </li>
+                            <li class="">
+                                <a href="#ShopAdditionalInfo" data-toggle="tab">Social Media Links</a>
+                            </li>
+                            <li class="hidden">
+                                <a href="#ShopFees" data-toggle="tab">Processing and Transaction Fees (Admin Only)</a>
+                            </li>
+                            <li class="">
+                                <a href="#ShopDeliverySetup" data-toggle="tab">Delivery Setup</a>
+                            </li>
+                            <li class="">
+                                <a href="#ShopDeliverySchedule" data-toggle="tab">Delivery Schedule</a>
+                            </li>
+                            <li class="">
+                                <a href="#ShopBankingInfo" data-toggle="tab">Bank &amp; Tax#</a>
+                            </li>
+                            @*<li class="">
+                                <a href="#ShopTaxInfo" data-toggle="tab">Tax Consent</a>
+                            </li>*@
+                            <li class="">
+                                <a href="#ShopReviews" data-toggle="tab">Shop Reviews</a>
+                            </li>
+                        </ul>
+                        <div id="" class="tab-content">
+                            <div id="ShopLocation" class="tab-pane active">
+                                <div class="form-group hidden">
+                                    @Html.EditorFor(model => model.BusinessAddressID, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                                @Html.Partial("../Address/_AddressInputPartial",new AddressViewModel()
+                                              {
+                                                  ProfileID = Model.ProfileID,
+                                                  OperatingCountryID = Model.OperatingCountryID,
+                                                  OperatingProvinceID = Model.OperatingProvinceID,
+                                                  OperatingCityID = Model.OperatingCityID,
+                                                  LocationID = Model.LocationID,
+                                                  AddressID = Model.AddressID,
+                                                  ProfileName = Model.ProfileName,
+                                                  AddressTypeID = Model.AddressTypeID,
+                                                  AddressTypeName = Model.AddressTypeName,
+                                                  PlotNumber = Model.PlotNumber,
+                                                  StreetNumber = Model.StreetNumber,
+                                                  NearestLandmark = Model.NearestLandmark,
+                                                  PostalCode = Model.PostalCode,
+                                                  MapLink = Model.MapLink,
+                                                  AddressModifiedOn = Model.AddressModifiedOn
+                                              }
+                                          )
+                                <div class="form-group">
+                                    <div class="col-md-1">
+                                        @Html.CheckBoxFor(model => model.IsBusinessAddressVisible, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.IsBusinessAddressVisible, "", new { @class = "text-danger" })
+                                    </div>
+                                    @Html.LabelFor(model => model.IsBusinessAddressVisible, htmlAttributes: new { @class = "control-label " })
+                                </div>
+                                @*<div class="form-group">
+                                    <div class="col-md-offset-2 col-md-6">
+                                        <input id="btnSave" type="submit" value="Save" class="btn btn-success" />
+                                    </div>
+                                </div>*@
+
+                            </div>
+                            <div id="ShopPreferences" class="tab-pane ">
+                                <div class="form-group hidden">
+                                    @Html.EditorFor(model => model.SupplierID, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.ModifiedOn.Ticks, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.LanguageTitle, htmlAttributes: new { @class = "control-label col-md-1" })
+                                    <div class="col-md-3">
+                                        @Html.LabelFor(model => model.LanguageTitle, new { @class = "form-control", @disabled = "true" })
+                                        @Html.ValidationMessageFor(model => model.OperatingLanguageID, "", new { @class = "text-danger" })
+                                    </div>
+                                    @Html.LabelFor(model => model.CurrencyTitle, htmlAttributes: new { @class = "control-label col-md-1" })
+                                    <div class="col-md-3">
+                                        @Html.LabelFor(model => model.CurrencyTitle, new { @class = "form-control", @disabled = "true" })
+                                        @Html.ValidationMessageFor(model => model.OperatingCurrencyID, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.CategoryRequests, htmlAttributes: new { @class = "control-label col-md-1" })
+                                    <div class="col-md-7">
+                                        @Html.EditorFor(model => model.CategoryRequests, new { htmlAttributes = new { @class = "form-control", @*@disabled = "true",*@ rows = "5" } })
+                                        @Html.ValidationMessageFor(model => model.CategoryRequests, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.AttributeRequests, htmlAttributes: new { @class = "control-label col-md-1" })
+                                    <div class="col-md-7">
+                                        @Html.EditorFor(model => model.AttributeRequests, new { htmlAttributes = new { @class = "form-control", @*@disabled = "true",*@ rows = "5" } })
+                                        @Html.ValidationMessageFor(model => model.AttributeRequests, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="ShopBasicInfo" class="tab-pane ">
+                                <div class="form-group">
+                                    <label class="control-label col-md-1">Shop Products</label>
+                                    <div class="col-md-3">
+                                        <a href="/Admin/Product/Index?shopId=@Model.SupplierID" class="btn btn-md btn-default">Shop's Products</a>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Logo, htmlAttributes: new { @class = "control-label col-md-1" })
+                                    <div class="col-md-6">
+                                        <div style="padding:13px">
+                                            @Html.EditorFor(model => model.Logo, new { htmlAttributes = new { @class = "form-control hidden" } })
+                                            @if (!string.IsNullOrEmpty(Model.Logo))
+                                            {
+                                                <img src='@Imageurl' alt="IMAGES" style="height:200px ; width:450px" />
+                                            }
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="btn btn-facebook" style="width:450px">
+                                                <input type="file" id="file" name="file" multiple="multiple" class="input-files" />
+                                            </div>
+                                            <div id="imgPreview" class="thumbnail" style="display:none">
+                                                <img class="img-responsive" id="targetImg" />
+                                                <div class="caption">
+                                                    <a href="#" onclick="ClearPreview()"><i class="glyphicon glyphicon-trash"></i></a>
+                                                    <span id="description"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+
+                                    @Html.LabelFor(model => model.SupplierName, htmlAttributes: new { @class = "control-label col-md-1" })
+                                    <div class="col-md-3">
+                                        @Html.EditorFor(model => model.SupplierName, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.SupplierName, "", new { @class = "text-danger" })
+                                    </div>
+                                    @Html.LabelFor(model => model.StatusTitle, htmlAttributes: new { @class = "control-label col-md-1" })
+                                    <div class="col-md-3">
+                                        @Html.DropDownListFor(model => model.StatusID, ViewBag.status as SelectList, "--Select Status--", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.StatusID, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-1" })
+                                    <div class="col-md-7">
+                                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", rows = "8" } })
+                                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.StatusNotes, htmlAttributes: new { @class = "control-label col-md-1" })
+                                    <div class="col-md-7">
+                                        @Html.EditorFor(model => model.StatusNotes, new { htmlAttributes = new { @class = "form-control", rows = "8" } })
+                                        @Html.ValidationMessageFor(model => model.StatusNotes, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="ShopAdditionalInfo" class="tab-pane">
+                                <div class="form-group hidden">
+                                    @Html.EditorFor(model => model.AnnouncementHTML, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.PolicyHTML, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.FAQHTML, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.WebLinksJSON, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.WebLinkJSONObject.fb, htmlAttributes: new { @class = "control-label col-md-1" })
+                                    <div class="col-md-7">
+                                        @Html.EditorFor(model => model.WebLinkJSONObject.fb, new { htmlAttributes = new { @class = "form-control", @disabled = "true" } })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.WebLinkJSONObject.goog, htmlAttributes: new { @class = "control-label col-md-1" })
+                                    <div class="col-md-7">
+                                        @Html.EditorFor(model => model.WebLinkJSONObject.goog, new { htmlAttributes = new { @class = "form-control", @disabled = "true" } })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.WebLinkJSONObject.instagrm, htmlAttributes: new { @class = "control-label col-md-1" })
+                                    <div class="col-md-7">
+                                        @Html.EditorFor(model => model.WebLinkJSONObject.instagrm, new { htmlAttributes = new { @class = "form-control", @disabled = "true" } })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.WebLinkJSONObject.pinterest, htmlAttributes: new { @class = "control-label col-md-1" })
+                                    <div class="col-md-7">
+                                        @Html.EditorFor(model => model.WebLinkJSONObject.pinterest, new { htmlAttributes = new { @class = "form-control", @disabled = "true" } })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.WebLinkJSONObject.twitr, htmlAttributes: new { @class = "control-label col-md-1" })
+                                    <div class="col-md-7">
+                                        @Html.EditorFor(model => model.WebLinkJSONObject.twitr, new { htmlAttributes = new { @class = "form-control", @disabled = "true" } })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.WebLinkJSONObject.youtb, htmlAttributes: new { @class = "control-label col-md-1" })
+                                    <div class="col-md-7">
+                                        @Html.EditorFor(model => model.WebLinkJSONObject.youtb, new { htmlAttributes = new { @class = "form-control", @disabled = "true" } })
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div id="ShopFees" class="tab-pane hidden">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ProcessingFee, htmlAttributes: new { @class = "control-label col-md-1", })
+                                    <div class="col-md-3">
+                                        @Html.EditorFor(model => model.ProcessingFee, new { htmlAttributes = new { @class = "form-control", @type = "number", @disabled = "true" } })
+                                        @Html.ValidationMessageFor(model => model.ProcessingFee, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-1">
+                                        @Html.CheckBoxFor(model => model.IsProcessingFeePercentage, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.IsProcessingFeePercentage, "", new { @class = "text-danger" })
+                                    </div>
+                                    @Html.LabelFor(model => model.IsProcessingFeePercentage, htmlAttributes: new { @class = "control-label " })
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.PaymentGatewayFee, htmlAttributes: new { @class = "control-label col-md-1" })
+                                    <div class="col-md-3">
+                                        @Html.EditorFor(model => model.PaymentGatewayFee, new { htmlAttributes = new { @class = "form-control", @type = "number", @disabled = "true" } })
+                                        @Html.ValidationMessageFor(model => model.PaymentGatewayFee, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-1">
+                                        @Html.CheckBoxFor(model => model.IsPaymentGatewayFeePercentage, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.IsPaymentGatewayFeePercentage, "", new { @class = "text-danger" })
+                                    </div>
+                                    @Html.LabelFor(model => model.IsPaymentGatewayFeePercentage, htmlAttributes: new { @class = "control-label " })
+                                </div>
+                            </div>
+                            <div id="ShopDeliverySetup" class="tab-pane ">
+                                <p>
+                                    <a href="@Url.Action("Create", "SupplierDeliveryOptionPair", new { Id = Model.SupplierID})" class="btn btn-md btn-default"><i class="glyphicon glyphicon-plus"></i> Create New</a>
+                                </p>
+                                @{
+                                    Html.RenderAction("IndexPartial", "SupplierDeliveryOptionPair", new { Id = Model.SupplierID });
+                                }
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.IsCOD, htmlAttributes: new { @class = "control-label col-md-1" })
+                                    <div class="col-md-3">
+                                        @Html.CheckBoxFor(model => model.IsCOD, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.IsCOD, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="ShopDeliverySchedule" class="tab-pane ">
+                                <p>
+                                    <a href="@Url.Action("Create", "ShopDeliverySchedule", new { Id = Model.SupplierID})" class="btn btn-md btn-default"><i class="glyphicon glyphicon-plus"></i> Create New</a>
+                                </p>
+                                @{
+                                    Html.RenderAction("GetShopSchedule", "ShopDeliverySchedule", new { Id = Model.SupplierID });
+                                }
+                            </div>
+                            <div id="ShopBankingInfo" class="tab-pane ">
+                                @{
+                                    Html.RenderAction("GetBankingInfo", "Supplier", new { Id = Model.SupplierID });
+                                    <br />
+                                    Html.RenderAction("GetShopTaxInfo", "Supplier", new { Id = Model.SupplierID });
+                                }
+                            </div>
+                            @*<div id="ShopTaxInfo" class="tab-pane ">
+                                @{
+                                    Html.RenderAction("GetShopTaxInfo", "Supplier", new { Id = Model.SupplierID });
+                                }
+                            </div>*@
+                            <div id="ShopReviews" class="tab-pane ">
+                                @{
+                                    Html.RenderAction("GetShopReviews", "Supplier", new { Id = Model.SupplierID });
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-6">
+                    <input id="btnSave" type="submit" value="Save" class="btn btn-success" />
+                </div>
+            </div>
+
+        }
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-success" })
+</div>

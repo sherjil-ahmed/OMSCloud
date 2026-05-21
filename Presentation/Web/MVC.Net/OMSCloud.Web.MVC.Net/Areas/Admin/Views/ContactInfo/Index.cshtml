@@ -1,0 +1,70 @@
+﻿@model IEnumerable<OMSCloud.Contracts.ViewModels.ContactInfoModel>
+
+@{
+    ViewBag.Title = "Contact Info List";
+}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        @*@Html.ActionLink("Create New", "Create")*@
+        <a href="@Url.Action("Create")" class="btn btn-md btn-default"><i class="glyphicon glyphicon-plus"></i> Create New</a>
+    </div>
+
+    <div class="panel-body">
+        <table class="table table-striped  table-hover table-responsive table-bordered dataTable" style="width:100%">
+            <thead>
+                <tr>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.RequestedByProfileId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ContactInfoID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ContactInfo1)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ContactPerson)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ContactTypeID)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                    <tr>
+                        <td class="hidden">
+                            @Html.DisplayFor(modelItem => item.RequestedByProfileId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ContactInfoID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ContactInfo1)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ContactPerson)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ContactTypeID)
+                        </td>
+                        <td>
+                            @*@Html.ActionLink("Edit", "Edit", new { id = item.ContactInfoID }) |
+                                @Html.ActionLink("Details", "Details", new { id = item.ContactInfoID }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.ContactInfoID })*@
+                            <a href="@Url.Action("Edit", new { id = item.ContactInfoID })" class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="top" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
+                            <a href="@Url.Action("Details", new { id = item.ContactInfoID })" class="btn btn-xs btn-info" data-toggle="tooltip" data-placement="top" title="Details"><i class="glyphicon glyphicon-eye-open"></i></a>
+                            <a href="@Url.Action("Delete", new { id = item.ContactInfoID })" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Delete"><i class="glyphicon glyphicon-remove-sign"></i></a>
+                        </td>
+                    </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

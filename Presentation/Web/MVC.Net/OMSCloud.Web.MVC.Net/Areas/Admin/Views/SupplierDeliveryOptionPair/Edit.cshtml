@@ -1,0 +1,162 @@
+﻿@model OMSCloud.Contracts.ViewModels.SupplierDeliveryOptionPairModel
+@using OMSCloud.Contracts.ViewModels
+@using OMSCloud.Contracts.Common.DBEnums
+@{
+    ViewBag.Title = "Modify Delivery Option";
+}
+@if (Model != null && Model.DeliveryOptionID != (long)DBDeliveryOptionEnum.DeliverSurroundingCities)
+{
+    <script>
+        window.onload = (event) => {
+            $('#SurroundingCitiesDiv').hide();
+            $('#SurroundingCitiesGridDiv').hide();
+        }
+    </script>
+}
+<script>
+    function DeliveryOptionHandler(event) {
+        var supplierID = $("#SupplierIdHidden").val();
+        console.log("Supplier Id: " + supplierID);
+        var selectedOption = $("#DeliveryOption").find('option:selected').val();
+        if (selectedOption == 1 /*(long)DBDeliveryOptionEnum.SelfPickUp*/) {
+            $('#DeliveryCharges').hide();
+            $('#MinOrderLimit').hide();
+            $('#selfPickupDiv').hide();
+        }
+        else {
+            $('#DeliveryCharges').show();
+            $('#MinOrderLimit').show();
+            $('#selfPickupDiv').show();
+        }
+        if (selectedOption == 3/*(long)DBDeliveryOptionEnum.DeliverSurroundingCities*/) {
+            //if (supplierID > -1) {
+            $.ajax({
+                type: "GET",
+                url: "/Admin/SupplierDeliveryOptionPair/GetSurroundingCities/" + supplierID + "",
+                success: (result) => {
+                    refillDropDown(result.cityList)
+                    //console.log('result=> ', result)
+                    $('#SurroundingCitiesDiv').show();
+                    $('#SurroundingCitiesGridDiv').show();
+                }
+            })
+            //}
+            //else { alert('Shop not found to get surrounding cities'); }
+        }
+        else {
+            $('#SurroundingCitiesDiv').hide();
+            $('#SurroundingCitiesGridDiv').hide();
+        }
+    }
+    function refillDropDown(result) {
+        var optionhtml1 = '<option value="">--Please Select--</option>'
+        $("#SurroundingCitiesDropDown").empty()
+        $("#SurroundingCitiesDropDown").append(optionhtml1)
+        $.each(result, (i) => {
+            var optionhtml = '<option value="' + result[i].LocationID + '">' + result[i].LocationName + '</option>'
+            $("#SurroundingCitiesDropDown").append(optionhtml)
+        })
+    }
+
+</script>
+<div class="panel panel-default">
+    <div class="panel-body">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group hidden">
+                    @Html.LabelFor(model => model.RequestedByProfileId, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.RequestedByProfileId, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.RequestedByProfileId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group hidden">
+                    @Html.LabelFor(model => model.SupplierDeliveryOptionPairID, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.SupplierDeliveryOptionPairID, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.SupplierDeliveryOptionPairID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SupplierName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.SupplierName, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                    </div>
+                </div>
+                <div class="form-group hidden">
+                    @Html.LabelFor(model => model.SupplierName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.SupplierID, new { htmlAttributes = new { @class = "form-control", id = "SupplierIdHidden" } })
+                        @Html.ValidationMessageFor(model => model.SupplierID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DeliveryOptionTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        @Html.DropDownListFor(model => model.DeliveryOptionID, ViewBag.DeliveryOption as SelectList, "--Select Delivery Option--", new { @class = "form-control", id = "DeliveryOption", onChange = "DeliveryOptionHandler(this)" })
+                        @Html.ValidationMessageFor(model => model.DeliveryOptionID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div id="selfPickupDiv" class="form-group">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DeliveryCharges, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.EditorFor(model => model.DeliveryCharges, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+                            @Html.ValidationMessageFor(model => model.DeliveryCharges, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.MinOrderLimit, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.EditorFor(model => model.MinOrderLimit, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+                            @Html.ValidationMessageFor(model => model.MinOrderLimit, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" id="SurroundingCitiesDiv" @*style="display: none;"*@>
+                    @Html.LabelFor(model => model.SurroundingCities, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        @Html.DropDownListFor(model => model.SurroundingCitiesIDs, ViewBag.SurroundingCities as SelectList, " --- Select Surrounding Cities --- ", new { @class = "form-control", id = "SurroundingCitiesDropDown" })
+                        @Html.Hidden("cityIDs", Model.SurroundingCitiesIDs)
+                        @Html.ValidationMessageFor(model => model.SurroundingCitiesIDs, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-1">
+                        <div class="col-md-3 col-lg-offset-3">
+                            <a href="#" class="btn btn-success" onclick="AddSurroundingCity()">+</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" id="SurroundingCitiesGridDiv" @*style="display: none;"*@>
+                    <div class="col-md-2">
+
+                    </div>
+                    <div class="col-md-6">
+                        @{
+                            Html.RenderAction("ShowCityList", "SupplierDeliveryOptionPair", new SupplierDeliveryOptionPairModel { SurroundingCitiesIDs = Model.SurroundingCitiesIDs });
+                        }
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-default btn-success" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-success" })
+</div>

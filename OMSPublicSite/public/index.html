@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  class="wf-opensans-n4-active wf-opensans-n6-active wf-poppins-n6-active wf-poppins-n3-active wf-opensans-n3-active wf-opensans-n7-active wf-opensans-n8-active wf-poppins-n7-active wf-poppins-n4-active wf-poppins-n5-active wf-active"
+>
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scaleable=0, shrink-to-fit=no"
+    />
+
+    <title>Zvonr</title>
+
+    <meta name="keywords" content="Zvonr marketplace" />
+    <meta name="description" content="Best marketplace in Canada, USA, and UK (powered by AvantureByte.com)" />
+    <meta name="author" content="www.avantureByte.com" />
+
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="assets/images/icons/favicon.ico"
+    />
+
+    <script src="assets/js/webfont.js" async=""></script>
+    <script type="text/javascript">
+      (WebFontConfig = {
+        google: {
+          families: [
+            'Open+Sans:300,400,600,700,800',
+            'Poppins:300,400,500,600,700',
+          ],
+        },
+      }),
+        (function (e) {
+          var s = e.createElement('script'),
+            n = e.scripts[0];
+          (s.src = 'assets/js/webfont.js'),
+            (s.async = !0),
+            n.parentNode.insertBefore(s, n);
+        })(document);
+    </script>
+
+    <!-- Plugins CSS File -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css"
+      rel="stylesheet"
+    />
+    <!-- Main CSS File -->
+    <link rel="stylesheet" href="assets/css/style.min.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="assets/vendor/fontawesome-free/css/all.min.css"
+    />
+    <!-- custom css -->
+    <!-- <link rel="stylesheet" href="assets/css/style.css" /> -->
+    <!-- <link rel="stylesheet" href="assets/css/custom.css"> -->
+    <link rel="stylesheet" href="assets/css/customreact.css" />
+    <link
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+      crossorigin="anonymous"
+    />
+    <!-- Facebook Pixel Code -->
+<script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window,document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '6056015711147202'); 
+  fbq('track', 'PageView');
+  </script>
+  <noscript>
+  <img height="1" width="1" 
+  src="https://www.facebook.com/tr?id=6056015711147202&ev=PageView
+  &noscript=1"/>
+  </noscript>
+  <!-- End Facebook Pixel Code -->
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <div class="testtarget custom-centerbottom-screen"></div>
+    <div id="google_translate_element"></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+
+    <!-- Plugins JS File -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/plugins.min.js"></script>
+    <script src="assets/js/plugins/isotope-docs.min.js"></script>
+    <script src="assets/js/nouislider.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <!-- Main JS File -->
+    <!-- <script src="assets/js/main-unminify.js"></script> -->
+    <!-- Custom JS File -->
+    <script src="assets/js/custom.js"></script>
+    <link rel="stylesheet" href="assets/css/customize_css.css" />
+    <script type="text/javascript">
+      window.GoogleTranslateObj = null;
+      function googleTranslateElementInit() {
+        window.GoogleTranslateObj = new google.translate.TranslateElement(
+          { pageLanguage: 'en' },
+          'google_translate_element',
+        );
+      }
+
+      var observer = new MutationObserver((mutations, observer) => {
+        mutations.map((m) => {
+          m.target.style.top = '0px';
+
+          $($('.skiptranslate')).hide();
+          $('#google_translate_element').hide();
+        });
+      });
+
+      observer.observe(document.getElementsByTagName('body')[0], {
+        attributes: true,
+      });
+    </script>
+
+    <script
+      type="text/javascript"
+      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/signalr.js/2.2.2/jquery.signalR.min.js"
+    ></script>
+    <!-- <script>
+      var mobMenuFunc = function(){
+      var elemDiv = document.createElement('div');
+      elemDiv.setAttribute("id", "MainMobMenu");
+      var menuhtml =  '<div id="mySidebar" class="sidebar">'+
+                      '<a class="closebtn" onclick=closeNav()>×</a>'+
+                      '<a href="#" class="side-a click-to-expand">About</a>'+
+                      '<div class="mobile-inner-dropdown expand">'+
+                        '<a href="#" class="side-a click-to-expand">About1</a> '+
+                        '<div class="mobile-inner-dropdown expand hidden">'+
+                          '<a href="#">About1 sub1</a>'+
+                          '<a href="#">About1 sub2</a>'+
+                          '<a href="#">About1 sub3</a>'+
+                          '<a href="#">About1 sub4</a>'+
+                        '</div>'+
+                        '<a href="#" class="side-a click-to-expand">About2</a>'+
+                        '<div class="mobile-inner-dropdown expand hidden">'+
+                          '<a href="#">About2 sub1</a>'+
+                          '<a href="#">About2 sub2</a>'+
+                          '<a href="#">About2 sub3</a>'+
+                          '<a href="#">About2 sub4</a>'+
+                        '</div>'+
+                        '<a href="#" class="side-a click-to-expand">About3</a>'+
+                        '<div class="mobile-inner-dropdown expand hidden">'+
+                          '<a href="#">About3 sub1</a>'+
+                          '<a href="#">About3 sub2</a>'+
+                          '<a href="#">About3 sub3</a>'+
+                          '<a href="#">About3 sub4</a>'+
+                        '</div>'+
+                      '</div>'+
+                    '</div>'
+      elemDiv.innerHTML= menuhtml
+      var subDivExists= document.getElementById('mySidebar')
+      if(document.body.classList.contains("mmenu-active")){
+        document.body.appendChild(elemDiv);
+      }
+      else{
+        var html= document.getElementById('MainMobMenu')
+        document.body.removeChild(html);
+      }
+      }
+      function closeNav(){
+        document.body.classList.remove("mmenu-active")
+        var html= document.getElementById('MainMobMenu')
+        document.body.removeChild(html);
+      }
+    </script> -->
+  </body>
+ 
+</html>

@@ -1,0 +1,16 @@
+﻿@model IEnumerable<OMSCloud.Contracts.ViewModels.SupplierDeliveryOptionPairModel>
+
+@{
+    ViewBag.Title = "Shop's Delivery Option List";
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <p>
+            <a href="@Url.Action("Create")" class="btn btn-md btn-default"><i class="glyphicon glyphicon-plus"></i> Create New</a>
+        </p>
+    </div>
+    <div class="panel-body">
+        @Html.Partial("Partial/_Index", Model)
+    </div>
+</div>

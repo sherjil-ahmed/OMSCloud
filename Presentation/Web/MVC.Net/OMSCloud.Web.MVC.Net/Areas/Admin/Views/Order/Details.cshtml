@@ -1,0 +1,92 @@
+﻿@model OMSCloud.Contracts.ViewModels.OrderDetailModel
+
+@{
+    ViewBag.Title = "Details of Selected Cart";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div>
+    <h4>Cart Details</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt class="">
+            @Html.DisplayNameFor(model => model.OrderID)
+        </dt>
+        <dd class="">
+            @Html.DisplayFor(model => model.OrderID)
+        </dd>
+        <dt class="">
+            @Html.DisplayNameFor(model => model.OrderNumber)
+        </dt>
+
+        <dd class="">
+            @Html.DisplayFor(model => model.OrderNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BuyerName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BuyerName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShopName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShopName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DeliveryTotal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeliveryTotal)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DiscountTotal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DiscountTotal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderTotal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrderTotal)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TaxTotal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaxTotal)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderStatusTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrderStatusTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StatusTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StatusTitle)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.OrderID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

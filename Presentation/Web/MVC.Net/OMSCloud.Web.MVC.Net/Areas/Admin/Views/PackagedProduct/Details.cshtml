@@ -1,0 +1,71 @@
+﻿@model OMSCloud.Contracts.ViewModels.PackagedProductModel
+@{
+    ViewBag.Title = "Bundle-Product Detail";
+
+}
+<h2>@ViewBag.Title</h2>
+<hr />
+<div>
+    <dl class="dl-horizontal">
+        <dt class="hidden">
+            @Html.DisplayNameFor(model => model.PackageID)
+        </dt>
+
+        <dd class="hidden">
+            @Html.DisplayFor(model => model.PackageID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ChildProductTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChildProductTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IncludedByDefault)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IncludedByDefault)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PercentagePrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PercentagePrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OtherDetails)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OtherDetails)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new {  id = Model.PackageID  }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

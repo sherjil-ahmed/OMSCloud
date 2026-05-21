@@ -1,0 +1,87 @@
+﻿@model OMSCloud.Contracts.ViewModels.ProductMediaDetailModel
+@{
+    ViewBag.Title = "Product-Media Detail";
+}
+<div class="panel panel-default">
+    <div class="panel-body">
+        <dl class="dl-horizontal">
+            <dt class="hidden">
+                @Html.DisplayNameFor(model => model.ProductMediaID)
+            </dt>
+            <dd class="hidden">
+                @Html.DisplayFor(model => model.ProductMediaID)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ProductMediaTitle)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ProductMediaTitle)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.MediaContentTypeTitle)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.MediaContentTypeTitle)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.MediaFilePath)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.MediaFilePath)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ProductTitle)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ProductTitle)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Width)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Width)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Height)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Height)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.TransparencyLevel)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TransparencyLevel)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.StatusTitle)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.StatusTitle)
+            </dd>
+
+
+        </dl>
+    </div>
+</div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ProductMediaID }, new { @class = "btn btn-success" }) |
+        @Html.ActionLink("Back to List", "Index",null,new { @class="btn btn-success"})
+    </p>

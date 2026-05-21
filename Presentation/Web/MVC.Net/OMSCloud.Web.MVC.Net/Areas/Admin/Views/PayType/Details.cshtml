@@ -1,0 +1,55 @@
+﻿@model OMSCloud.Contracts.ViewModels.PayTypeModel
+
+@{
+    ViewBag.Title = "PayType List";
+}
+
+<h2>@ViewBag.Title </h2>
+<hr />
+
+<div>
+    <dl class="dl-horizontal">
+        <dt class="hidden">
+            @Html.DisplayNameFor(model => model.PayTypeID)
+        </dt>
+
+        <dd class="hidden">
+            @Html.DisplayFor(model => model.PayTypeID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PayTypeTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PayTypeTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StatusTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StatusTitle)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsSystem)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsSystem)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PayTypeID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

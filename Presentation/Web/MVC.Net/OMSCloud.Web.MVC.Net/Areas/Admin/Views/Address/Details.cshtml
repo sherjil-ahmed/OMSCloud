@@ -1,0 +1,108 @@
+﻿
+@model OMSCloud.Contracts.ViewModels.AddressViewModel
+@{
+    ViewBag.Title = "Address Detail";
+}
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div>
+            <dl class="dl-horizontal">
+                <dt hidden>
+                    @Html.DisplayNameFor(model => model.AddressID)
+                </dt>
+
+                <dd hidden>
+                    @Html.DisplayFor(model => model.AddressID)
+                </dd>
+
+                <dt hidden>
+                    @Html.DisplayNameFor(model => model.ProfileID)
+                </dt>
+
+                <dd hidden>
+                    @Html.DisplayFor(model => model.ProfileID)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.ProfileName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ProfileName)
+                </dd>
+
+                <dt hidden>
+                    @Html.DisplayNameFor(model => model.AddressTypeID)
+                </dt>
+
+                <dd hidden>
+                    @Html.DisplayFor(model => model.AddressTypeID)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.AddressTypeName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.AddressTypeName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.PlotNumber)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.PlotNumber)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.StreetNumber)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.StreetNumber)
+                </dd>
+
+                <dt hidden>
+                    @Html.DisplayNameFor(model => model.LocationID)
+                </dt>
+
+                <dd hidden>
+                    @Html.DisplayFor(model => model.LocationID)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.LocationName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.LocationName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.NearestLandmark)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.NearestLandmark)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.PostalCode)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.PostalCode)
+                </dd>
+            </dl>
+        </div>
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.AddressID }, new { @class = "btn btn-success" }) 
+            
+        </p>
+    </div>    
+</div>
+<div>
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-success" })
+</div>

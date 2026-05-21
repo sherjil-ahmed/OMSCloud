@@ -1,0 +1,64 @@
+﻿@using Microsoft.AspNet.Identity
+@using OMSCloud.Web.MVC.Net.Areas.Security.Models
+@using OMSCloud.Contracts.Proxy.WebAPI
+
+@model OMSCloud.Web.MVC.Net.Areas.Security.Models.ApplicationUser
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+
+        ProfileControllerProxy profileProxy = new ProfileControllerProxy();
+        var profile = profileProxy.GetProfileByUserId(Model.Id );//this.User.Identity.GetUserId<long>()
+
+            <div id="userbox" class="userbox">
+            <a href="#" data-toggle="dropdown">
+                <figure class="profile-picture">
+                    <img src="@ViewBag.UserImage" alt="" class="img-circle" data-lock-picture="@ViewBag.UserImage" />
+                    @*<img src="~/@profile.ImagePath" alt="" class="img-circle" data-lock-picture="assets/images/%21logged-user.jpg" />*@
+                    
+                    
+                </figure>
+                <div class="profile-info" data-lock-name="@Model.Email" data-lock-email="@Model.Email">
+                    <span class="name">@Model.Firstname @Model.Lastname</span>
+                    @*<span class="name">
+                        @Model.UserName
+                    </span>*@
+                    <span class="name">@Model.Email</span>
+                    @*@foreach (ApplicationUserRole role in Model.Roles)
+                    {
+                        <span class="role">@role.Role.RoleDescription</span>
+                    }*@
+                </div>
+
+                <i class="fa custom-caret"></i>
+            </a>
+
+            <div class="dropdown-menu">
+                <ul class="list-unstyled">
+                    <li class="divider"></li>
+                    <li>
+                        
+                        <a role="menuitem" tabindex="-1" href="@Url.Action("Edit"@*ProfileByUserId*@, "Profile", new { id = Model.Id })"><i class="fa fa-user"></i> My Profile</a>
+                    </li>
+                    <li>
+                        <a role="menuitem" tabindex="-1" href="#" data-lock-screen="true"><i class="fa fa-lock"></i> Lock Screen</a>
+                    </li>
+                    <li>
+                        <a role="menuitem" tabindex="-1" href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-power-off"></i>Log Off</a>
+                        @*<a role="menuitem" tabindex="-1" href="pages-signin.html"><i class="fa fa-power-off"></i> Logout</a>*@
+                    </li>
+                </ul>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Log In", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}

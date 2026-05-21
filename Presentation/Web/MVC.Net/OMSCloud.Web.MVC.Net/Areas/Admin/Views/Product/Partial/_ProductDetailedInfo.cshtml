@@ -1,0 +1,197 @@
+﻿@model OMSCloud.Contracts.ViewModels.ProductModel
+<style>
+    .thumb-image {
+        width: 200px;
+        height: 200px;
+    }
+</style>
+@*
+    <div class="form-group">
+        @Html.LabelFor(model => model.ProductActualImagePath, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            <div style="padding:13px">
+                @Html.EditorFor(model => model.ProductActualImagePath, new { htmlAttributes = new { @class = "form-control hidden" } })
+                @if (!string.IsNullOrEmpty(ViewBag.ProductActualImagePath))
+                {
+                    <img src=@ViewBag.ProductActualImagePath alt="IMAGES" style="height:200px ; width:332px" />
+                }
+                <div class="btn btn-facebook">
+                    <input type="file" id="fileUpload1" name="productActualiamgefile" accept="image/*" />
+                </div><br /><br />
+                <div id="image-holder1"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ProductImagePath, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            <div style="padding:13px">
+                @Html.EditorFor(model => model.ProductImagePath, new { htmlAttributes = new { @class = "form-control hidden" } })
+                @if (!string.IsNullOrEmpty(ViewBag.ProductActualImagePath))
+                {
+                    <img src=@ViewBag.ProductImagePath alt="IMAGES" style="height:200px ; width:332px" />
+                }
+                <div class="btn btn-facebook">
+                    <input type="file" id="fileUpload" name="productimagefile" accept="image/*" />
+                </div>
+                <br /><br />
+                <div id="image-holder"></div>
+
+            </div>
+        </div>
+    </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StockCount, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.StockCount, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.StockCount, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.WebLink, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.WebLink, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.WebLink, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+<div class="form-group">
+    @Html.LabelFor(model => model.BasePrice, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-3">
+        @Html.EditorFor(model => model.BasePrice, new { htmlAttributes = new { @class = "form-control", @disabled = "ture", @type = "number" } })
+        @Html.ValidationMessageFor(model => model.BasePrice, "", new { @class = "text-danger" })
+    </div>
+    @*</div>
+
+        <div class="form-group">*@
+    @Html.LabelFor(model => model.SellingPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-3">
+        @Html.EditorFor(model => model.SellingPrice, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+        @Html.ValidationMessageFor(model => model.SellingPrice, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.DiscountValue, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-3">
+        @Html.EditorFor(model => model.DiscountValue, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+        @Html.ValidationMessageFor(model => model.DiscountValue, "", new { @class = "text-danger" })
+    </div>
+    @*</div>
+        <div class="form-group">*@
+    @Html.LabelFor(model => model.IsDiscountPercentage, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-3">
+        @Html.EditorFor(model => model.IsDiscountPercentage, new { htmlAttributes = new { @class = "" } })
+        @Html.ValidationMessageFor(model => model.IsDiscountPercentage, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+@*
+    <div class="form-group">
+        @Html.LabelFor(model => model.UserRating, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.EditorFor(model => model.UserRating, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.UserRating, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.AnalysisRank, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.EditorFor(model => model.AnalysisRank, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.AnalysisRank, "", new { @class = "text-danger" })
+        </div>
+    </div>*@
+
+<div class="form-group">
+    @Html.LabelFor(model => model.OrderResponseTime, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-3">
+        @Html.EditorFor(model => model.OrderResponseTime, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+        @Html.ValidationMessageFor(model => model.OrderResponseTime, "", new { @class = "text-danger" })
+    </div>
+    @*</div>
+        <div class="form-group">*@
+    @Html.LabelFor(model => model.OrderResponseTimeUnitID, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-3">
+        @Html.DropDownListFor(model => model.OrderResponseTimeUnitID, ViewBag.ResponseTimeUnit as SelectList, "--Please Select--",  new { @class = "form-control" }  )
+        @Html.ValidationMessageFor(model => model.OrderResponseTimeUnitID, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.TaxTypeTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-3">
+        @Html.DropDownListFor(model => model.TaxTypeID, ViewBag.taxType as SelectList, "--Please Select--", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.TaxTypeID, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="form-group">
+    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-8">
+        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", rows = "8" } })
+        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-6">
+        <input id="btnSave" type="submit" value="Save" class="btn btn-success" />
+    </div>
+</div>
+
+@*<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+<script>
+    $("#fileUpload").on('change', function () {
+
+        if (typeof (FileReader) != "undefined") {
+
+            var image_holder = $("#image-holder");
+            image_holder.empty();
+
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $("<img />", {
+                    "src": e.target.result,
+                    "class": "thumb-image"
+                }).appendTo(image_holder);
+
+            }
+            image_holder.show();
+            reader.readAsDataURL($(this)[0].files[0]);
+        }
+
+        else {
+            alert("This browser does not support FileReader.");
+        }
+    });
+</script>
+<script>
+    $("#fileUpload1").on('change', function () {
+
+        if (typeof (FileReader) != "undefined") {
+
+            var image_holder = $("#image-holder1");
+            image_holder.empty();
+
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $("<img />", {
+                    "src": e.target.result,
+                    "class": "thumb-image"
+                }).appendTo(image_holder);
+
+            }
+            image_holder.show();
+            reader.readAsDataURL($(this)[0].files[0]);
+        }
+
+        else {
+            alert("This browser does not support FileReader.");
+        }
+    });
+</script>*@
+

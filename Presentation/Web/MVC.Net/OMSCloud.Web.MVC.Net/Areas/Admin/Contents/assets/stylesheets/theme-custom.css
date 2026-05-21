@@ -1,0 +1,53 @@
+/*Admin site responsive css*/
+@media only screen and (max-width: 1280px) {
+    .content-body {
+        padding: 40px 0 !important;
+    }
+    .page-header {
+        max-width: 100% !important;
+        border-left: 0 !important;
+        margin: -40px 0 0 0 !important;
+    }
+    .panel.panel-default {
+        padding: 51px 29px 0 !important;
+    }
+}
+@media only screen and (max-width: 850px) {
+    .header .logo {
+        width: 24% !important;
+    }
+
+    .header .separator {
+        margin: 0 7px 0 !important;
+    }
+    .userbox .profile-info {
+        margin: 0 0px 0 10px !important;
+    }
+}
+@media only screen and (max-width: 768px) {
+    .header .logo img {
+        width: 100% !important;
+        object-fit: contain;
+    }
+}
+@media only screen and (max-width: 600px) {
+    .userbox.open .dropdown-menu {
+        padding: 44px 24px 0 0 !important;
+    }
+    .header .logo {
+        width: 35% !important;
+    }
+}
+
+    /* Add here all your CSS customizations */
+    .body-sign .panel-sign .panel-title-sign .title {
+        background-color: #333;
+    }
+
+    .body-sign .panel-sign .panel-body {
+        border-top: 5px solid #333;
+    }
+
+    a:hover, a:focus .danger {
+        color: #710000;
+    }

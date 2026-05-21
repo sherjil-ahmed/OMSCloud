@@ -1,0 +1,178 @@
+﻿@model IEnumerable<OMSCloud.Contracts.ViewModels.CustomerReviewDetailModel>
+@using OMSCloud.Contracts.Common.DBEnums
+@helper Truncate(string input, int length)
+{
+    /**/
+
+    if (input.Length <= length)
+    {
+        @input
+    }
+    else
+    {
+        @input.Substring(0, length)<text>...</text>
+    }
+}
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <table id="allProductReviewsTable" class="table table-striped table-hover table-responsive table-bordered dataTable" style="width:100%">
+            <thead>
+                <tr>
+                    <th class="">
+                        @Html.CheckBox("Select All", false, htmlAttributes: new { @class = "checkAll", onclick = "", onchange = "OnClickSelectAll(this)" })
+                    </th>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.CustomerReviewID)
+                    </th>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.SubjectRowID)
+                    </th>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.SubjectID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ReviewerName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ReviewText)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Rating)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.StatusID)
+                    </th>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.ReviewerImage)
+                    </th>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.RequestedByProfileId)
+                    </th>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.CreatedBy)
+                    </th>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.CreatedOn)
+                    </th>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.ModifiedBy)
+                    </th>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.ModifiedOn)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td id="reviewId_checkBox" class="">
+                                @Html.CheckBox(item.CustomerReviewID.ToString(), false, htmlAttributes: new { @id= "ProductReviewId_CheckBox", @class = "CheckBox reviewId_CheckBox_" + item.CustomerReviewID, onclick = "OnClickSelectOne(this);" })
+                            </td>
+                            <td class="hidden">
+                                @Html.DisplayFor(modelItem => item.CustomerReviewID)
+                            </td>
+                            <td class="hidden">
+                                @Html.DisplayFor(modelItem => item.SubjectRowID)
+                            </td>
+                            <td class="hidden">
+                                @Html.DisplayFor(modelItem => item.SubjectID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ReviewerName)
+                            </td>
+                            <td>
+                                <span data-toggle="tooltip" data-placement="top" title="@Html.DisplayFor(modelItem => item.ReviewText)">@Truncate(item.ReviewText, 300)</span>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Rating)
+                            </td>
+                            <td>
+                                @if (item.StatusID == (long)DBStatusEnum.New)
+                                {
+                                    <span>New</span>
+                                }
+                                else if (item.StatusID == (long)DBStatusEnum.Active)
+                                {
+                                    <span>Active</span>
+                                }
+                                else if (item.StatusID == (long)DBStatusEnum.InActive)
+                                {
+                                    <span>In-Active</span>
+                                }
+                                else if (item.StatusID == (long)DBStatusEnum.Deleted)
+                                {
+                                    <span>Deleted</span>
+                                }
+                            </td>
+                            <td class="hidden">
+                                @Html.DisplayFor(modelItem => item.ReviewerImage)
+                            </td>
+                            <td class="hidden">
+                                @Html.DisplayFor(modelItem => item.RequestedByProfileId)
+                            </td>
+                            <td class="hidden">
+                                @Html.DisplayFor(modelItem => item.CreatedBy)
+                            </td>
+                            <td class="hidden">
+                                @Html.DisplayFor(modelItem => item.CreatedOn)
+                            </td>
+                            <td class="hidden">
+                                @Html.DisplayFor(modelItem => item.ModifiedBy)
+                            </td>
+                            <td class="hidden">
+                                @Html.DisplayFor(modelItem => item.ModifiedOn)
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        <div class="form-group">
+            <div class=" col-md-6">
+                <input type="submit" value="Approve Selected" class="btn btn-success" onclick="PostApproveSelected()" />
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var OnClickSelectAll = function (sender) {
+        $('.CheckBox').toggleClass("checked");
+        $("#allProductReviewsTable input#ProductReviewId_CheckBox[type=checkbox]").each((i, ele) => { ele.value = !ele.value; ele.checked = !ele.checked })
+    }
+
+    var OnClickSelectOne = function (sender) {
+        var x = $(sender).toggleClass("checked");
+        $('.CheckBox').val('false');
+        $('.checked').val('true');
+    }
+    var PostApproveSelected = function () {
+        var values = [];
+        $('.checked').each(
+            function (obj) {
+                values.push($(this).attr('name'));
+            });
+            var form = $('#__AjaxAntiForgeryForm');
+            var token = $('input[name="__RequestVerificationToken"]', form).val();
+
+            var mydata = {
+                values: values,
+                "__RequestVerificationToken": token,
+                };
+
+        $.ajax({
+            type: "POST",
+            //url: '@Url.Action("ApproveReviewList", "Review")',
+            url: "/admin/Review/ApproveReviewList?ReviewCSV=" + values,
+            data: mydata,
+            success: function (data) {
+                location.reload();
+            },
+            error: function () {
+            }
+        });
+    }
+</script>
