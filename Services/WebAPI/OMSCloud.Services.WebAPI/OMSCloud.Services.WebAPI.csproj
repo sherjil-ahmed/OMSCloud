@@ -208,6 +208,8 @@
   <ItemGroup>
     <Content Include="App_Code\ApiSession.cs" />
     <Content Include="Global.asax" />
+    <Content Include="GOOGLE_OAUTH_COMPLETE_SETUP.md" />
+    <Content Include="GOOGLE_OAUTH_IMPLEMENTATION_SUMMARY.md" />
     <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Scripts\jquery-1.6.4.js" />
     <Content Include="Scripts\jquery-1.6.4.min.js" />
@@ -256,7 +258,7 @@
     <Compile Include="Collections\ActiveChatClients.cs" />
     <Compile Include="Collections\ActiveNotificationClients.cs" />
     <Compile Include="Common\Security_ExtendedMethods.cs" />
-    <Compile Include="Common\Security_IdentityExtendedMethods.cs" />
+    <Compile Include="Common\GoogleOAuthService.cs" />
     <Compile Include="Controllers\CartOrderManagement\CartController.cs" />
     <Compile Include="Controllers\CartOrderManagement\OrderStatusMapController.cs" />
     <Compile Include="Controllers\CartOrderManagement\PaymentController.cs" />
@@ -290,6 +292,7 @@
     <Compile Include="Controllers\CartOrderManagement\DeliveryOptionController.cs" />
     <Compile Include="Controllers\UserSecurity\ExecActionController.cs" />
     <Compile Include="Controllers\UserSecurity\ExecActionParamController.cs" />
+    <Compile Include="Controllers\UserSecurity\GoogleOAuthController.cs" />
     <Compile Include="Controllers\UserSecurity\GroupController.cs" />
     <Compile Include="Controllers\UserSecurity\GroupRolePairController.cs" />
     <Compile Include="Controllers\Address\LocationLevelController.cs" />
@@ -352,6 +355,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\Misc\Config\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Business\CoreBusiness\OMSCloud.Business.Core\OMSCloud.Business.Core.csproj">

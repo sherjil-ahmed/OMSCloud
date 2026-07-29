@@ -125,6 +125,7 @@
     <Compile Include="EntityModels\CartOrderManagement\PayOptionMatrixModel.cs" />
     <Compile Include="EntityModels\Misc\SearchTermModel.cs" />
     <Compile Include="EntityModels\UserSecurity\VerificationStatusModel.cs" />
+    <Compile Include="ViewModels\GoogleOAuthModels.cs" />
     <Compile Include="ViewModels\LocationModels.cs" />
     <Compile Include="ViewModels\SearchModels.cs" />
   </ItemGroup>

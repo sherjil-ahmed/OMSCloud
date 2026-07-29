@@ -16,8 +16,18 @@ namespace OMSCloud.Services.WebAPIs.Models
         {
             //Create Default Roles...
             IList<ApplicationRole> defaultRoles = new List<ApplicationRole>();
-            defaultRoles.Add(new ApplicationRole { Name = c_SysAdmin, RoleDescription = "Allows system administration of Users/Roles/Permissions", LastModified = DateTime.Now, IsSysAdmin = true });
-            defaultRoles.Add(new ApplicationRole { Name = c_DefaultUser, RoleDescription = "Default role with limited permissions", LastModified = DateTime.Now, IsSysAdmin = false });
+            defaultRoles.Add(new ApplicationRole { 
+                Name = c_SysAdmin, 
+                RoleDescription = "Allows system administration of Users/Roles/Permissions", 
+                LastModified = DateTime.Now, 
+                IsSysAdmin = true 
+            });
+            defaultRoles.Add(new ApplicationRole { 
+                Name = c_DefaultUser, 
+                RoleDescription = "Default role with limited permissions", 
+                LastModified = DateTime.Now, 
+                IsSysAdmin = false 
+            });
 
             ApplicationRoleManager RoleManager = new ApplicationRoleManager(new ApplicationRoleStore(context));
             foreach (ApplicationRole role in defaultRoles)

@@ -147,6 +147,7 @@
     <Compile Include="BusinessComponents\Misc\UnUsed\TaxType.BusinessComponent.cs" />
     <Compile Include="BusinessComponents\UserSecurity\User.BusinessComponent.cs" />
     <Compile Include="BusinessComponents\UserSecurity\UserType.BusinessComponent.cs" />
+    <Compile Include="Migrations\AddUserGoogleOAuthCredentials.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,132 +1,112 @@
 using System;
-using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OMSCloud.Services.WebAPIs.Models
 {
     /// <summary>
-    /// Model for Google OAuth configuration
+    /// Database model to store Google OAuth credentials for users
+    /// Maps to AspNetUserLogins table via provider/providerkey
+    /// Also stores additional Google-specific credentials like refresh tokens
     /// </summary>
-    public class GoogleOAuthConfiguration
+    [Table("UserGoogleOAuthCredentials1")]
+    public class UserGoogleOAuthCredential1
     {
-        public string ClientId { get; set; }
-        public string ClientSecret { get; set; }
-        public string RedirectUri { get; set; }
-        public string TokenEndpoint { get; set; }
-        public string UserInfoEndpoint { get; set; }
-    }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long Id { get; set; }
 
-    /// <summary>
-    /// Model to represent Google OAuth token request
-    /// </summary>
-    public class GoogleTokenRequest
-    {
-        public string code { get; set; }
-        public string client_id { get; set; }
-        public string client_secret { get; set; }
-        public string redirect_uri { get; set; }
-        public string grant_type { get; set; } = "authorization_code";
-    }
-
-    /// <summary>
-    /// Model to represent Google OAuth token response
-    /// </summary>
-    public class GoogleTokenResponse
-    {
-        public string access_token { get; set; }
-        public int expires_in { get; set; }
-        public string refresh_token { get; set; }
-        public string scope { get; set; }
-        public string token_type { get; set; }
-        public string id_token { get; set; }
-    }
-
-    /// <summary>
-    /// Model to represent Google user information
-    /// </summary>
-    public class GoogleUserInfo
-    {
-        public string id { get; set; }
-        public string email { get; set; }
-        public string verified_email { get; set; }
-        public string name { get; set; }
-        public string given_name { get; set; }
-        public string family_name { get; set; }
-        public string picture { get; set; }
-        public string locale { get; set; }
-    }
-
-    /// <summary>
-    /// Model for Google OAuth signup/signin request
-    /// </summary>
-    public class GoogleOAuthSignupRequest
-    {
-        public string Code { get; set; }
-        public string State { get; set; }
-        public string RedirectUri { get; set; }
-        public string DeviceToken { get; set; }
-        public string NotificationTokenJson { get; set; }
-    }
-
-    /// <summary>
-    /// Model for Google OAuth refresh token request
-    /// </summary>
-    public class GoogleOAuthRefreshTokenRequest
-    {
-        public string refresh_token { get; set; }
-        public string client_id { get; set; }
-        public string client_secret { get; set; }
-        public string grant_type { get; set; } = "refresh_token";
-    }
-
-    /// <summary>
-    /// Model to store Google OAuth credentials for a user
-    /// </summary>
-    public class UserGoogleOAuthCredential
-    {
-        public long UserOAuthCredentialId { get; set; }
+        /// <summary>
+        /// Reference to ApplicationUser
+        /// </summary>
+        [Required]
+        [Index("IX_UserId", IsUnique = false)]
         public long UserId { get; set; }
+
+        /// <summary>
+        /// Google's unique identifier for the user (subject claim from Google's JWT)
+        /// </summary>
+        [Required]
+        [StringLength(500)]
+        [Index("IX_GoogleId", IsUnique = true)]
         public string GoogleId { get; set; }
+
+        /// <summary>
+        /// Google's access token for API calls
+        /// </summary>
+        [Required]
         public string AccessToken { get; set; }
+
+        /// <summary>
+        /// Google's refresh token for obtaining new access tokens
+        /// </summary>
+        [StringLength(1000)]
         public string RefreshToken { get; set; }
+
+        /// <summary>
+        /// Expiry time of the access token
+        /// </summary>
         public DateTime AccessTokenExpiryTime { get; set; }
-        public DateTime CreatedOn { get; set; }
-        public DateTime ModifiedOn { get; set; }
+
+        /// <summary>
+        /// Google's ID token (JWT) for additional claims validation
+        /// </summary>
+        public string IdToken { get; set; }
+
+        /// <summary>
+        /// Scope of permissions granted
+        /// </summary>
+        [StringLength(500)]
+        public string Scope { get; set; }
+
+        /// <summary>
+        /// Token type (usually "Bearer")
+        /// </summary>
+        [StringLength(50)]
+        public string TokenType { get; set; }
+
+        /// <summary>
+        /// Authentication provider name (always "Google" for this table)
+        /// </summary>
+        [Required]
+        [StringLength(50)]
+        [Index("IX_AuthProvider", IsUnique = false)]
+        public string AuthenticationProvider { get; set; }
+
+        /// <summary>
+        /// Is this credential active and usable
+        /// </summary>
         public bool IsActive { get; set; }
-        public string AuthenticationProvider { get; set; } = "Google"; // To distinguish from other OAuth providers
+
+        /// <summary>
+        /// When was this credential created
+        /// </summary>
+        public DateTime CreatedOn { get; set; }
+
+        /// <summary>
+        /// When was this credential last modified
+        /// </summary>
+        public DateTime ModifiedOn { get; set; }
+
+        /// <summary>
+        /// Last login time using this OAuth provider
+        /// </summary>
+        public DateTime? LastLoginOn { get; set; }
+
+        /// <summary>
+        /// Navigation property to ApplicationUser
+        /// </summary>
+        [ForeignKey("UserId")]
+        public virtual ApplicationUser User { get; set; }
     }
 
     /// <summary>
-    /// Extended login model to support Google OAuth
+    /// Metadata constants for authentication
     /// </summary>
-    public class GoogleOAuthLoginViewModel
+    public static class AuthenticationMetadata
     {
-        public string Email { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string GoogleId { get; set; }
-        public string GoogleAccessToken { get; set; }
-        public string GoogleRefreshToken { get; set; }
-        public DateTime TokenExpiryTime { get; set; }
-        public string AuthenticationProvider { get; set; } = "Google";
-    }
-
-    /// <summary>
-    /// Response model for authentication that indicates the provider
-    /// </summary>
-    public class AuthenticationSourceModel
-    {
-        public string Provider { get; set; } // "Google" or "Default"
-        public bool IsGoogleOAuth { get; set; }
-        public bool IsDefaultAuth { get; set; }
-    }
-
-    /// <summary>
-    /// Model to track authentication method in claims
-    /// </summary>
-    public class AuthenticationMetadata
-    {
-        public const string GoogleOAuthProvider = "GoogleOAuth";
-        public const string DefaultProvider = "DefaultAuth";
+        public const string GoogleOAuthProvider = "Google";
+        public const string StandardProvider = "Standard";
         public const string ClaimType = "AuthenticationProvider";
     }
 }

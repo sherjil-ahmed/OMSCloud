@@ -3,12 +3,15 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
+
 using OMSCloud.Business.Core;
 using OMSCloud.Contracts.Common;
 using OMSCloud.Contracts.Common.DBEnums;
 using OMSCloud.Contracts.ViewModels;
+using OMSCloud.DataStore.EF.OMSModel;
 using OMSCloud.Services.WebAPIs.Common;
 using OMSCloud.Services.WebAPIs.Models;
+
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -21,7 +24,9 @@ using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Web;
+
 using static OMSCloud.Contracts.Common.NLogger;
+
 
 namespace OMSCloud.Services.WebAPIs
 {
@@ -235,7 +240,7 @@ namespace OMSCloud.Services.WebAPIs
             return manager;
         }
 
-        public static ApplicationUser GetUser(long _userId)
+		public static ApplicationUser GetUser(long _userId)
         {
             return GetUser(SecurityDbContext.CreateInstance(), _userId);
         }
@@ -465,26 +470,206 @@ namespace OMSCloud.Services.WebAPIs
             return _retVal;
         }
 
-        public static List<ApplicationUser> GetUsers4SelectList()
-        {
-            List<ApplicationUser> _retVal = null;
-            try
-            {
+		public static List<ApplicationUser> GetUsers4SelectList()
+		{
+			List<ApplicationUser> _retVal = null;
+			try
+			{
+				using (SecurityDbContext db = SecurityDbContext.CreateInstance())
+				{
+					_retVal = db.Users.Where(r => r.Inactive == false || r.Inactive == null).ToList();
+				}
+			}
+			catch (Exception)
+			{
+			}
+
+			return _retVal;
+		}
+
+		#region Worker functions for Google OAuth credentials
+		/// <summary>
+		/// Retrieves stored Google OAuth credentials for a user
+		/// </summary>
+		public UserGoogleOAuthCredential GetStoredGoogleCredentials(long userId)
+		{
+			try
+			{
+				//Logger.Info(string.Format("Retrieving Google OAuth credentials for UserId: {0}", userId));
+				var db = SecurityDbContext.CreateInstance();
+				var credential = db.UserGoogleOAuthCredentials.Where(x => x.UserId == userId).FirstOrDefault();
+				//var credential = new UserGoogleOAuthCredentialModel
+				//{
+				//	UserId = userId,
+				//	GoogleId = o.GoogleId,
+				//	AccessToken = o.AccessToken,
+				//	RefreshToken = o.RefreshToken,
+				//	AccessTokenExpiryTime = o.AccessTokenExpiryTime,
+				//	CreatedOn = o.CreatedOn,
+				//	ModifiedOn = o.ModifiedOn,
+				//	IsActive = o.IsActive,
+				//	AuthenticationProvider = o.AuthenticationProvider,
+				//	UserOAuthCredentialId = o.Id,
+				//};
+				return credential;
+			}
+			catch (Exception ex)
+			{
+				//Logger.Error(ex, string.Format("Error retrieving Google OAuth credentials for UserId: {0}", userId));
+				return null;
+			}
+		}
+
+		/// <summary>
+		/// Updates existing Google OAuth credentials
+		/// </summary>
+		public bool UpdateGoogleOAuthCredentials(long userId, GoogleUserInfoModel googleUserInfo, GoogleTokenResponseModel tokenResponse)
+		{
+			bool _retVal = false;
+			try
+			{
                 using (SecurityDbContext db = SecurityDbContext.CreateInstance())
                 {
-                    _retVal = db.Users.Where(r => r.Inactive == false || r.Inactive == null).ToList();
+                    ApplicationUser _user2Modify = GetUser(db, userId);
+
+                    var existingCredentials = db.UserGoogleOAuthCredentials.Where(x => x.UserId == userId)
+                        .FirstOrDefault();
+                    if (existingCredentials != null)
+                    {
+                        existingCredentials.GoogleId = googleUserInfo.id;
+                        existingCredentials.AccessToken = tokenResponse.access_token;
+                        existingCredentials.RefreshToken = tokenResponse.refresh_token;
+                        existingCredentials.AccessTokenExpiryTime = DateTime.Now.AddSeconds(tokenResponse.expires_in);
+                        existingCredentials.IdToken = tokenResponse.id_token;
+                        existingCredentials.Scope = tokenResponse.scope;
+                        existingCredentials.TokenType = tokenResponse.token_type;
+                        existingCredentials.AuthenticationProvider = "Google";
+                        existingCredentials.ModifiedOn = DateTime.Now;
+                        db.Entry(existingCredentials).State = EntityState.Modified;
+                    }
+                    else
+                    {
+                        UserGoogleOAuthCredential newCredential = new UserGoogleOAuthCredential
+                        {
+                            UserId = userId,
+                            GoogleId = googleUserInfo.id,
+                            AccessToken = tokenResponse.access_token,
+                            RefreshToken = tokenResponse.refresh_token,
+                            AccessTokenExpiryTime = DateTime.Now.AddSeconds(tokenResponse.expires_in),
+                            IdToken = tokenResponse.id_token,
+                            Scope = tokenResponse.scope,
+                            TokenType = tokenResponse.token_type,
+                            AuthenticationProvider = "Google",
+                            IsActive = true,
+                            CreatedOn = DateTime.Now,
+                            ModifiedOn = DateTime.Now,
+                            LastLoginOn = DateTime.Now
+						};
+                        db.UserGoogleOAuthCredentials.Add(newCredential);
+					}
+                    db.SaveChangesAsync();
+					_retVal = true;
                 }
-            }
-            catch (Exception)
-            {
-            }
-
+			}
+			catch (Exception ex)
+			{
+				//Logger.Error(ex, string.Format("Error updating Google OAuth credentials for UserId: {0}", userId));
+				return false;
+			}
             return _retVal;
-        }
+		}
+		/// <summary>
+		/// Updates Google credentials in database
+		/// </summary>
+		public bool UpdateGoogleCredentialsInDatabase(UserGoogleOAuthCredential credential)
+		{
+			bool _retVal = false;
+			try
+			{
+				using (SecurityDbContext db = SecurityDbContext.CreateInstance())
+				{
+					var existingCredentials = db.UserGoogleOAuthCredentials.Where(x => x.UserId == credential.UserId)
+						.FirstOrDefault();
+					if (existingCredentials != null)
+					{
+						existingCredentials.GoogleId = credential.GoogleId;
+						existingCredentials.AccessToken = credential.AccessToken;
+						existingCredentials.RefreshToken = credential.RefreshToken;
+						existingCredentials.AccessTokenExpiryTime = credential.AccessTokenExpiryTime;
+						existingCredentials.IdToken = credential.IdToken;
+						existingCredentials.Scope = credential.Scope;
+						existingCredentials.TokenType = credential.TokenType;
+						existingCredentials.AuthenticationProvider = "Google";
+						existingCredentials.ModifiedOn = DateTime.Now;
+						db.Entry(existingCredentials).State = EntityState.Modified;
+					}
+					else
+					{
+						UserGoogleOAuthCredential newCredential = new UserGoogleOAuthCredential
+						{
+							UserId = credential.UserId,
+							GoogleId = credential.GoogleId,
+							AccessToken = credential.AccessToken,
+							RefreshToken = credential.RefreshToken,
+							AccessTokenExpiryTime = credential.AccessTokenExpiryTime,
+							IdToken = credential.IdToken,
+							Scope = credential.Scope,
+							TokenType = credential.TokenType,
+							AuthenticationProvider = "Google",
+							ModifiedOn = DateTime.Now,
+							IsActive = true,
+							CreatedOn = DateTime.Now,
+							//LastLoginOn = DateTime.Now
+						};
+						db.UserGoogleOAuthCredentials.Add(newCredential);
+					}
+					db.SaveChangesAsync();
+					_retVal = true;
+				}
+			}
+			catch (Exception ex)
+			{
+				//Logger.Error(ex, string.Format("Error updating Google OAuth credentials for UserId: {0}", userId));
+				return false;
+			}
+			return _retVal;
 
-    }
+		}
 
-    public class ApplicationSignInManager : SignInManager<ApplicationUser, long>
+		public bool StoreGoogleOAuthCredentials(long userId, GoogleUserInfoModel googleUserInfo, GoogleTokenResponseModel tokenResponse)
+		{
+			try
+			{
+				//Logger.Info(string.Format("Storing Google OAuth credentials for UserId: {0}, GoogleId: {1}", userId, googleUserInfo.id));
+				var db = SecurityDbContext.CreateInstance();
+                db.UserGoogleOAuthCredentials.Add(new UserGoogleOAuthCredential
+                {
+                    UserId = userId,
+                    GoogleId = googleUserInfo.id,
+                    AccessToken = tokenResponse.access_token,
+                    RefreshToken = tokenResponse.refresh_token,
+                    AccessTokenExpiryTime = DateTime.UtcNow.AddSeconds(tokenResponse.expires_in),
+                    IdToken = tokenResponse.id_token,
+                    Scope = tokenResponse.scope,
+                    TokenType = tokenResponse.token_type,
+                    CreatedOn = DateTime.Now,
+                    ModifiedOn = DateTime.Now,
+                    IsActive = true,
+                    AuthenticationProvider = "Google"
+                });
+                var id = db.SaveChanges();
+				return id > 0;
+			}
+			catch (Exception ex)
+			{
+				//Logger.Error(ex, string.Format("Error storing Google OAuth credentials for UserId: {0}", userId));
+				return false;
+			}
+		}
+		#endregion
+	}
+
+	public class ApplicationSignInManager : SignInManager<ApplicationUser, long>
     {
         public ApplicationSignInManager(ApplicationUserManager userManager, IAuthenticationManager authenticationManager)
             : base(userManager, authenticationManager)

@@ -9,3 +9,4 @@ Logs/
 /Services/WebAPI/OMSCloud.Services.WebAPI/BackgroundServiceData
 
 /Services/WebAPI/OMSCloud.Services.WebAPI/_bin_deployableAssemblies
+/packages

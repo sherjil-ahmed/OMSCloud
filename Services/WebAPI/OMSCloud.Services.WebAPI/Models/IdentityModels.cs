@@ -2,6 +2,8 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Linq;
 using System.Security.Claims;
@@ -151,11 +153,64 @@ namespace OMSCloud.Services.WebAPIs.Models
         }
     }
 
+    /// <summary>
+    /// Database model to store Google OAuth credentials for users
+    /// </summary>
+    [Table("UserGoogleOAuthCredentials")]
+    public class UserGoogleOAuthCredential
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long Id { get; set; }
+
+        [Required]
+        [Index("IX_UserId", IsUnique = false)]
+        public long UserId { get; set; }
+
+        [Required]
+        [StringLength(500)]
+        [Index("IX_GoogleId", IsUnique = true)]
+        public string GoogleId { get; set; }
+
+        [Required]
+        public string AccessToken { get; set; }
+
+        [StringLength(1000)]
+        public string RefreshToken { get; set; }
+
+        public DateTime AccessTokenExpiryTime { get; set; }
+
+        public string IdToken { get; set; }
+
+        [StringLength(500)]
+        public string Scope { get; set; }
+
+        [StringLength(50)]
+        public string TokenType { get; set; }
+
+        [Required]
+        [StringLength(50)]
+        [Index("IX_AuthProvider", IsUnique = false)]
+        public string AuthenticationProvider { get; set; }
+
+        public bool IsActive { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+
+        public DateTime ModifiedOn { get; set; }
+
+        public DateTime? LastLoginOn { get; set; }
+
+        [ForeignKey("UserId")]
+        public virtual ApplicationUser User { get; set; }
+    }
+
     public class SecurityDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, long, ApplicationUserLogin, ApplicationUserRole, ApplicationUserClaim>
     {
         public DbSet<PERMISSION> PERMISSIONS { get; set; }
-
-        public SecurityDbContext() : base("DefaultSecurityConnection")
+        public DbSet<UserGoogleOAuthCredential> UserGoogleOAuthCredentials { get; set; }
+		
+public SecurityDbContext() : base("DefaultSecurityConnection")
         {
             Database.SetInitializer<SecurityDbContext>(new SecurityDBInitializer());
 
@@ -178,6 +233,17 @@ namespace OMSCloud.Services.WebAPIs.Models
             modelBuilder.Entity<ApplicationUser>().ToTable("USERS").Property(p => p.Id).HasColumnName("UserId");
             modelBuilder.Entity<ApplicationRole>().ToTable("ROLES").Property(p => p.Id).HasColumnName("RoleId");
             modelBuilder.Entity<ApplicationUserRole>().ToTable("LNK_USER_ROLE");
+
+            // Configure UserGoogleOAuthCredential
+            modelBuilder.Entity<UserGoogleOAuthCredential>()
+                .ToTable("UserGoogleOAuthCredentials")
+                .HasKey(c => c.Id);
+
+            modelBuilder.Entity<UserGoogleOAuthCredential>()
+                .HasRequired(c => c.User)
+                .WithMany()
+                .HasForeignKey(c => c.UserId)
+                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<ApplicationRole>().
             HasMany(c => c.PERMISSIONS).
