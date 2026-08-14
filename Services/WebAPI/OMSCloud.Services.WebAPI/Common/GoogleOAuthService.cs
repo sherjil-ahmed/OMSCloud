@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
@@ -320,6 +321,42 @@ namespace OMSCloud.Services.WebAPIs.Common
 				return null;
 			}
 		}
-	}
 
+		private async Task<GoogleTokenResponseModel> GoogleAuth(string authorizationCode)
+		{
+			// Step 1: User gets redirected to Google login
+			// GET https://accounts.google.com/o/oauth2/v2/auth?
+			//   client_id=YOUR_CLIENT_ID&
+			//   scope=profile%20email&
+			//   response_type=code&
+			//   redirect_uri=YOUR_REDIRECT_URI
+
+			// Step 2: Exchange authorization code for tokens
+			var tokenRequest = new HttpClient();
+			var response = await tokenRequest.PostAsync("https://oauth2.googleapis.com/token",
+				new FormUrlEncodedContent(new Dictionary<string, string>
+					{
+						{ "client_id", "YOUR_CLIENT_ID" },
+						{ "client_secret", "YOUR_CLIENT_SECRET" },
+						{ "code", authorizationCode },
+						{ "grant_type", "authorization_code" },
+						{ "redirect_uri", "YOUR_REDIRECT_URI" }
+					}
+				));
+
+			var tokenResponse = JsonConvert.DeserializeObject<dynamic>(
+				await response.Content.ReadAsStringAsync());
+
+
+			var googleTokenResponseModel = new GoogleTokenResponseModel
+			{
+				access_token = tokenResponse.access_token,
+				refresh_token = tokenResponse.refresh_token,
+				id_token = tokenResponse.id_token,
+				expires_in = tokenResponse.expires_in,
+				token_type = tokenResponse.token_type
+			};
+			return googleTokenResponseModel;
+		}
+	}
 }

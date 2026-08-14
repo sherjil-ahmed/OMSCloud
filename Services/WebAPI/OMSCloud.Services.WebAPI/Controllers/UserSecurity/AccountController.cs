@@ -989,8 +989,8 @@ namespace OMSCloud.Services.WebAPIs.Controllers
             {
                 responeModel = JsonConvert.DeserializeObject<TokenResponseModel>(response.Content);
                 //Add token expiry date into response model
-                responeModel.expiredInMinutes = 30;
-                responeModel.expiredTime = DateTime.UtcNow.AddMinutes(responeModel.expiredInMinutes);
+                responeModel.expires_in = 30;
+                responeModel.expiredTime = DateTime.UtcNow.AddMinutes(responeModel.expires_in);
                 return responeModel;
             }
 

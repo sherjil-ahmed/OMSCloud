@@ -1,15 +1,20 @@
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+
 using Newtonsoft.Json;
+
 using NLog;
+
 using OMSCloud.Business.Core;
-using OMSCloud.Contracts.Common;
 using OMSCloud.Contracts.Common.DBEnums;
+using OMSCloud.Contracts.ViewModels;
+using OMSCloud.Services.WebAPIs.Common;
 using OMSCloud.Services.WebAPIs.Models;
+
 using RestSharp;
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Configuration;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -39,9 +44,9 @@ namespace OMSCloud.Services.WebAPIs.Controllers
                 {
                     var config = new GoogleOAuthConfiguration
                     {
-                        ClientId = System.Configuration.ConfigurationManager.AppSettings["GoogleOAuth_ClientId"],
-                        ClientSecret = System.Configuration.ConfigurationManager.AppSettings["GoogleOAuth_ClientSecret"],
-                        RedirectUri = System.Configuration.ConfigurationManager.AppSettings["GoogleOAuth_RedirectUri"],
+                        ClientId = ConfigurationManager.AppSettings["GoogleOAuth_ClientId"],
+                        ClientSecret = ConfigurationManager.AppSettings["GoogleOAuth_ClientSecret"],
+                        RedirectUri = ConfigurationManager.AppSettings["GoogleOAuth_RedirectUri"],
                         TokenEndpoint = "https://oauth2.googleapis.com/token",
                         UserInfoEndpoint = "https://www.googleapis.com/oauth2/v1/userinfo"
                     };
@@ -58,8 +63,8 @@ namespace OMSCloud.Services.WebAPIs.Controllers
         [HttpPost]
         [Route("signup")]
         [AllowAnonymous]
-        [ReturnType(DataType = typeof(AccountResponseModel))]
-        public async Task<IHttpActionResult> GoogleSignup([FromBody] GoogleOAuthSignupRequest model)
+        [ResponseType(typeof(AccountResponseModel))]
+        public async Task<IHttpActionResult> GoogleSignUp([FromBody] GoogleOAuthSignupRequestModel model)
         {
             Logger.Info("=== Google OAuth Signup Started ===");
             var response = new AccountResponseModel();
@@ -67,108 +72,105 @@ namespace OMSCloud.Services.WebAPIs.Controllers
             response.IsActionRequired = false;
 
             try
-            {
-                if (model == null || string.IsNullOrEmpty(model.Code))
+			{
+				if (model == null || string.IsNullOrEmpty(model.Code))
+				{
+					response.StatusMessage = "Invalid request. Authorization code is required.";
+					Logger.Warn("Invalid signup request: missing authorization code");
+					return Ok(response);
+				}
+
+				// Step 1: Exchange authorization code for tokens and user info
+				Logger.Info("Exchanging authorization code for tokens");
+				var exchangeOutput = await GoogleOAuthService.ExchangeCodeForTokenAsync(
+					model.Code,
+					model.RedirectUri
+				);
+
+				if (!exchangeOutput.IsSuccessful || exchangeOutput.TokenResponse == null || exchangeOutput.UserInfo == null)
+				{
+					response.StatusMessage = "Failed to authenticate with Google. Please try again.";
+					Logger.Error("Failed to exchange code for token or get user info");
+					return Ok(response);
+				}
+
+				// Step 2: Check if user already exists
+				var userMgr = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+				var user = userMgr.FindByEmail(exchangeOutput.UserInfo.email);
+
+				if (user == null)
+				{
+					user = await CreateUserFromGoogleOAuth(exchangeOutput, userMgr);
+					if (user == null)
+					{
+						response.StatusMessage = "Failed to create user account. ";// + string.Join(", ", result.Errors);
+						Logger.Error(string.Format("Failed to create user: {0}"));//, string.Join(", ", result.Errors)));
+						return Ok(response);
+					}
+					Logger.Info(string.Format("User created successfully. UserId: {0}", user.Id));
+				}
+
+				// User exists, link Google OAuth account
+				Logger.Info(string.Format("Linking Google OAuth account."));
+				response = await LinkGoogleOAuthAccount(
+                    user, 
+                    userMgr, 
+                    exchangeOutput, 
+                    model);
+
+				/*
+				// Step 4: Store Google OAuth credentials
+				if (!userMgr.StoreGoogleOAuthCredentials(user.Id, exchangeOutput.UserInfo, exchangeOutput.TokenResponse))
+				{
+					response.StatusMessage = "Account created but failed to store OAuth credentials.";
+					Logger.Warn(string.Format("Failed to store OAuth credentials for UserId: {0}", user.Id));
+				}
+
+				// Step 5: Add authentication provider claim
+				await AddAuthenticationProviderClaim(userMgr, user.Id, AuthenticationMetadata.GoogleOAuthProvider);
+                
+				// Step 6: Set up user profile
+				SetupProfileForGoogleUser(user, exchangeOutput.UserInfo);
+
+				// Step 7: Add default role
+				ApplicationUserManager.AddUser2Role(user.Id, 3);
+
+				// Step 8: Generate authentication response with token
+				response.StatusCode = SecurityStatus.Success;
+				response.StatusMessage = "Google account registered successfully. You can now login.";
+				response.IsActionRequired = false;
+
+				response.TokenResponse = SetToken(exchangeOutput.TokenResponse);
+
+				// Set device token if provided
+				if (model.NotificationTokenJson != null)
+				{
+					try
+					{
+						var notificationToken = JsonConvert.DeserializeObject<NotificationTokenModel>(model.NotificationTokenJson);
+						if (notificationToken != null)
+						{
+							SetDeviceToken(notificationToken, user.Id);
+						}
+					}
+					catch (Exception ex)
+					{
+						Logger.Warn(ex, "Failed to set device token during signup");
+					}
+				}
+                */
+
+                if(response.StatusCode != SecurityStatus.Success)
                 {
-                    response.StatusMessage = "Invalid request. Authorization code is required.";
-                    Logger.Warn("Invalid signup request: missing authorization code");
-                    return Ok(response);
+                    Logger.Warn(string.Format("Google OAuth signup completed with warnings for UserId: {0}. StatusMessage: {1}", user.Id, response.StatusMessage));
                 }
-
-                // Step 1: Exchange authorization code for tokens and user info
-                Logger.Info($"Exchanging authorization code for tokens");
-                var (tokenResponse, googleUserInfo) = await GoogleOAuthService.ExchangeCodeForTokenAsync(
-                    model.Code,
-                    model.RedirectUri
-                );
-
-                if (tokenResponse == null || googleUserInfo == null)
+                else
                 {
-                    response.StatusMessage = "Failed to authenticate with Google. Please try again.";
-                    Logger.Error("Failed to exchange code for token or get user info");
-                    return Ok(response);
-                }
-
-                // Step 2: Check if user already exists
-                var userMgr = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
-                var existingUser = userMgr.FindByEmail(googleUserInfo.email);
-
-                if (existingUser != null)
-                {
-                    // User exists, link Google OAuth account
-                    Logger.Info($"User already exists with email {googleUserInfo.email}. Linking Google OAuth account.");
-                    return await LinkGoogleOAuthAccount(existingUser, tokenResponse, googleUserInfo, model, response);
-                }
-
-                // Step 3: Create new user with Google information
-                Logger.Info($"Creating new user from Google OAuth. Email: {googleUserInfo.email}");
-                var newUser = new ApplicationUser
-                {
-                    UserName = googleUserInfo.email,
-                    Email = googleUserInfo.email,
-                    Firstname = googleUserInfo.given_name ?? googleUserInfo.name ?? "Google",
-                    Lastname = googleUserInfo.family_name ?? "User",
-                    EmailConfirmed = googleUserInfo.verified_email == "true",
-                    Inactive = false,
-                    LastModified = DateTime.Now
-                };
-
-                // Generate a random password for Google OAuth users
-                var randomPassword = Membership.GeneratePassword(16, 4);
-
-                var result = await userMgr.CreateAsync(newUser, randomPassword);
-
-                if (!result.Succeeded)
-                {
-                    response.StatusMessage = "Failed to create user account. " + string.Join(", ", result.Errors);
-                    Logger.Error($"Failed to create user: {string.Join(", ", result.Errors)}");
-                    return Ok(response);
-                }
-
-                Logger.Info($"User created successfully. UserId: {newUser.Id}");
-
-                // Step 4: Store Google OAuth credentials
-                if (!StoreGoogleOAuthCredentials(newUser.Id, googleUserInfo, tokenResponse))
-                {
-                    response.StatusMessage = "Account created but failed to store OAuth credentials.";
-                    Logger.Warn($"Failed to store OAuth credentials for UserId: {newUser.Id}");
-                }
-
-                // Step 5: Set up user profile
-                SetupProfileForGoogleUser(newUser, googleUserInfo);
-
-                // Step 6: Add default role
-                ApplicationUserManager.AddUser2Role(newUser.Id, 3); // Shop User role by default
-
-                // Step 7: Generate authentication response with token
-                response.StatusCode = SecurityStatus.Success;
-                response.StatusMessage = "Google account registered successfully. You can now login.";
-                response.IsActionRequired = false;
-
-                // Get access token
-                response.TokenResponse = GetTokenForGoogleUser(newUser.Email, randomPassword, newUser.Id);
-
-                // Set device token if provided
-                if (model.NotificationTokenJson != null)
-                {
-                    try
-                    {
-                        var notificationToken = JsonConvert.DeserializeObject<NotificationTokenModel>(model.NotificationTokenJson);
-                        if (notificationToken != null)
-                        {
-                            SetDeviceToken(notificationToken, newUser.Id);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger.Warn(ex, "Failed to set device token during signup");
-                    }
-                }
-
-                Logger.Info($"=== Google OAuth Signup Completed Successfully for UserId: {newUser.Id} ===");
-                return Ok(response);
-            }
-            catch (Exception ex)
+                    Logger.Info(string.Format("Google OAuth signup completed successfully for UserId: {0}", user.Id));
+				}
+				return Ok(response);
+			}
+			catch (Exception ex)
             {
                 response.StatusCode = SecurityStatus.Failure;
                 response.StatusMessage = "An error occurred during signup. Please try again.";
@@ -178,15 +180,15 @@ namespace OMSCloud.Services.WebAPIs.Controllers
             }
         }
 
-        /// <summary>
-        /// Google OAuth Sign-In Endpoint
-        /// Accepts authorization code and logs in the user
-        /// </summary>
-        [HttpPost]
+		/// <summary>
+		/// Google OAuth Sign-In Endpoint
+		/// Accepts authorization code and logs in the user
+		/// </summary>
+		[HttpPost]
         [Route("signin")]
         [AllowAnonymous]
-        [ReturnType(DataType = typeof(AccountResponseModel))]
-        public async Task<IHttpActionResult> GoogleSignin([FromBody] GoogleOAuthSignupRequest model)
+        [ResponseType(typeof(AccountResponseModel))]
+        public async Task<IHttpActionResult> GoogleSignIn([FromBody] GoogleOAuthSignupRequestModel model)
         {
             Logger.Info("=== Google OAuth Signin Started ===");
             var response = new AccountResponseModel();
@@ -204,12 +206,12 @@ namespace OMSCloud.Services.WebAPIs.Controllers
 
                 // Step 1: Exchange authorization code for tokens and user info
                 Logger.Info("Exchanging authorization code for tokens");
-                var (tokenResponse, googleUserInfo) = await GoogleOAuthService.ExchangeCodeForTokenAsync(
+                var exchangeOutput = await GoogleOAuthService.ExchangeCodeForTokenAsync(
                     model.Code,
                     model.RedirectUri
                 );
 
-                if (tokenResponse == null || googleUserInfo == null)
+                if (!exchangeOutput.IsSuccessful || exchangeOutput.TokenResponse == null || exchangeOutput.UserInfo == null)
                 {
                     response.StatusMessage = "Failed to authenticate with Google. Please try again.";
                     Logger.Error("Failed to exchange code for token or get user info");
@@ -218,34 +220,36 @@ namespace OMSCloud.Services.WebAPIs.Controllers
 
                 // Step 2: Find user by email
                 var userMgr = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
-                var user = userMgr.FindByEmail(googleUserInfo.email);
+                var user = userMgr.FindByEmail(exchangeOutput.UserInfo.email);
 
                 if (user == null)
                 {
                     response.StatusMessage = "No account found with this Google email. Please sign up first.";
-                    Logger.Warn($"No user found for Google email: {googleUserInfo.email}");
+                    Logger.Warn(string.Format("No user found for Google email: {0}", exchangeOutput.UserInfo.email));
                     return Ok(response);
                 }
 
                 if (user.Inactive)
                 {
                     response.StatusMessage = "Your account has been deactivated.";
-                    Logger.Warn($"Inactive user attempting to sign in: {user.Email}");
+                    Logger.Warn(string.Format("Inactive user attempting to sign in: {0}", user.Email));
                     return Ok(response);
                 }
 
                 // Step 3: Update Google OAuth credentials
-                Logger.Info($"Updating Google OAuth credentials for UserId: {user.Id}");
-                UpdateGoogleOAuthCredentials(user.Id, googleUserInfo, tokenResponse);
+                Logger.Info(string.Format("Updating Google OAuth credentials for UserId: {0}", user.Id));
+                userMgr.UpdateGoogleOAuthCredentials(user.Id, exchangeOutput.UserInfo, exchangeOutput.TokenResponse);
 
-                // Step 4: Generate authentication response
-                response.StatusCode = SecurityStatus.Success;
+                // Step 4: Add authentication provider claim if not exists
+                await AddAuthenticationProviderClaim(userMgr, user.Id, AuthenticationMetadata.GoogleOAuthProvider);
+
+                // Step 5: Generate authentication response
+                response.StatusCode =   SecurityStatus.Success;
                 response.StatusMessage = "Login successful.";
                 response.IsActionRequired = false;
 
                 // Get access token
-                var password = Membership.GeneratePassword(16, 4);
-                response.TokenResponse = GetTokenForGoogleUser(user.Email, password, user.Id);
+                response.TokenResponse = GetTokenForGoogleUser(exchangeOutput.TokenResponse);
 
                 // Set device token if provided
                 if (model.NotificationTokenJson != null)
@@ -264,7 +268,7 @@ namespace OMSCloud.Services.WebAPIs.Controllers
                     }
                 }
 
-                Logger.Info($"=== Google OAuth Signin Completed Successfully for UserId: {user.Id} ===");
+                Logger.Info(string.Format("=== Google OAuth Signin Completed Successfully for UserId: {0} ===", user.Id));
                 return Ok(response);
             }
             catch (Exception ex)
@@ -284,7 +288,7 @@ namespace OMSCloud.Services.WebAPIs.Controllers
         [HttpPost]
         [Route("refresh-token")]
         [Authorize]
-        [ReturnType(DataType = typeof(TokenResponseModel))]
+        [ResponseType(typeof(TokenResponseModel))]
         public async Task<IHttpActionResult> RefreshGoogleToken()
         {
             Logger.Info("=== Google OAuth Refresh Token Started ===");
@@ -297,44 +301,44 @@ namespace OMSCloud.Services.WebAPIs.Controllers
 
                 if (currentUser == null)
                 {
-                    Logger.Warn($"Current user not found: {User.Identity.Name}");
+                    Logger.Warn(string.Format("Current user not found: {0}", User.Identity.Name));
                     return BadRequest("User not found");
                 }
 
-                // Step 1: Retrieve stored Google OAuth credentials
-                var googleCredentials = GetStoredGoogleCredentials(currentUser.Id);
+				// Step 1: Retrieve stored Google OAuth credentials
+				
+				var googleCredentials = userMgr.GetStoredGoogleCredentials(currentUser.Id);
 
-                if (googleCredentials == null || string.IsNullOrEmpty(googleCredentials.RefreshToken))
+				if (googleCredentials == null || string.IsNullOrEmpty(googleCredentials.RefreshToken))
                 {
-                    Logger.Warn($"No Google OAuth credentials found for UserId: {currentUser.Id}");
+                    Logger.Warn(string.Format("No Google OAuth credentials found for UserId: {0}", currentUser.Id));
                     return BadRequest("No Google OAuth credentials found for this account");
                 }
 
                 // Step 2: Refresh the access token
-                Logger.Info($"Refreshing Google access token for UserId: {currentUser.Id}");
+                Logger.Info(string.Format("Refreshing Google access token for UserId: {0}", currentUser.Id));
                 var newTokenResponse = await GoogleOAuthService.RefreshAccessTokenAsync(googleCredentials.RefreshToken);
 
                 if (newTokenResponse == null)
                 {
-                    Logger.Error($"Failed to refresh access token for UserId: {currentUser.Id}");
+                    Logger.Error(string.Format("Failed to refresh access token for UserId: {0}", currentUser.Id));
                     return BadRequest("Failed to refresh Google access token");
                 }
-
-                // Step 3: Update stored credentials
-                googleCredentials.AccessToken = newTokenResponse.access_token;
+				// Step 3: Update stored credentials
+				googleCredentials.AccessToken = newTokenResponse.access_token;
                 googleCredentials.AccessTokenExpiryTime = DateTime.UtcNow.AddSeconds(newTokenResponse.expires_in);
                 googleCredentials.ModifiedOn = DateTime.Now;
 
-                UpdateGoogleCredentialsInDatabase(googleCredentials);
+				userMgr.UpdateGoogleCredentialsInDatabase(googleCredentials);
 
-                // Step 4: Return new access token
-                response.access_token = newTokenResponse.access_token;
-                response.expires_in = newTokenResponse.expires_in;
+				// Step 4: Return new access token
+				response.access_token = newTokenResponse.access_token;
+                response.refresh_token = newTokenResponse.refresh_token ?? googleCredentials.RefreshToken;
                 response.token_type = newTokenResponse.token_type;
-                response.expiredInMinutes = newTokenResponse.expires_in / 60;
+                response.expires_in = newTokenResponse.expires_in / 60;
                 response.expiredTime = googleCredentials.AccessTokenExpiryTime;
 
-                Logger.Info($"=== Google OAuth Refresh Token Completed Successfully for UserId: {currentUser.Id} ===");
+                Logger.Info(string.Format("=== Google OAuth Refresh Token Completed Successfully for UserId: {0} ===", currentUser.Id));
                 return Ok(response);
             }
             catch (Exception ex)
@@ -349,39 +353,50 @@ namespace OMSCloud.Services.WebAPIs.Controllers
         /// <summary>
         /// Links Google OAuth account to existing user
         /// </summary>
-        private async Task<IHttpActionResult> LinkGoogleOAuthAccount(
-            ApplicationUser existingUser,
-            GoogleTokenResponse tokenResponse,
-            GoogleUserInfo googleUserInfo,
-            GoogleOAuthSignupRequest model,
-            AccountResponseModel response)
+        private async Task<AccountResponseModel> LinkGoogleOAuthAccount(
+            ApplicationUser user,
+			ApplicationUserManager userMgr,
+			GoogleCodeExchangeOutput exchangeOutput,
+            GoogleOAuthSignupRequestModel model
+            )
         {
-            Logger.Info($"Linking Google OAuth account to existing UserId: {existingUser.Id}");
+            Logger.Info(string.Format("Linking Google OAuth account to existing UserId: {0}", user.Id));
 
-            // Store or update Google OAuth credentials
-            if (!StoreGoogleOAuthCredentials(existingUser.Id, googleUserInfo, tokenResponse))
+			var response = new AccountResponseModel();
+
+            response.StatusCode = SecurityStatus.Failure;
+            response.IsActionRequired = false;
+			// Store or update Google OAuth credentials
+			if (!userMgr.StoreGoogleOAuthCredentials(user.Id, exchangeOutput.UserInfo, exchangeOutput.TokenResponse))
             {
                 response.StatusMessage = "Failed to link Google account.";
-                Logger.Error($"Failed to store OAuth credentials for existing user: {existingUser.Id}");
-                return Ok(response);
+                Logger.Error(string.Format("Failed to store OAuth credentials for existing user: {0}", user.Id));
+                return response;
             }
 
-            response.StatusCode = SecurityStatus.Success;
+            // Add authentication provider claim if not exists
+            await AddAuthenticationProviderClaim(userMgr, user.Id, AuthenticationMetadata.GoogleOAuthProvider);
+
+			// Step 6: Set up user profile
+			SetupProfileForGoogleUser(user, exchangeOutput.UserInfo);
+
+			// Step 7: Add default role
+			ApplicationUserManager.AddUser2Role(user.Id, 3);
+
+			response.StatusCode = SecurityStatus.Success;
             response.StatusMessage = "Google account linked successfully.";
             response.IsActionRequired = false;
 
-            // Get access token using existing user's default authentication
-            var password = Membership.GeneratePassword(16, 4);
-            response.TokenResponse = GetTokenForGoogleUser(existingUser.Email, password, existingUser.Id);
+			response.TokenResponse = GetTokenForGoogleUser(exchangeOutput.TokenResponse);
 
-            if (model.NotificationTokenJson != null)
+			if (model.NotificationTokenJson != null)
             {
                 try
                 {
                     var notificationToken = JsonConvert.DeserializeObject<NotificationTokenModel>(model.NotificationTokenJson);
                     if (notificationToken != null)
                     {
-                        SetDeviceToken(notificationToken, existingUser.Id);
+                        SetDeviceToken(notificationToken, user.Id);
                     }
                 }
                 catch (Exception ex)
@@ -390,128 +405,57 @@ namespace OMSCloud.Services.WebAPIs.Controllers
                 }
             }
 
-            return Ok(response);
+            return response;
         }
 
         /// <summary>
-        /// Stores Google OAuth credentials in a secure manner
-        /// In production, consider encrypting sensitive data
+        /// Adds authentication provider claim to user identity
+        /// Allows identification of whether user authenticated via Google OAuth or default auth
         /// </summary>
-        private bool StoreGoogleOAuthCredentials(long userId, GoogleUserInfo googleUserInfo, GoogleTokenResponse tokenResponse)
+        private async Task AddAuthenticationProviderClaim(ApplicationUserManager userMgr, long userId, string provider)
         {
             try
             {
-                Logger.Info($"Storing Google OAuth credentials for UserId: {userId}");
+                Logger.Info(string.Format("Adding authentication provider claim for UserId: {0}, Provider: {1}", userId, provider));
 
-                // TODO: Implement database storage for UserGoogleOAuthCredential
-                // This would typically be stored in a table in the database
-                // For now, this is a placeholder for integration with your data layer
-
-                var credential = new UserGoogleOAuthCredential
+                var existingUser = await userMgr.FindByIdAsync(userId);
+                if (existingUser != null)
                 {
-                    UserId = userId,
-                    GoogleId = googleUserInfo.id,
-                    AccessToken = tokenResponse.access_token,
-                    RefreshToken = tokenResponse.refresh_token,
-                    AccessTokenExpiryTime = DateTime.UtcNow.AddSeconds(tokenResponse.expires_in),
-                    CreatedOn = DateTime.Now,
-                    ModifiedOn = DateTime.Now,
-                    IsActive = true,
-                    AuthenticationProvider = "Google"
-                };
+                    var claims = await userMgr.GetClaimsAsync(userId);
 
-                // Store in database
-                // var result = _googleOAuthRepository.AddOrUpdate(credential);
-                // return result != null;
+                    // Check if claim already exists
+                    Claim providerClaim = null;
+                    foreach (var claim in claims)
+                    {
+                        if (claim.Type == AuthenticationMetadata.ClaimType)
+                        {
+                            providerClaim = claim;
+                            break;
+                        }
+                    }
 
-                Logger.Info($"Google OAuth credentials stored for UserId: {userId}");
-                return true;
+                    if (providerClaim == null)
+                    {
+                        await userMgr.AddClaimAsync(userId, new Claim(AuthenticationMetadata.ClaimType, provider));
+                    }
+                }
+
+                Logger.Info(string.Format("Authentication provider claim added for UserId: {0}", userId));
             }
             catch (Exception ex)
             {
-                Logger.Error(ex, $"Error storing Google OAuth credentials for UserId: {userId}");
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Updates existing Google OAuth credentials
-        /// </summary>
-        private void UpdateGoogleOAuthCredentials(long userId, GoogleUserInfo googleUserInfo, GoogleTokenResponse tokenResponse)
-        {
-            try
-            {
-                Logger.Info($"Updating Google OAuth credentials for UserId: {userId}");
-
-                // TODO: Implement database update for UserGoogleOAuthCredential
-                // var existing = _googleOAuthRepository.GetByUserId(userId);
-                // if (existing != null)
-                // {
-                //     existing.AccessToken = tokenResponse.access_token;
-                //     existing.RefreshToken = tokenResponse.refresh_token;
-                //     existing.AccessTokenExpiryTime = DateTime.UtcNow.AddSeconds(tokenResponse.expires_in);
-                //     existing.ModifiedOn = DateTime.Now;
-                //     _googleOAuthRepository.Update(existing);
-                // }
-
-                Logger.Info($"Google OAuth credentials updated for UserId: {userId}");
-            }
-            catch (Exception ex)
-            {
-                Logger.Error(ex, $"Error updating Google OAuth credentials for UserId: {userId}");
-            }
-        }
-
-        /// <summary>
-        /// Retrieves stored Google OAuth credentials for a user
-        /// </summary>
-        private UserGoogleOAuthCredential GetStoredGoogleCredentials(long userId)
-        {
-            try
-            {
-                Logger.Info($"Retrieving Google OAuth credentials for UserId: {userId}");
-
-                // TODO: Implement database retrieval for UserGoogleOAuthCredential
-                // var credentials = _googleOAuthRepository.GetByUserId(userId);
-                // return credentials;
-
-                return null;
-            }
-            catch (Exception ex)
-            {
-                Logger.Error(ex, $"Error retrieving Google OAuth credentials for UserId: {userId}");
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Updates Google credentials in database
-        /// </summary>
-        private void UpdateGoogleCredentialsInDatabase(UserGoogleOAuthCredential credential)
-        {
-            try
-            {
-                Logger.Info($"Updating Google credentials in database for UserId: {credential.UserId}");
-
-                // TODO: Implement database update
-                // var result = _googleOAuthRepository.Update(credential);
-
-                Logger.Info($"Google credentials updated for UserId: {credential.UserId}");
-            }
-            catch (Exception ex)
-            {
-                Logger.Error(ex, $"Error updating Google credentials for UserId: {credential.UserId}");
+                Logger.Warn(ex, string.Format("Failed to add authentication provider claim for UserId: {0}", userId));
             }
         }
 
         /// <summary>
         /// Sets up user profile for new Google OAuth user
         /// </summary>
-        private void SetupProfileForGoogleUser(ApplicationUser user, GoogleUserInfo googleUserInfo)
+        private void SetupProfileForGoogleUser(ApplicationUser user, GoogleUserInfoModel googleUserInfo)
         {
             try
             {
-                Logger.Info($"Setting up profile for new Google user: {user.Id}");
+                Logger.Info(string.Format("Setting up profile for new Google user: {0}", user.Id));
 
                 var profileComponent = new ProfileBusinessComponent();
                 var profile = new ProfileModel
@@ -526,22 +470,65 @@ namespace OMSCloud.Services.WebAPIs.Controllers
                 };
 
                 var profileId = profileComponent.AddProfile(profile);
-                Logger.Info($"Profile created for user: {user.Id}, ProfileId: {profileId}");
+                Logger.Info(string.Format("Profile created for user: {0}, ProfileId: {1}", user.Id, profileId));
             }
             catch (Exception ex)
             {
-                Logger.Error(ex, $"Error setting up profile for user: {user.Id}");
+                Logger.Error(ex, string.Format("Error setting up profile for user: {0}", user.Id));
             }
         }
+		
+        private static TokenResponseModel GetTokenForGoogleUser(GoogleTokenResponseModel googleTokenResponse)
+		{
+			// Get access token
+			TokenResponseModel tokenResponse = new TokenResponseModel();
+			tokenResponse.access_token = googleTokenResponse.access_token;
+			tokenResponse.refresh_token = googleTokenResponse.refresh_token;
+			tokenResponse.token_type = googleTokenResponse.token_type;
+			tokenResponse.expires_in = googleTokenResponse.expires_in;
+			tokenResponse.expiredTime = DateTime.UtcNow.AddMinutes(googleTokenResponse.expires_in);
+			//tokenResponse.id_token = googleTokenResponse.id_token;
+			//tokenResponse.scope = tokenResponse.scope;
+			return tokenResponse;
+		}
 
-        /// <summary>
-        /// Gets authentication token for Google OAuth user
-        /// </summary>
-        private TokenResponseModel GetTokenForGoogleUser(string email, string password, long userId)
+		private static async Task<ApplicationUser> CreateUserFromGoogleOAuth(GoogleCodeExchangeOutput exchangeOutput, ApplicationUserManager userMgr)
+		{
+			// Step 3: Create new user with Google information
+			Logger.Info(string.Format("Creating new user from Google OAuth. Email: {0}", exchangeOutput.UserInfo.email));
+			var newUser = new ApplicationUser
+			{
+				UserName = exchangeOutput.UserInfo.email,
+				Email = exchangeOutput.UserInfo.email,
+				Firstname = exchangeOutput.UserInfo.given_name ?? exchangeOutput.UserInfo.name ?? "Google",
+				Lastname = exchangeOutput.UserInfo.family_name ?? "User",
+				EmailConfirmed = exchangeOutput.UserInfo.verified_email == "true",
+				Inactive = false,
+				LastModified = DateTime.Now,
+                TwoFactorEnabled = false,
+                AccessFailedCount = 0,
+                LockoutEnabled = false,
+                PhoneNumber = null,
+                PhoneNumberConfirmed = true,
+                
+			};
+
+			// Generate a random password for Google OAuth users
+			var randomPassword = Membership.GeneratePassword(16, 4);
+
+			var result = await userMgr.CreateAsync(newUser, randomPassword);
+			newUser = result.Succeeded ? newUser : null;
+			return (newUser);
+		}
+
+		/// <summary>
+		/// Gets authentication token for Google OAuth user
+		/// </summary>
+		private TokenResponseModel GetTokenForGoogleUser1(string email, string password, long userId)
         {
             try
             {
-                Logger.Info($"Generating auth token for Google user: {email}");
+                Logger.Info(string.Format("Generating auth token for Google user: {0}", email));
 
                 var tokenResponseModel = new TokenResponseModel();
                 var tokenRequestModel = new TokenRequestModel(email, password);
@@ -552,7 +539,7 @@ namespace OMSCloud.Services.WebAPIs.Controllers
                 request.AddHeader("cache-control", "no-cache");
                 request.AddHeader("content-type", "application/x-www-form-urlencoded");
 
-                string data = $"UserName={email}&password={password}&grant_type={tokenRequestModel.grant_type}";
+                string data = string.Format("UserName={0}&password={1}&grant_type={2}", email, password, tokenRequestModel.grant_type);
                 request.AddParameter("application/x-www-form-urlencoded", data, ParameterType.RequestBody);
 
                 var response = client.Execute(request);
@@ -560,19 +547,19 @@ namespace OMSCloud.Services.WebAPIs.Controllers
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     tokenResponseModel = JsonConvert.DeserializeObject<TokenResponseModel>(response.Content);
-                    tokenResponseModel.expiredInMinutes = 30;
-                    tokenResponseModel.expiredTime = DateTime.UtcNow.AddMinutes(tokenResponseModel.expiredInMinutes);
+                    tokenResponseModel.expires_in = 30;
+                    tokenResponseModel.expiredTime = DateTime.UtcNow.AddMinutes(tokenResponseModel.expires_in);
 
-                    Logger.Info($"Auth token generated successfully for user: {email}");
+                    Logger.Info(string.Format("Auth token generated successfully for user: {0}", email));
                     return tokenResponseModel;
                 }
 
-                Logger.Warn($"Failed to generate token for user: {email}");
+                Logger.Warn(string.Format("Failed to generate token for user: {0}", email));
                 return tokenResponseModel;
             }
             catch (Exception ex)
             {
-                Logger.Error(ex, $"Error generating auth token for user: {email}");
+                Logger.Error(ex, string.Format("Error generating auth token for user: {0}", email));
                 return new TokenResponseModel();
             }
         }
@@ -584,7 +571,7 @@ namespace OMSCloud.Services.WebAPIs.Controllers
         {
             try
             {
-                Logger.Info($"Setting device token for UserId: {userId}");
+                Logger.Info(string.Format("Setting device token for UserId: {0}", userId));
 
                 var profileComponent = new ProfileBusinessComponent();
                 var profile = profileComponent.GetProfileByUserId(userId);
@@ -606,12 +593,12 @@ namespace OMSCloud.Services.WebAPIs.Controllers
                         ntbc.UpdateNotificationToken(dbToken);
                     }
 
-                    Logger.Info($"Device token set for UserId: {userId}");
+                    Logger.Info(string.Format("Device token set for UserId: {0}", userId));
                 }
             }
             catch (Exception ex)
             {
-                Logger.Error(ex, $"Error setting device token for UserId: {userId}");
+                Logger.Error(ex, string.Format("Error setting device token for UserId: {0}", userId));
             }
         }
 
